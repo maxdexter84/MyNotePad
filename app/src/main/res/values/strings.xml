@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">MyNote</string>
+    <string name="simple_note_title">Simple</string>
+    <string name="important_note_title">Important</string>
+    <string name="password_note_title">Passwords</string>
+
+
+    <string name="title_hint">title</string>
+    <string name="simple_note">Simple</string>
+    <string name="important_note">Important</string>
+    <string name="password_note">Password</string>
+    <string name="desc_hint">description</string>
+    <string name="all_note_title">All</string>
+    <string name="tools">Tools</string>
+    <string name="delete">Delete</string>
+    <string name="to_favourites">To favourites</string>
+    <string name="to_passwords">To passwords</string>
+    <string name="is_dark_theme">Dark theme</string>
+    <string name="off">off</string>
+    <string name="on">on</string>
+</resources>
