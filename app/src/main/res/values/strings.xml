@@ -18,4 +18,6 @@
     <string name="is_dark_theme">Dark theme</string>
     <string name="off">off</string>
     <string name="on">on</string>
+    <string name="share">Share</string>
+    <string name="image">Image</string>
 </resources>

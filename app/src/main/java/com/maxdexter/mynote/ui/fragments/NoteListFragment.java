@@ -145,7 +145,6 @@ private List<Note> listNew;
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getContext(), "onStart", Toast.LENGTH_SHORT).show();
         updateUI(type);
     }
 
