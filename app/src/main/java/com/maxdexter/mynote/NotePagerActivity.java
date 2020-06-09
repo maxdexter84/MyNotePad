@@ -32,12 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class NotePagerActivity extends AppCompatActivity {
-    private File mPhotoFile;
-    private ImageButton share;
-    private ImageButton delete;
-    private ImageButton voice;
-    private ImageButton image;
-    private Note currentNote;
+
     private FloatingActionButton mFloatingActionButton;
     private String noteId;
     private List<Note>currentList;
@@ -56,58 +51,11 @@ public class NotePagerActivity extends AppCompatActivity {
         currentList = newList(noteId);
         initViewPager(currentList);
         initFloatingAB();
-        initButtonGroup();
-        mPhotoFile = NotePad.get(this).getPhotoFile(currentNote);
-
     }
 
-    private void photoIntent() {
 
-        final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(getPackageManager()) != null;
-//            image.setEnabled(canTakePhoto);
-        Uri uri = FileProvider.getUriForFile(this,"com.maxdexter.mynote.fileprovider",mPhotoFile);
-        captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-        List<ResolveInfo> cameraActivity = this.getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
-        for(ResolveInfo activity: cameraActivity){
-            this.grantUriPermission(activity.activityInfo.packageName,uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        }
-        startActivityForResult(captureImage,REQUEST_PHOTO);
-    }
 
-    private void initButtonGroup() {
-        share = findViewById(R.id.share_button);
-        delete = findViewById(R.id.delete_button);
-        image = findViewById(R.id.add_image_button);
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plane");
-                intent.putExtra(Intent.EXTRA_TITLE,currentNote.getTitle());
-                intent.putExtra(Intent.EXTRA_TEXT,currentNote.getDescription());
-                startActivity(intent);
-            }
-        });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(v,"Delete note?",Snackbar.LENGTH_LONG).setAction("Yes", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        NotePad.get(getApplicationContext()).deleteNote(currentNote);
-                        finish();
-                    }
-                }).show();
-            }
-        });
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photoIntent();
-            }
-        });
-    }
+
 
     private void initFloatingAB() {
         mFloatingActionButton = findViewById(R.id.floatingActionButton_save);
@@ -140,7 +88,6 @@ public class NotePagerActivity extends AppCompatActivity {
         for (int i = 0; i < mNoteList.size(); i++) {
             if(mNoteList.get(i).getUUID().equals(noteId)){
                 mViewPager.setCurrentItem(i);
-                currentNote = mNoteList.get(i);
             }
         }
     }
