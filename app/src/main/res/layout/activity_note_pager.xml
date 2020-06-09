@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/fragment_container_detail"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_save"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
     <android.support.v4.view.ViewPager
         android:id="@+id/note_view_pager"
         android:layout_width="match_parent"
@@ -31,20 +23,41 @@
         android:id="@+id/floatingActionButton_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:layout_margin="16dp"
-        android:src="?android:attr/textCheckMarkInverse"
-        app:layout_constraintBottom_toTopOf="@+id/botton_detail_nav"
+        android:src="@drawable/baseline_done_24"
+
+        app:layout_constraintBottom_toTopOf="@+id/button_group"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/botton_detail_nav"
+    <LinearLayout
+        android:id="@+id/button_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/detail_bottom_nav"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:orientation="horizontal"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <ImageButton
+            android:id="@+id/add_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_image_24"/>
+        <ImageButton
+            android:id="@+id/add_voice_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_record_voice_over_24"/>
+        <ImageButton
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_share_24"/>
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_delete_24"/>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

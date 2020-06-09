@@ -98,12 +98,15 @@ private void initBottomSheet(){
 
         @Override
         public void onStateChanged(@NonNull View view, int i) {
-
+            if(BottomSheetBehavior.STATE_EXPANDED == i){
+                fab.setEnabled(false);
+            }else fab.setEnabled(true);
         }
 
         @Override
         public void onSlide(@NonNull View view, float v) {
             fab.animate().scaleX(1 - v).scaleY(1 - v).setDuration(0).start();
+
         }
     });
 }

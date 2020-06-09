@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">МоиЗаметки</string>
+    <string name="simple_note_title">Обычная</string>
+    <string name="important_note_title">Важная</string>
+    <string name="password_note_title">Пароль</string>
+    <string name="simple_note">Обычная</string>
+    <string name="important_note">Важная</string>
+    <string name="password_note">С паролем</string>
+    <string name="tools">Настроки</string>
+    <string name="delete">Удалить</string>
+    <string name="is_dark_theme">Темная тема</string>
+    <string name="off">выкл</string>
+    <string name="on">вкл</string>
+    <string name="share">Поделиьтся</string>
+    <string name="image">Изображение</string>
+    <string name="title_hint">название заметки</string>
+    <string name="desc_hint">текст заметки</string>
+</resources>

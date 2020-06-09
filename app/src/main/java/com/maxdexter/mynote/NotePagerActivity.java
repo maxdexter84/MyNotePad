@@ -2,14 +2,20 @@ package com.maxdexter.mynote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
@@ -20,13 +26,20 @@ import java.util.List;
 import java.util.UUID;
 
 public class NotePagerActivity extends AppCompatActivity {
-
+    private ImageButton share;
+    private ImageButton delete;
+    private ImageButton voice;
+    private ImageButton image;
+    private Note currentNote;
     private FloatingActionButton mFloatingActionButton;
     private String noteId;
    private List<Note>currentList;
     private static final String EXTRA_NOTE = "note_id";
     private ViewPager mViewPager; //Создаем экземпляр ViewPager
 private List<Note> mNoteList;//Создаем список
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +48,37 @@ private List<Note> mNoteList;//Создаем список
 
         currentList = newList(noteId);
         initViewPager(currentList);
-
         initFloatingAB();
+        initButtonGroup();
+
+    }
+
+    private void initButtonGroup() {
+        share = findViewById(R.id.share_button);
+        delete = findViewById(R.id.delete_button);
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plane");
+                intent.putExtra(Intent.EXTRA_TITLE,currentNote.getTitle());
+                intent.putExtra(Intent.EXTRA_TEXT,currentNote.getDescription());
+                startActivity(intent);
+            }
+        });
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Snackbar.make(v,"Delete note?",Snackbar.LENGTH_LONG).setAction("Yes", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        NotePad.get(getApplicationContext()).deleteNote(currentNote);
+                        finish();
+                    }
+                }).show();
+
+            }
+        });
     }
 
     private void initFloatingAB() {
@@ -70,6 +112,7 @@ private List<Note> mNoteList;//Создаем список
         for (int i = 0; i < mNoteList.size(); i++) {
             if(mNoteList.get(i).getUUID().equals(noteId)){
                 mViewPager.setCurrentItem(i);
+                currentNote = mNoteList.get(i);
             }
         }
     }
@@ -90,4 +133,5 @@ private List<Note> mNoteList;//Создаем список
         }
         return currentList;
     }
+
 }
