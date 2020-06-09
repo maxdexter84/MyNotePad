@@ -10,8 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
         <activity android:name=".NotePagerActivity" android:parentActivityName=".MainActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".data.NotePad" />
+
         <activity android:name=".DetailActivity" android:windowSoftInputMode="adjustResize"/>
+        <provider
+            android:authorities="com.maxdexter.mynote.fileprovider"
+            android:name="android.support.v4.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file"/>
+        </provider>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

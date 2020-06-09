@@ -92,5 +92,9 @@ public class Note {
        return time;
     }
 
+    public String getPhotoFilename(){
+        return "IMG " + getId() + " .jpg";
+    }
+
 
 }
