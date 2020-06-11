@@ -19,8 +19,8 @@
     </style>
 
    <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">
-       <item name="android:inputType">textCapSentences</item>
-       <item name="android:textSize">14sp</item>
+       <item name="android:inputType">textCapSentences|textMultiLine</item>
+       <item name="android:textSize">18sp</item>
    </style>
 
 
