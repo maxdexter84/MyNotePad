@@ -93,7 +93,7 @@ public class Note {
     }
 
     public String getPhotoFilename(){
-        return "IMG " + getId() + " .jpg";
+        return "IMG " + getUUID() + " .jpg";
     }
 
 

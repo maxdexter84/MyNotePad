@@ -12,42 +12,36 @@ import android.view.View;
 
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.ui.fragments.DetailFragment;
+import com.maxdexter.mynote.ui.fragments.FullscreenFragment;
 
 import java.util.Objects;
 import java.util.UUID;
 
 public class DetailActivity extends AppCompatActivity {
-private static final String EXTRA_NOTE = "note_id";
-private FloatingActionButton mFloatingActionButton;
+private static final String EXTRA_NOTE_ID = "EXTRA_NOTE_ID";
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        mFloatingActionButton = findViewById(R.id.floatingActionButton_save);
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        initDetailFragment();
+        String noteId = getIntent().getExtras().getString(EXTRA_NOTE_ID);
+        initDetailFragment(noteId);
 
     }
 
-    private void initDetailFragment() {
+    private void initDetailFragment(String noteId) {
         FragmentManager fm = getSupportFragmentManager();
         Fragment fragment = fm.findFragmentById(R.id.fragment_container_detail);
-        String noteId = Objects.requireNonNull(getIntent().getExtras()).getString(EXTRA_NOTE);
         if(fragment == null){
-            fragment = DetailFragment.newInstance(noteId);// Передаем идинтификатор заметки в DetailFragment через метод newInstance
+            fragment = FullscreenFragment.newInstance(noteId);// Передаем идинтификатор заметки в FullscreenFragment через метод newInstance
             fm.beginTransaction().add(R.id.fragment_container_detail,fragment).commit();
         }
     }
 
     public static Intent newIntent(Context context, String noteId){
     Intent intent = new Intent(context,DetailActivity.class);
-    intent.putExtra(EXTRA_NOTE,noteId);
+    intent.putExtra(EXTRA_NOTE_ID,noteId);
     return intent;
 }
 

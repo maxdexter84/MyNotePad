@@ -20,4 +20,7 @@
     <string name="on">on</string>
     <string name="share">Share</string>
     <string name="image">Image</string>
+    <string name="dummy_button" translatable="false">Dummy Button</string>
+    <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
+    <string name="back">BACK</string>
 </resources>

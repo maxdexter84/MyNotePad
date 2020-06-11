@@ -9,9 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".NotePagerActivity" android:parentActivityName=".MainActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".NotePagerActivity" android:parentActivityName=".NoteListActivity" android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".DetailActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".DetailActivity" />
         <provider
             android:authorities="com.maxdexter.mynote.fileprovider"
             android:name="android.support.v4.content.FileProvider"
@@ -20,7 +20,7 @@
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file"/>
         </provider>
-        <activity android:name=".MainActivity">
+        <activity android:name=".NoteListActivity" android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,8 +1,12 @@
 package com.maxdexter.mynote.ui.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,7 +34,19 @@ public static final String TYPE_ID = "type_id";
 private RecyclerView mRecyclerView;
 private NoteAdapter mNoteAdapter;
 private int type;
+private FloatingActionButton fab;
 private List<Note> listNew;
+private Callbacks mCallbacks;
+//Обязательный интерфейс для активности хоста
+public interface Callbacks{
+    void onNoteSelected(Note note);
+}
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mCallbacks = (Callbacks) context;
+    }
 
 
     @Override
@@ -40,8 +56,6 @@ private List<Note> listNew;
         mRecyclerView = view.findViewById(R.id.note_list_id);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         type = getArguments().getInt(TYPE_ID);
-
-
         updateUI(type);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         mRecyclerView.addItemDecoration(itemTouchHelper);
@@ -49,6 +63,7 @@ private List<Note> listNew;
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
         return view;
     }
+
 
     private void updateUI(int type) {
         List<Note>list= NotePad.get(getContext()).getNotes();
@@ -86,8 +101,9 @@ private List<Note> listNew;
 
         @Override
         public void onClick(View v) {
-            Intent intent = NotePagerActivity.newIntent(getContext(),mNote.getUUID());
-            startActivity(intent);
+            mCallbacks.onNoteSelected(mNote);
+//            Intent intent = NotePagerActivity.newIntent(getContext(),mNote.getUUID());
+//            startActivity(intent);
         }
 
     }
@@ -192,5 +208,9 @@ private List<Note> listNew;
         }
     }
 
-
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mCallbacks = null;
+    }
 }

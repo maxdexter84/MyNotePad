@@ -10,22 +10,20 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.ui.fragments.DetailFragment;
 import com.maxdexter.mynote.ui.fragments.NoteListFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class NoteListActivity extends AppCompatActivity implements NoteListFragment.Callbacks {
     BottomSheetBehavior bottomSheetBehavior;
     private int type = 0;
     BottomNavigationView mNavigationView;
     FloatingActionButton mFloatingActionButton;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         initBottomNav();
         initFloatingActionButton();
         initBottomSheet();
+
     }
 
     private void initFloatingActionButton() {
@@ -42,8 +41,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Note note = new Note();
-                NotePad.get(MainActivity.this).addNote(note);
-                Intent intent = NotePagerActivity.newIntent(MainActivity.this,note.getUUID());
+                NotePad.get(NoteListActivity.this).addNote(note);
+
+                Intent intent = NotePagerActivity.newIntent(NoteListActivity.this,note.getUUID());
                 startActivity(intent);
             }
         });
@@ -110,5 +110,16 @@ private void initBottomSheet(){
         }
     });
 }
+
+    @Override
+    public void onNoteSelected(Note note) { //Если ориентация портретная и R.id.fragment_container_detail нет в мкете то при клике на элемент списка запуститься NotePagerActivity
+        if(findViewById(R.id.fragment_container_detail)== null){
+            Intent intent = NotePagerActivity.newIntent(this,note.getUUID());
+            startActivity(intent);
+        }else{ // если ориентация альбомная и R.id.fragment_container_detail есть в макете то произайдет транзакция DetailFragment в контейнер в макете
+            Fragment newDetail = DetailFragment.newInstance(note.getUUID());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_detail,newDetail).commit();
+        }
+    }
 
 }

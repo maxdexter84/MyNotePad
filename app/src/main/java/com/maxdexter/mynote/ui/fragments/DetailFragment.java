@@ -1,8 +1,13 @@
 package com.maxdexter.mynote.ui.fragments;
+import android.annotation.SuppressLint;
+import android.content.ContentProvider;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +20,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,6 +34,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.maxdexter.mynote.DetailActivity;
 import com.maxdexter.mynote.R;
@@ -31,6 +43,11 @@ import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -43,10 +60,13 @@ public class DetailFragment extends Fragment {
     public static final int NOTE_TYPE_IMPORTANT = 1;
     public static final int NOTE_TYPE_PASSWORD = 2;
     private static final int REQUEST_PHOTO = 2;
+    private static final int REQUEST_GALLERY =3 ;
+    private static final int IDM_DELETE = 33;
     private ImageButton share;
     private ImageButton delete;
     private ImageButton voice;
     private ImageButton image;
+    private ImageButton gallery;
     private Note mNote;
     private EditText mDescriptionField;
     private EditText mTitle;
@@ -54,6 +74,7 @@ public class DetailFragment extends Fragment {
     private RadioGroup mRadioGroup;
     private File mPhotoFile;
     private ImageView photo;
+    FileInputStream fileInputStream = null;
     public DetailFragment() {
         // Required empty public constructor
     }
@@ -68,6 +89,7 @@ public class DetailFragment extends Fragment {
         mPhotoFile = NotePad.get(getActivity()).getPhotoFile(mNote);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,25 +99,43 @@ public class DetailFragment extends Fragment {
         getTextDescript(view);
         getTextTitle(view);
         initRadioGroup(view);
-        initFAB();
+       // initFAB();
         initButtonGroup(view);
-        photo = view.findViewById(R.id.image_view_fragment_detail);
+        initImageButton(view);
         updatePhotoView();
+
         return view;
     }
+
+    private void initImageButton(View view) {
+        photo = view.findViewById(R.id.image_view_fragment_detail);
+        registerForContextMenu(photo);
+        photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Click!!", Toast.LENGTH_SHORT).show();
+                Intent intent = DetailActivity.newIntent(getActivity(),mNote.getUUID());
+                startActivity(intent);
+            }
+        });
+    }
+
     private void updatePhotoView(){
         if(mPhotoFile == null || !mPhotoFile.exists()){
-            photo.setImageDrawable(null);
+            photo.setVisibility(View.INVISIBLE);
         }else{
+            photo.setVisibility(View.VISIBLE);
             Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(),getActivity());
             photo.setImageBitmap(bitmap);
         }
     }
 
+
     private void initButtonGroup(View view) {
         share = view.findViewById(R.id.share_button);
         delete = view.findViewById(R.id.delete_button);
         image = view.findViewById(R.id.add_image_button);
+        gallery = view.findViewById(R.id.add_gallery_button);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,12 +164,17 @@ public class DetailFragment extends Fragment {
                 photoIntent();
             }
         });
+        gallery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                galleryIntent();
+            }
+        });
     }
 
     private void photoIntent() {
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//            boolean canTakePhoto = mPhotoFile != null && captureImage.resolveActivity(getPackageManager()) != null;
-//            image.setEnabled(canTakePhoto);
+
         Uri uri = FileProvider.getUriForFile(getActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         List<ResolveInfo> cameraActivity = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
@@ -138,17 +183,28 @@ public class DetailFragment extends Fragment {
         }
         startActivityForResult(captureImage,REQUEST_PHOTO);
     }
-
-    private void initFAB() {
-        mButton = getActivity().findViewById(R.id.floatingActionButton_save);
-        mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NotePad.get(getContext()).addNote(mNote);
-                getActivity().finish();
-            }
-        });
+    private void galleryIntent() {
+        final Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+        galleryIntent.setType("image/*");
+        Uri uri = FileProvider.getUriForFile(getActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
+        galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
+        List<ResolveInfo> cameraActivity = getActivity().getPackageManager().queryIntentActivities(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY);
+        for(ResolveInfo activity: cameraActivity){
+            getActivity().grantUriPermission(activity.activityInfo.packageName,uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        startActivityForResult(galleryIntent,REQUEST_GALLERY);
     }
+
+//    private void initFAB() {
+//        mButton = getActivity().findViewById(R.id.floatingActionButton_save);
+//        mButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NotePad.get(getContext()).addNote(mNote);
+//                getActivity().finish();
+//            }
+//        });
+//    }
 
     //этот метод создает экземпляр фрагмента , упаковывает и задает его аргументы(этот метод вызывается в активносте хосте)
     public static DetailFragment newInstance(String noteId){//Присоединение аргументов к фрагменту
@@ -243,10 +299,48 @@ public class DetailFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_PHOTO){
             Uri uri = FileProvider.getUriForFile(getActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updatePhotoView();
         }
+        if (requestCode == REQUEST_GALLERY && data != null) {
+            // Получаем URI изображения
+            Uri imageUri = data.getData();
+            if (imageUri != null) {
+                try {
+                    // Получаем InputStream, из которого будем декодировать Bitmap
+                    InputStream inputStream = getContext().getContentResolver().openInputStream(imageUri);
+                    FileOutputStream fos = getActivity().openFileOutput(mPhotoFile.getName(), Context.MODE_PRIVATE);
+                    byte[]image = new byte[inputStream.available()];
+                    inputStream.read(image);
+                    fos.write(image);
+                    updatePhotoView();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.context_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.delete){
+            mPhotoFile.delete();
+            getActivity().recreate();
+        }
+        return super.onContextItemSelected(item);
+
     }
 }

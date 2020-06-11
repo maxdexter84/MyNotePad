@@ -16,4 +16,5 @@
     <string name="image">Изображение</string>
     <string name="title_hint">название заметки</string>
     <string name="desc_hint">текст заметки</string>
+    <string name="back">Назад</string>
 </resources>
