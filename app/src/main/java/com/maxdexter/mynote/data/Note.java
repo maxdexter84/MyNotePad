@@ -88,8 +88,7 @@ public class Note {
     }
     private String dateFormat(Date date){
         SimpleDateFormat sd = new SimpleDateFormat("d MMM yy HH:mm", Locale.getDefault());
-       String time = sd.format(date);
-       return time;
+        return sd.format(date);
     }
 
     public String getPhotoFilename(){

@@ -25,7 +25,7 @@ private static final String EXTRA_NOTE_ID = "EXTRA_NOTE_ID";
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
-        String noteId = getIntent().getExtras().getString(EXTRA_NOTE_ID);
+        String noteId = Objects.requireNonNull(getIntent().getExtras()).getString(EXTRA_NOTE_ID);
         initDetailFragment(noteId);
 
     }

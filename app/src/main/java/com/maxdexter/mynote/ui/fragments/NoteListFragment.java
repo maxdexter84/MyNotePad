@@ -25,6 +25,7 @@ import com.maxdexter.mynote.data.NotePad;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +56,7 @@ public interface Callbacks{
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
         mRecyclerView = view.findViewById(R.id.note_list_id);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        assert getArguments() != null;
         type = getArguments().getInt(TYPE_ID);
         updateUI(type);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
@@ -176,23 +178,21 @@ public interface Callbacks{
     private final ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
 
         @Override
-        public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+        public boolean onMove(RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return true;
         }
 
         @Override
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
-            switch (direction){
-                case ItemTouchHelper.LEFT:
-                    Snackbar.make(getView(),"Точно удалить?",Snackbar.LENGTH_LONG).setAction("Да", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            delItem(true,position);
-                        }
-                    }).show();
-                    mNoteAdapter.notifyItemChanged(position);
-                    break;
+            if (direction == ItemTouchHelper.LEFT) {
+                Snackbar.make(Objects.requireNonNull(getView()), "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delItem(true, position);
+                    }
+                }).show();
+                mNoteAdapter.notifyItemChanged(position);
             }
 
         }

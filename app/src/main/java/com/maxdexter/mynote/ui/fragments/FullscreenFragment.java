@@ -141,10 +141,11 @@ public class FullscreenFragment extends Fragment {
 
         mControlsView = view.findViewById(R.id.fullscreen_content_controls);
         mContentView = view.findViewById(R.id.fullscreen_content);
+        assert getArguments() != null;
         String noteId = getArguments().getString(ARG_NOTE);
         mNote = NotePad.get(getActivity()).getNote(noteId);
         mFile = NotePad.get(getActivity()).getPhotoFile(mNote);
-        Bitmap bitmap = PictureUtils.getScaleBitmap(mFile.getPath(),getActivity());
+        Bitmap bitmap = PictureUtils.getScaleBitmap(mFile.getPath(), Objects.requireNonNull(getActivity()));
         mContentView.setImageBitmap(bitmap);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {
