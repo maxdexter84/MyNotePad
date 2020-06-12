@@ -10,8 +10,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
@@ -23,16 +26,42 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
     private int type = 0;
     BottomNavigationView mNavigationView;
     FloatingActionButton mFloatingActionButton;
-
+    SwitchCompat mSwitchCompat;
+    SharedPref sharedPref;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPref = new SharedPref(this);
         initFragmentList(type);
         initBottomNav();
         initFloatingActionButton();
         initBottomSheet();
+        initTheme();
+        initSwitch();
+    }
 
+    private void initSwitch() {
+        mSwitchCompat = findViewById(R.id.switch_theme);
+        mSwitchCompat.setChecked(sharedPref.isDarkTheme());
+        mSwitchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                sharedPref.setDarkTheme(isChecked);
+                recreate();
+            }
+        });
+    }
+
+    private void initTheme() {
+        if(sharedPref.isDarkTheme()){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            setTheme(R.style.MyTheme);
+
+        }
     }
 
     private void initFloatingActionButton() {

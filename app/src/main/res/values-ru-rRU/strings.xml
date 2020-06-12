@@ -17,4 +17,5 @@
     <string name="title_hint">название заметки</string>
     <string name="desc_hint">текст заметки</string>
     <string name="back">Назад</string>
+    <string name="text_size">Размер шрифта</string>
 </resources>

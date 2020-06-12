@@ -23,4 +23,5 @@
     <string name="dummy_button" translatable="false">Dummy Button</string>
     <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
     <string name="back">BACK</string>
+    <string name="text_size">Text size</string>
 </resources>

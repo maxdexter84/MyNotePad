@@ -38,6 +38,7 @@ import android.widget.Toast;
 
 import com.maxdexter.mynote.DetailActivity;
 import com.maxdexter.mynote.R;
+import com.maxdexter.mynote.SharedPref;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
@@ -62,7 +63,7 @@ public class DetailFragment extends Fragment {
     public static final int NOTE_TYPE_PASSWORD = 2;
     private static final int REQUEST_PHOTO = 2;
     private static final int REQUEST_GALLERY =3 ;
-    private static final int IDM_DELETE = 33;
+    private static float text_size = 0;
     private ImageButton share;
     private ImageButton delete;
     private ImageButton voice;
@@ -75,7 +76,7 @@ public class DetailFragment extends Fragment {
     private RadioGroup mRadioGroup;
     private File mPhotoFile;
     private ImageView photo;
-    FileInputStream fileInputStream = null;
+    SharedPref mSharedPref;
     public DetailFragment() {
         // Required empty public constructor
     }
@@ -84,10 +85,12 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
+        mSharedPref = new SharedPref(getActivity());
         String noteId = getArguments().getString(ARG_NOTE_ID);// Получение идентификатора заметки из аргументов
         assert noteId != null;
         mNote = NotePad.get(getActivity()).getNote(noteId);
         mPhotoFile = NotePad.get(getActivity()).getPhotoFile(mNote);
+        text_size = mSharedPref.getTextSize();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -255,6 +258,7 @@ public class DetailFragment extends Fragment {
 
     private void getTextTitle(View view) {
         mTitle = view.findViewById(R.id.title_id);
+        mTitle.setTextSize(text_size);
         mTitle.setText(mNote.getTitle());
         mTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -277,6 +281,7 @@ public class DetailFragment extends Fragment {
 
     private void getTextDescript(View view) {
         mDescriptionField = view.findViewById(R.id.descript_id);
+        mDescriptionField.setTextSize(text_size);
         mDescriptionField.setText(mNote.getDescription());
         mDescriptionField.addTextChangedListener(new TextWatcher() {
             @Override
