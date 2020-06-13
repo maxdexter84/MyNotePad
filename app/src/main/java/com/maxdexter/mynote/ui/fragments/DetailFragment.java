@@ -1,32 +1,26 @@
 package com.maxdexter.mynote.ui.fragments;
 import android.annotation.SuppressLint;
-import android.content.ContentProvider;
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -35,23 +29,21 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import com.maxdexter.mynote.DetailActivity;
 import com.maxdexter.mynote.R;
 import com.maxdexter.mynote.SharedPref;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
-
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
+
+import static android.util.TypedValue.COMPLEX_UNIT_SP;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,7 +55,6 @@ public class DetailFragment extends Fragment {
     public static final int NOTE_TYPE_PASSWORD = 2;
     private static final int REQUEST_PHOTO = 2;
     private static final int REQUEST_GALLERY =3 ;
-    private static float text_size = 0;
     private ImageButton share;
     private ImageButton delete;
     private ImageButton voice;
@@ -76,7 +67,6 @@ public class DetailFragment extends Fragment {
     private RadioGroup mRadioGroup;
     private File mPhotoFile;
     private ImageView photo;
-    SharedPref mSharedPref;
     public DetailFragment() {
         // Required empty public constructor
     }
@@ -85,13 +75,13 @@ public class DetailFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         assert getArguments() != null;
-        mSharedPref = new SharedPref(getActivity());
         String noteId = getArguments().getString(ARG_NOTE_ID);// Получение идентификатора заметки из аргументов
         assert noteId != null;
         mNote = NotePad.get(getActivity()).getNote(noteId);
         mPhotoFile = NotePad.get(getActivity()).getPhotoFile(mNote);
-        text_size = mSharedPref.getTextSize();
+
     }
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -103,10 +93,28 @@ public class DetailFragment extends Fragment {
         getTextDescript(view);
         getTextTitle(view);
         initRadioGroup(view);
-       // initFAB();
         initButtonGroup(view);
         initImageButton(view);
         updatePhotoView();
+        LiveData<Integer> liveData = NotePad.get(getContext()).getLiveData();
+        liveData.observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer integer) {
+                switch (integer){
+                    case 0:
+                        mTitle.setTextSize(14f);
+                        mDescriptionField.setTextSize(14f);
+                        return;
+                    case 1:
+                        mTitle.setTextSize(18f);
+                        mDescriptionField.setTextSize(18f);
+                        return;
+                    case 2:
+                        mTitle.setTextSize(22f);
+                        mDescriptionField.setTextSize(22f);
+                }
+            }
+        });
 
         return view;
     }
@@ -199,16 +207,6 @@ public class DetailFragment extends Fragment {
         startActivityForResult(galleryIntent,REQUEST_GALLERY);
     }
 
-//    private void initFAB() {
-//        mButton = getActivity().findViewById(R.id.floatingActionButton_save);
-//        mButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                NotePad.get(getContext()).addNote(mNote);
-//                getActivity().finish();
-//            }
-//        });
-//    }
 
     //этот метод создает экземпляр фрагмента , упаковывает и задает его аргументы(этот метод вызывается в активносте хосте)
     public static DetailFragment newInstance(String noteId){//Присоединение аргументов к фрагменту
@@ -258,7 +256,6 @@ public class DetailFragment extends Fragment {
 
     private void getTextTitle(View view) {
         mTitle = view.findViewById(R.id.title_id);
-        mTitle.setTextSize(text_size);
         mTitle.setText(mNote.getTitle());
         mTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -281,7 +278,6 @@ public class DetailFragment extends Fragment {
 
     private void getTextDescript(View view) {
         mDescriptionField = view.findViewById(R.id.descript_id);
-        mDescriptionField.setTextSize(text_size);
         mDescriptionField.setText(mNote.getDescription());
         mDescriptionField.addTextChangedListener(new TextWatcher() {
             @Override

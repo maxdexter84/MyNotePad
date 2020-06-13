@@ -1,6 +1,7 @@
 package com.maxdexter.mynote.data;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
@@ -10,6 +11,16 @@ import java.io.File;
 import java.util.List;
 
 public class NotePad {
+    MutableLiveData<Integer> mLiveData;
+
+    public MutableLiveData<Integer> getLiveData() {
+        return mLiveData;
+    }
+
+    public void setLiveData(int i) {
+        mLiveData.setValue(i);
+    }
+
     private static NotePad sNotePad;
     Context mContext;
     private AppDatabase database;
@@ -26,6 +37,7 @@ public class NotePad {
     }
     private NotePad(Context context){
         mContext = context;
+        mLiveData = new MutableLiveData<>();
         database = Room.databaseBuilder(context, AppDatabase.class, "database")
                 .allowMainThreadQueries()
                 .build();

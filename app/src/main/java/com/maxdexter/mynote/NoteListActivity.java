@@ -1,5 +1,6 @@
 package com.maxdexter.mynote;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -14,12 +15,20 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.SwitchCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.ui.fragments.DetailFragment;
 import com.maxdexter.mynote.ui.fragments.NoteListFragment;
+
+import java.util.ArrayList;
 
 public class NoteListActivity extends AppCompatActivity implements NoteListFragment.Callbacks {
     BottomSheetBehavior bottomSheetBehavior;
@@ -28,6 +37,7 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
     FloatingActionButton mFloatingActionButton;
     SwitchCompat mSwitchCompat;
     SharedPref sharedPref;
+    Spinner mSpinner;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +49,44 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
         initBottomSheet();
         initTheme();
         initSwitch();
+        initSpinner();
+    }
+
+    private void initSpinner() {
+        ArrayList<String>size = new ArrayList<>();
+        size.add("small");
+        size.add("medium");
+        size.add("large");
+        mSpinner = findViewById(R.id.text_size_spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,size);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setSelection(sharedPref.getTextSize());
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position){
+                    case 0:
+                        sharedPref.setTextSize(0);
+                        NotePad.get(getApplicationContext()).setLiveData(0);
+                        return;
+                    case 1:
+                        sharedPref.setTextSize(1);
+                        NotePad.get(getApplicationContext()).setLiveData(1);
+                        return;
+                    case 2:
+                        sharedPref.setTextSize(2);
+                        NotePad.get(getApplicationContext()).setLiveData(2);
+
+                }
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
     }
 
     private void initSwitch() {

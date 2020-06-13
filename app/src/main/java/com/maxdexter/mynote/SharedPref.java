@@ -1,6 +1,7 @@
 package com.maxdexter.mynote;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 
@@ -20,8 +21,8 @@ public class SharedPref {
         // Если настройка не найдена , то берется параметр по умолчанию
         return sharedPref.getBoolean(IsDarkThem,true);
     }
-    public float getTextSize(){
-        return sharedPref.getFloat(TEXT_SIZE,18f);
+    public int getTextSize(){
+        return sharedPref.getInt(TEXT_SIZE,0);
     }
 
     //Сохранение настроек
@@ -30,7 +31,7 @@ public class SharedPref {
         //Параметры сохраняются посредствам специального класса editor
     }
 
-    public void setTextSize(float textSize){
-        sharedPref.edit().putFloat(TEXT_SIZE,textSize).apply();
+    public void setTextSize(int textSize){
+        sharedPref.edit().putInt(TEXT_SIZE,textSize).apply();
     }
 }

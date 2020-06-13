@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:textColor="@android:color/white" >
+        android:textColor="@android:color/white">
 
 
         <android.support.v7.widget.SwitchCompat
@@ -38,18 +38,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
         <TextView
-            android:text="@string/text_size"
+            android:id="@+id/textView"
+            style="@style/Widget.AppCompat.CompoundButton.Switch"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="@string/text_size"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_size_spinner"
+            app:layout_constraintStart_toStartOf="@+id/switch_theme"
+            app:layout_constraintTop_toBottomOf="@+id/switch_theme" />
 
         <Spinner
             android:id="@+id/text_size_spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="@+id/switch_theme"
-            app:layout_constraintStart_toStartOf="@+id/switch_theme"
+            app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/switch_theme" />
 
 
