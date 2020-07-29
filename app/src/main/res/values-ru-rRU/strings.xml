@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">МоиЗаметки</string>
+    <string name="app_name">Блокнот</string>
     <string name="simple_note_title">Обычная</string>
     <string name="important_note_title">Важная</string>
     <string name="password_note_title">Пароль</string>

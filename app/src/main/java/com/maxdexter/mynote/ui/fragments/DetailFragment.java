@@ -125,7 +125,6 @@ public class DetailFragment extends Fragment {
         photo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Click!!", Toast.LENGTH_SHORT).show();
                 Intent intent = DetailActivity.newIntent(getActivity(),mNote.getUUID());
                 startActivity(intent);
             }
@@ -137,8 +136,21 @@ public class DetailFragment extends Fragment {
             photo.setVisibility(View.INVISIBLE);
         }else{
             photo.setVisibility(View.VISIBLE);
-            Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(), Objects.requireNonNull(getActivity()));
-            photo.setImageBitmap(bitmap);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    final Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(), Objects.requireNonNull(getActivity()));
+                    photo.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            photo.setImageBitmap(bitmap);
+                        }
+                    });
+                }
+            }).start();
+
+
+
         }
     }
 
@@ -314,6 +326,7 @@ public class DetailFragment extends Fragment {
                     // Получаем InputStream, из которого будем декодировать Bitmap
                     InputStream inputStream = Objects.requireNonNull(getContext()).getContentResolver().openInputStream(imageUri);
                     FileOutputStream fos = Objects.requireNonNull(getActivity()).openFileOutput(mPhotoFile.getName(), Context.MODE_PRIVATE);
+
                     assert inputStream != null;
                     byte[]image = new byte[inputStream.available()];
                     inputStream.read(image);

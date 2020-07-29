@@ -6,22 +6,17 @@
         <item name="colorPrimary">@color/myPrimary</item>
         <item name="colorPrimaryDark">@color/myPrimaryDark</item>
         <item name="colorAccent">@color/myAccent</item>
-
     </style>
 
-    <style name="MyThemeDark" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/myPrimaryNight</item>
-        <item name="colorPrimaryDark">@color/myPrimaryDarkNight</item>
-        <item name="colorAccent">@color/myAccent</item>
-        <item name="background">@color/black</item>
 
-    </style>
+
 
    <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">
        <item name="android:inputType">textCapSentences|textMultiLine</item>
    </style>
 
 
-
+    <color name="myPrimary2">#558B2F</color>
+    <color name="myPrimaryDark2">#2E7D32</color>
+    <color name="myAccent2">#F9A825</color>
 </resources>

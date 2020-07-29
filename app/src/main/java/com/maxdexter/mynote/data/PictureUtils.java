@@ -11,12 +11,11 @@ public class PictureUtils {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path,options);
-
         float srcWidth = options.outWidth;
         float srcHeight = options.outHeight;
 
         //Вычесление степени масштабирования
-        int inSampleSize = 1;
+        int inSampleSize = 2;
         if(srcHeight > destHeight || srcWidth > destWidth){
             float heightScale = srcHeight / destHeight;
             float widthScale = srcWidth / destWidth;
@@ -24,7 +23,6 @@ public class PictureUtils {
         }
         options = new BitmapFactory.Options();
         options.inSampleSize = inSampleSize;
-
         //Чтение данных и создание итогового изображения
         return BitmapFactory.decodeFile(path,options);
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="myPrimary">#b5a691</color>
-    <color name="myPrimaryDark">#7b6e4c</color>
-    <color name="myAccent">#a0a50d</color>
-    <color name="myColor">#83EFF6FF</color>
+    <color name="myPrimary">#4d9699</color>
+    <color name="myPrimaryDark">#5f6c11</color>
+    <color name="myAccent">#fbc11a</color>
+    <color name="myColor">#eae7e0</color>
     <color name="black_overlay">#FFD54F</color>
     <color name="black">#201E1E</color>
     <color name="myPrimaryNight">#1C2247</color>
