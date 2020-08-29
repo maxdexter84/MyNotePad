@@ -1,15 +1,28 @@
 package com.maxdexter.mynote.data;
 
 import android.app.Application;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.maxdexter.mynote.database.AppDatabase;
 
+import java.io.File;
 import java.util.List;
 
 public class NotePad {
+    MutableLiveData<Integer> mLiveData;
+
+    public MutableLiveData<Integer> getLiveData() {
+        return mLiveData;
+    }
+
+    public void setLiveData(int i) {
+        mLiveData.setValue(i);
+    }
+
     private static NotePad sNotePad;
+    Context mContext;
     private AppDatabase database;
     private List<Note>mNotes;
     public List<Note> getNotes() {
@@ -23,6 +36,8 @@ public class NotePad {
         return sNotePad;
     }
     private NotePad(Context context){
+        mContext = context;
+        mLiveData = new MutableLiveData<>();
         database = Room.databaseBuilder(context, AppDatabase.class, "database")
                 .allowMainThreadQueries()
                 .build();
@@ -46,6 +61,12 @@ public class NotePad {
     }
     public AppDatabase getDatabase() {
         return database;
+    }
+
+    public File getPhotoFile(Note note){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir,note.getPhotoFilename());
+
     }
 
 

@@ -6,19 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".DetailActivity">
 
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/fragment_container_detail"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_save"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent" />-->
     <android.support.v4.view.ViewPager
         android:id="@+id/note_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton_save"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,13 +22,14 @@
         android:id="@+id/floatingActionButton_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
+        android:layout_marginBottom="86dp"
+        android:layout_marginEnd="24dp"
         android:clickable="true"
-        android:src="?android:attr/textCheckMarkInverse"
+        android:focusable="true"
+        android:src="@drawable/baseline_done_24"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="true" />
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
 
 </android.support.constraint.ConstraintLayout>

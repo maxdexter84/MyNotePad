@@ -2,19 +2,31 @@ package com.maxdexter.mynote;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.FileProvider;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.ui.fragments.DetailFragment;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -23,10 +35,13 @@ public class NotePagerActivity extends AppCompatActivity {
 
     private FloatingActionButton mFloatingActionButton;
     private String noteId;
-   private List<Note>currentList;
+    private List<Note>currentList;
     private static final String EXTRA_NOTE = "note_id";
     private ViewPager mViewPager; //Создаем экземпляр ViewPager
-private List<Note> mNoteList;//Создаем список
+    private List<Note> mNoteList;//Создаем список
+    private static final int REQUEST_PHOTO =2;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,9 +50,12 @@ private List<Note> mNoteList;//Создаем список
 
         currentList = newList(noteId);
         initViewPager(currentList);
-
         initFloatingAB();
     }
+
+
+
+
 
     private void initFloatingAB() {
         mFloatingActionButton = findViewById(R.id.floatingActionButton_save);
@@ -90,4 +108,5 @@ private List<Note> mNoteList;//Создаем список
         }
         return currentList;
     }
+
 }

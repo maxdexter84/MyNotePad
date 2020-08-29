@@ -3,15 +3,15 @@
 
     <item
         android:id="@+id/simple_note"
-        android:icon="@drawable/edit"
+        android:icon="@drawable/ic_register"
         android:title="@string/simple_note_title"/>
     <item
         android:id="@+id/important_note"
-       android:icon="@drawable/heart"
+       android:icon="@drawable/ic_heart"
         android:title="@string/important_note_title"/>
     <item
         android:id="@+id/password_note"
-        android:icon="@drawable/secure"
+        android:icon="@drawable/ic_files_and_folders"
         android:title="@string/password_note_title"/>
     <item
         android:id="@+id/tools"
