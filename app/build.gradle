@@ -38,6 +38,7 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation 'junit:junit:4.13'
     //noinspection GradleCompatible
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -63,4 +64,9 @@ dependencies {
 
 //    После добавления FireStore в проект столкнемся с превышением лимита количества методов для .dex-файлов. Чтобы решить эту проблему, необходимо добавить в проект поддержку MultiDex. Для этого добавим еще одну зависимость в build.gradle уровня модуля:
     implementation 'com.android.support:multidex:1.0.3'
+
+
+    //Navigation
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
 }

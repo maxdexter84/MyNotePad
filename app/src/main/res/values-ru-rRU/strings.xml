@@ -18,4 +18,5 @@
     <string name="desc_hint">текст заметки</string>
     <string name="back">Назад</string>
     <string name="text_size">Размер шрифта</string>
+    <string name="cloud">Облако</string>
 </resources>

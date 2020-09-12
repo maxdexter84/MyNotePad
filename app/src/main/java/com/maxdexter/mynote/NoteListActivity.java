@@ -26,6 +26,7 @@ import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.ui.fragments.DetailFragment;
 import com.maxdexter.mynote.ui.fragments.NoteListFragment;
+import com.maxdexter.mynote.ui.fragments.settings.SettingsFragment;
 
 import java.util.ArrayList;
 
@@ -156,11 +157,12 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
                         type = DetailFragment.NOTE_TYPE_PASSWORD;
                         initFragmentList(type);
                         return true;
-                    case R.id.tools:
-                        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
-                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-                        }else bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        return false;
+                    case R.id.settingsFragment:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.Companion.newInstance()).commit();
+//                        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+//                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+//                        }else bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        return true;
                 }
                 return false;
             }

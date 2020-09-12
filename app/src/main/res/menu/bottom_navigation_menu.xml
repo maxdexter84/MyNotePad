@@ -14,9 +14,7 @@
         android:icon="@drawable/ic_files_and_folders"
         android:title="@string/password_note_title"/>
     <item
-        android:id="@+id/tools"
+        android:id="@+id/settingsFragment"
         android:icon="@drawable/settings_dark_icone"
         android:title="@string/tools" />
-
-
 </menu>

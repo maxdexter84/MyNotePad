@@ -198,7 +198,7 @@ public interface Callbacks{
         public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
             final int position = viewHolder.getAdapterPosition();
             if (direction == ItemTouchHelper.LEFT) {
-                Snackbar.make(Objects.requireNonNull(getView()), "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да", new View.OnClickListener() {
+                Snackbar.make(requireView(), "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         delItem(true, position);
