@@ -88,6 +88,8 @@ public class Note {
         Date date = new Date();
         mDate = dateFormat(date);
     }
+
+
     private String dateFormat(Date date){
         SimpleDateFormat sd = new SimpleDateFormat("d MMM yy HH:mm", Locale.getDefault());
         return sd.format(date);

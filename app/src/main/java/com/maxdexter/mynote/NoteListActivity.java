@@ -49,6 +49,7 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
         initTheme();
         initSwitch();
         initSpinner();
+
     }
 
     private void initSpinner() {
