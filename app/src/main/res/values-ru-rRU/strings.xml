@@ -19,4 +19,7 @@
     <string name="back">Назад</string>
     <string name="text_size">Размер шрифта</string>
     <string name="cloud">Облако</string>
+    <string name="download">Выгрузить из облака</string>
+    <string name="upload_to_the_cloud">Загрузить в облако</string>
+    <string name="synchronization">Синхронизация</string>
 </resources>

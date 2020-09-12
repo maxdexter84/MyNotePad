@@ -1,13 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragments.firestore.FireStoreFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+        <variable
+            name="viewModel"
+            type="com.maxdexter.mynote.ui.fragments.firestore.FireStoreViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        tools:context=".ui.settings.SettingsFragment">
 
-</FrameLayout>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_tools_upload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:cardElevation="@dimen/cardview_default_elevation"
+            android:layout_marginTop="@dimen/min_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/min_margin"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/upload_to_the_cloud"
+                android:textSize="@dimen/medium_text" />
+
+            <ImageButton
+                android:id="@+id/btn_save_fire_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/min_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:src="@drawable/ic_baseline_cloud_upload_24" />
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cv_tools_download"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:cardElevation="@dimen/cardview_default_elevation"
+            android:layout_marginTop="@dimen/min_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cv_tools_upload">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start|center"
+                android:layout_marginStart="@dimen/medium_margin"
+                android:layout_marginTop="@dimen/min_margin"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:fontFamily="@font/roboto_mono"
+                android:text="@string/synchronization"
+                android:textSize="@dimen/medium_text" />
+
+            <ImageButton
+                android:id="@+id/btn_download_fire_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/min_margin"
+                android:layout_marginEnd="@dimen/medium_margin"
+                android:layout_marginBottom="@dimen/min_margin"
+                android:src="@drawable/ic_baseline_cloud_download_24"
+                android:text="@string/download"
+
+                />
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

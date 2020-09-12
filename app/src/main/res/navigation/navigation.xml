@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/noteListFragment">
+
+    <fragment
+        android:id="@+id/noteListFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.NoteListFragment"
+        android:label="NoteListFragment" >
+        <argument
+            android:name="noteType"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/fireStoreFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.firestore.FireStoreFragment"
+        android:label="FireStoreFragment" />
+    <fragment
+        android:id="@+id/fullscreenFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.FullscreenFragment"
+        android:label="fragment_fullscreen"
+        tools:layout="@layout/fragment_fullscreen" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <action
+            android:id="@+id/action_detailFragment_to_fullscreenFragment"
+            app:destination="@id/fullscreenFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_fireStoreFragment"
+            app:destination="@id/fireStoreFragment" />
+    </fragment>
+</navigation>

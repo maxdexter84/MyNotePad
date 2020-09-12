@@ -2,6 +2,7 @@ package com.maxdexter.mynote;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -38,18 +41,27 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
     SwitchCompat mSwitchCompat;
     SharedPref sharedPref;
     Spinner mSpinner;
+    BottomNavigationView bottomNavigationView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sharedPref = new SharedPref(this);
-        initFragmentList(type);
-        initBottomNav();
+        //initFragmentList(type);
+        //initBottomNav();
+        NavHostFragment mNavHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
+        NavController navController = mNavHostFragment.getNavController();
+        bottomNavigationView = findViewById(R.id.bottom_nav);
+        
+
+
         initFloatingActionButton();
         initBottomSheet();
         initTheme();
         initSwitch();
         initSpinner();
+
 
     }
 
@@ -127,48 +139,48 @@ public class NoteListActivity extends AppCompatActivity implements NoteListFragm
         });
     }
 
-    private void initFragmentList(int type) {
-        FragmentManager fm = getSupportFragmentManager();
-        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
-        if(fragment == null){
-            fragment = NoteListFragment.newInstance(type);
-            fm.beginTransaction().add(R.id.fragment_container,fragment).commit();
-        }else{
-            fragment = NoteListFragment.newInstance(type);
-            fm.beginTransaction().replace(R.id.fragment_container,fragment).commit();
-        }
-    }
+//    private void initFragmentList(int type) {
+//        FragmentManager fm = getSupportFragmentManager();
+//        Fragment fragment = fm.findFragmentById(R.id.fragment_container);
+//        if(fragment == null){
+//            fragment = NoteListFragment.newInstance(type);
+//            fm.beginTransaction().add(R.id.fragment_container,fragment).commit();
+//        }else{
+//            fragment = NoteListFragment.newInstance(type);
+//            fm.beginTransaction().replace(R.id.fragment_container,fragment).commit();
+//        }
+//    }
 
-    private void initBottomNav() {
-        mNavigationView = findViewById(R.id.bottom_nav);
-        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId()){
-                    case R.id.simple_note:
-                        type = DetailFragment.NOTE_TYPE_SIMPLE;
-                        initFragmentList(type);
-                        return true;
-                    case R.id.important_note:
-                        type = DetailFragment.NOTE_TYPE_IMPORTANT;
-                        initFragmentList(type);
-                        return true;
-                    case R.id.password_note:
-                        type = DetailFragment.NOTE_TYPE_PASSWORD;
-                        initFragmentList(type);
-                        return true;
-                    case R.id.settingsFragment:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.Companion.newInstance()).commit();
-//                        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
-//                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-//                        }else bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-                        return true;
-                }
-                return false;
-            }
-        });
-
-    }
+//    private void initBottomNav() {
+//        mNavigationView = findViewById(R.id.bottom_nav);
+//        mNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                switch (menuItem.getItemId()){
+//                    case R.id.simple_note:
+//                        type = DetailFragment.NOTE_TYPE_SIMPLE;
+//                        initFragmentList(type);
+//                        return true;
+//                    case R.id.important_note:
+//                        type = DetailFragment.NOTE_TYPE_IMPORTANT;
+//                        initFragmentList(type);
+//                        return true;
+//                    case R.id.password_note:
+//                        type = DetailFragment.NOTE_TYPE_PASSWORD;
+//                        initFragmentList(type);
+//                        return true;
+//                    case R.id.settingsFragment:
+//                        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, SettingsFragment.Companion.newInstance()).commit();
+////                        if(bottomSheetBehavior.getState() == BottomSheetBehavior.STATE_COLLAPSED){
+////                            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+////                        }else bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
+//
+//    }
 private void initBottomSheet(){
     LinearLayout bottomSheet = findViewById(R.id.bottom_sheet);
     bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
