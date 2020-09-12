@@ -1,7 +1,6 @@
 package com.maxdexter.mynote.ui.fragments;
 import android.annotation.SuppressLint;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.Observer;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,11 +9,13 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.FileProvider;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.ContextMenu;
@@ -28,10 +29,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.maxdexter.mynote.DetailActivity;
 import com.maxdexter.mynote.R;
-import com.maxdexter.mynote.SharedPref;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
@@ -42,12 +44,8 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Objects;
 
-import static android.util.TypedValue.COMPLEX_UNIT_SP;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class DetailFragment extends Fragment {
     private static final String ARG_NOTE_ID = "note_id";
     public static final int NOTE_TYPE_SIMPLE = 0;
@@ -173,7 +171,7 @@ public class DetailFragment extends Fragment {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v,"Delete note?",Snackbar.LENGTH_LONG).setAction("Yes", new View.OnClickListener() {
+                Snackbar.make(v,"Delete note?", Snackbar.LENGTH_LONG).setAction("Yes", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         NotePad.get(getContext()).deleteNote(mNote);

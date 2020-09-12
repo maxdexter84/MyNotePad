@@ -1,9 +1,10 @@
 package com.maxdexter.mynote.data;
 
-import android.app.Application;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.persistence.room.Room;
+
 import android.content.Context;
+
+import androidx.lifecycle.MutableLiveData;
+import androidx.room.Room;
 
 import com.maxdexter.mynote.database.AppDatabase;
 

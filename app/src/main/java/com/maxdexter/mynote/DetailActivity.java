@@ -2,20 +2,17 @@ package com.maxdexter.mynote;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 
-import com.maxdexter.mynote.data.NotePad;
-import com.maxdexter.mynote.ui.fragments.DetailFragment;
+import android.os.Bundle;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import com.maxdexter.mynote.ui.fragments.FullscreenFragment;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public class DetailActivity extends AppCompatActivity {
 private static final String EXTRA_NOTE_ID = "EXTRA_NOTE_ID";
