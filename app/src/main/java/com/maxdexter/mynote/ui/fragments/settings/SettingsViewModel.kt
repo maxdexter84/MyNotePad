@@ -16,4 +16,9 @@ class SettingsViewModel : ViewModel() {
     fun navigateToFireStore() {
         _toFireStore.value = true
     }
+
+    override fun onCleared() {
+        super.onCleared()
+        _toFireStore.value = false
+    }
 }

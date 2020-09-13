@@ -23,30 +23,21 @@ class FireStoreProvider : RemoteDataProvider {
     private val notesReference = db.collection(NOTES_COLLECTION )
 
 
-    override fun subscribeToAllNotes(): LiveData<NoteResult> {
-        val result = MutableLiveData<NoteResult>()
-
-        notesReference.addSnapshotListener(object : EventListener<QuerySnapshot> {
-            override fun onEvent(snapshot: QuerySnapshot?, e: FirebaseFirestoreException?) {
-                if (e != null) {
-                    result.value = NoteResult.Error(e)
-                } else if (snapshot != null) {
-                    val notes = mutableListOf<Note>()
-
-                    for (doc: QueryDocumentSnapshot in snapshot) {
-                        notes.add(doc.toObject(Note::class.java))
+    override fun subscribeToAllNotes(): LiveData<NoteResult> =
+        MutableLiveData<NoteResult>().apply {
+        notesReference.addSnapshotListener { snapshot, e ->
+            value = e?.let { NoteResult.Error(it) }
+                    ?: snapshot.let {
+                        val notes = it?.documents?.map { it.toObject(Note::class.java) }
+                        NoteResult.Success(notes)
                     }
-                    result.value = NoteResult.Success(notes)
-                }
             }
-        })
-
-        return result
     }
+
+
 
     override fun getNoteById(id: String): LiveData<NoteResult> {
         val result = MutableLiveData<NoteResult>()
-
         notesReference.document(id).get()
                 .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot> {
                     override fun onSuccess(snapshot: DocumentSnapshot) {

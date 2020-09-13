@@ -28,8 +28,9 @@ class SettingsFragment : Fragment() {
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         viewModel.toFireStore.observe(viewLifecycleOwner, { it ->
-         findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFireStoreFragment())
-
+            if (it){
+                findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFireStoreFragment())
+            }
      })
 
 

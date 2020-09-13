@@ -7,6 +7,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.maxdexter.mynote.extensions.ExtensionsKt;
+
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -86,7 +89,8 @@ public class Note {
     public Note(){
         mUUID = UUID.randomUUID().toString();
         Date date = new Date();
-        mDate = dateFormat(date);
+        mDate = ExtensionsKt.currentDate(date);
+
     }
 
 
