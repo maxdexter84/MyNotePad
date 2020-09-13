@@ -15,7 +15,7 @@
         tools:context=".ui.settings.SettingsFragment">
 
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_tools_upload"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,9 +47,9 @@
                 android:layout_marginBottom="@dimen/min_margin"
                 android:src="@drawable/ic_baseline_cloud_upload_24" />
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.cardview.widget.CardView
             android:id="@+id/cv_tools_download"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,7 +84,7 @@
 
                 />
 
-        </com.google.android.material.card.MaterialCardView>
+        </androidx.cardview.widget.CardView>
 
 
 

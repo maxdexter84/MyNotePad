@@ -13,6 +13,7 @@
 
    <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">
        <item name="android:inputType">textCapSentences|textMultiLine</item>
+       <item name="fontFamily">@font/roboto_mono</item>
    </style>
 
 
