@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.databinding.SettingsFragmentBinding
 
@@ -25,8 +26,9 @@ class SettingsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, container, false)
         binding.lifecycleOwner = this
+        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         viewModel.toFireStore.observe(viewLifecycleOwner, { it ->
-         Toast.makeText(context, "Settings", Toast.LENGTH_SHORT).show()
+         findNavController().navigate(SettingsFragmentDirections.actionSettingsFragmentToFireStoreFragment())
 
      })
 
@@ -35,10 +37,6 @@ class SettingsFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
 
-    }
 
 }
