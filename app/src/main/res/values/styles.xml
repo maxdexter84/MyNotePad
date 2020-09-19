@@ -16,8 +16,16 @@
        <item name="fontFamily">@font/roboto_mono</item>
    </style>
 
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
 
-    <color name="myPrimary2">#558B2F</color>
-    <color name="myPrimaryDark2">#2E7D32</color>
-    <color name="myAccent2">#F9A825</color>
+    <style name="LoginStyle" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+
 </resources>

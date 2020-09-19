@@ -73,9 +73,9 @@ public class Note {
         return mDate;
     }
 
-    public void setDate(Date date) {
-        mDate = dateFormat(date);
-    }
+//    public void setDate(Date date) {
+//        mDate = dateFormat(date);
+//    }
 
 
     public String getUUID() {
@@ -89,8 +89,8 @@ public class Note {
     public Note(){
         mUUID = UUID.randomUUID().toString();
         Date date = new Date();
-        mDate = ExtensionsKt.currentDate(date);
-
+        //setDate(date);
+        setDate(dateFormat(date));
     }
 
 

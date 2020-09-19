@@ -10,6 +10,11 @@
     <color name="myPrimaryDarkNight">#110F0F</color>
 
 
+    <color name="myPrimary2">#558B2F</color>
+    <color name="myPrimaryDark2">#2E7D32</color>
+    <color name="myAccent2">#F9A825</color>
+
+
     <color name="color_white">#F5F5F5</color>
     <color name="color_yello">#FFF59D</color>
     <color name="color_green">#81C784</color>

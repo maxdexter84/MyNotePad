@@ -22,6 +22,7 @@ import com.maxdexter.mynote.R;
 import com.maxdexter.mynote.data.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
+import com.maxdexter.mynote.repository.Repository;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -71,7 +72,7 @@ public interface Callbacks{
 
 
     private void updateUI(int type) {
-        List<Note>list= NotePad.get(getContext()).getNotes();
+        final List<Note>list= NotePad.get(getContext()).getNotes();
             listNew = new ArrayList<>();
             for(Note note: list){
                 if(note.getTypeNote() == type){
@@ -82,6 +83,13 @@ public interface Callbacks{
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setAdapter(mNoteAdapter);
             mNoteAdapter.notifyDataSetChanged();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    new Repository().loadToFireStore(list);
+                }
+            }).start();
+
     }
 
 

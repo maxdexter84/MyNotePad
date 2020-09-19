@@ -1,16 +1,21 @@
 package com.maxdexter.mynote.repository
 
-import androidx.lifecycle.LiveData
+import android.content.Context
 import com.maxdexter.mynote.data.Note
+import com.maxdexter.mynote.data.NotePad
+
 import com.maxdexter.mynote.data.provider.FireStoreProvider
 import com.maxdexter.mynote.data.provider.RemoteDataProvider
-import com.maxdexter.mynote.model.NoteResult
 
-object Repository {
 
+class Repository() {
     private val remoteProvider: RemoteDataProvider = FireStoreProvider()
-    fun getNotes() = remoteProvider.subscribeToAllNotes()
-    fun saveNote(note: Note) = remoteProvider.saveNote(note)
-    fun getNoteById(id: String) = remoteProvider.getNoteById(id)
+    fun synchronization() = remoteProvider.subscribeToAllNotes()
+    fun saveNoteInFireStore(note: Note) = remoteProvider.saveNote(note)
+    fun getNoteByIdFromFireStore(uuid: String) = remoteProvider.getNoteById(uuid)
+    fun getCurrentUser() = remoteProvider.getCurrentUser()
+    fun loadToFireStore(allNotes: List<Note>) {
+        allNotes.forEach { note -> saveNoteInFireStore(note) }
+    }
 
 }

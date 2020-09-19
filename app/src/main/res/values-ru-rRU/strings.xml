@@ -22,4 +22,15 @@
     <string name="download">Выгрузить из облака</string>
     <string name="upload_to_the_cloud">Загрузить в облако</string>
     <string name="synchronization">Синхронизация</string>
+    <string name="prompt_email">Почта</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">вход или регистрация</string>
+    <string name="action_sign_in_short">войти</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="invalid_username">Неверное имя пользователя</string>
+    <string name="invalid_password">Пароль должен быть длинее 5 знаков</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="logout">Выйти</string>
+    <string name="authentication">Авторизация</string>
+    <string name="Authentication">Авторизация</string>
 </resources>

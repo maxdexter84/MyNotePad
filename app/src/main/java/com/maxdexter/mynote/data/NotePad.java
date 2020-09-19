@@ -3,6 +3,7 @@ package com.maxdexter.mynote.data;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
@@ -30,6 +31,13 @@ public class NotePad {
         mNotes = database.mNoteDao().getAll();
         return mNotes;
     }
+    public LiveData<List<Note>> getLiveNotes(){
+        MutableLiveData<List<Note>> liveNotes = new MutableLiveData<>();
+        liveNotes.setValue(database.mNoteDao().getAll());
+        return liveNotes;
+    }
+
+
     public static NotePad get(Context context){ //Если экземпляр уже существует то просто возвращает его, если не существует то вызвывается конструктор для его создания
         if(sNotePad == null){
             sNotePad = new NotePad(context);

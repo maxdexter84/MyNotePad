@@ -137,7 +137,7 @@ public class DetailFragment extends Fragment {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    final Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(), Objects.requireNonNull(getActivity()));
+                    final Bitmap bitmap = PictureUtils.getScaleBitmap(mPhotoFile.getPath(), requireActivity());
                     photo.post(new Runnable() {
                         @Override
                         public void run() {
@@ -175,7 +175,7 @@ public class DetailFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         NotePad.get(getContext()).deleteNote(mNote);
-                        Objects.requireNonNull(getActivity()).finish();
+                        requireActivity().finish();
                     }
                 }).show();
             }
@@ -197,7 +197,7 @@ public class DetailFragment extends Fragment {
     private void photoIntent() {
         final Intent captureImage = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),"com.maxdexter.mynote.fileprovider",mPhotoFile);
+        Uri uri = FileProvider.getUriForFile(requireActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         List<ResolveInfo> cameraActivity = getActivity().getPackageManager().queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY);
         for(ResolveInfo activity: cameraActivity){
@@ -208,7 +208,7 @@ public class DetailFragment extends Fragment {
     private void galleryIntent() {
         final Intent galleryIntent = new Intent(Intent.ACTION_PICK);
         galleryIntent.setType("image/*");
-        Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),"com.maxdexter.mynote.fileprovider",mPhotoFile);
+        Uri uri = FileProvider.getUriForFile(requireActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
         galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         List<ResolveInfo> cameraActivity = getActivity().getPackageManager().queryIntentActivities(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY);
         for(ResolveInfo activity: cameraActivity){
@@ -312,7 +312,7 @@ public class DetailFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_PHOTO){
-            Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(getActivity()),"com.maxdexter.mynote.fileprovider",mPhotoFile);
+            Uri uri = FileProvider.getUriForFile(requireActivity(),"com.maxdexter.mynote.fileprovider",mPhotoFile);
             getActivity().revokeUriPermission(uri,Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             updatePhotoView();
         }
@@ -322,8 +322,8 @@ public class DetailFragment extends Fragment {
             if (imageUri != null) {
                 try {
                     // Получаем InputStream, из которого будем декодировать Bitmap
-                    InputStream inputStream = Objects.requireNonNull(getContext()).getContentResolver().openInputStream(imageUri);
-                    FileOutputStream fos = Objects.requireNonNull(getActivity()).openFileOutput(mPhotoFile.getName(), Context.MODE_PRIVATE);
+                    InputStream inputStream = requireContext().getContentResolver().openInputStream(imageUri);
+                    FileOutputStream fos = requireActivity().openFileOutput(mPhotoFile.getName(), Context.MODE_PRIVATE);
 
                     assert inputStream != null;
                     byte[]image = new byte[inputStream.available()];
@@ -342,7 +342,7 @@ public class DetailFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = Objects.requireNonNull(getActivity()).getMenuInflater();
+        MenuInflater inflater = requireActivity().getMenuInflater();
         inflater.inflate(R.menu.context_menu,menu);
     }
 
@@ -350,7 +350,7 @@ public class DetailFragment extends Fragment {
     public boolean onContextItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.delete){
             mPhotoFile.delete();
-            Objects.requireNonNull(getActivity()).recreate();
+            requireActivity().recreate();
         }
         return super.onContextItemSelected(item);
 

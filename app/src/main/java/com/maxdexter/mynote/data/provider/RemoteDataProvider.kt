@@ -3,13 +3,18 @@ package com.maxdexter.mynote.data.provider
 import androidx.lifecycle.LiveData
 import com.maxdexter.mynote.data.Note
 import com.maxdexter.mynote.model.NoteResult
+import com.maxdexter.mynote.model.User
+
 /**
  * Теперь создадим классы доступа к данным.
  * Чтобы отвязать реализацию логики хранения данных от остальной логики приложения, создадим  интерфейс RemoteDataProvider:*/
 interface RemoteDataProvider {
-    fun subscribeToAllNotes(): LiveData<NoteResult>
-    fun getNoteById(id: String): LiveData<NoteResult>
-    fun saveNote(note: Note) : LiveData<NoteResult>
+    fun subscribeToAllNotes(): LiveData<MutableList<Note>>
+    fun getNoteById(uuid: String): LiveData<Note>
+    fun saveNote(note: Note) : LiveData<Note>
+    fun getCurrentUser(): LiveData<User?>
+    suspend fun deleteNote(note: Note): Boolean
+
 }
 /**
  * Так как запросы к базе данных асинхронные, нужен механизм отложенного получения результата.

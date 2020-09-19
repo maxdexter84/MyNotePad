@@ -145,7 +145,7 @@ public class FullscreenFragment extends Fragment {
         String noteId = getArguments().getString(ARG_NOTE);
         mNote = NotePad.get(getActivity()).getNote(noteId);
         mFile = NotePad.get(getActivity()).getPhotoFile(mNote);
-        Bitmap bitmap = PictureUtils.getScaleBitmap(mFile.getPath(), Objects.requireNonNull(getActivity()));
+        Bitmap bitmap = PictureUtils.getScaleBitmap(mFile.getPath(), requireActivity());
         mContentView.setImageBitmap(bitmap);
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(new View.OnClickListener() {

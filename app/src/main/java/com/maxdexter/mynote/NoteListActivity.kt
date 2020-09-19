@@ -94,7 +94,7 @@ class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
 //    }
 
     private fun initTheme() {
-        if (sharedPref!!.isDarkTheme) {
+        if (sharedPref.isDarkTheme) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             setTheme(R.style.Theme_AppCompat_DayNight_NoActionBar)
         } else {
