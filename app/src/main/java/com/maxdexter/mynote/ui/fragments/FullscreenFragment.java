@@ -23,7 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.maxdexter.mynote.R;
-import com.maxdexter.mynote.data.Note;
+import com.maxdexter.mynote.model.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
 
@@ -93,7 +93,7 @@ public class FullscreenFragment extends Fragment {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             try {
-                Objects.requireNonNull(getActivity()).finish();
+                requireActivity().finish();
             }catch (SecurityException e){
                 e.printStackTrace();
             }

@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.room.Room;
 
 import com.maxdexter.mynote.database.AppDatabase;
+import com.maxdexter.mynote.model.Note;
 
 import java.io.File;
 import java.util.List;

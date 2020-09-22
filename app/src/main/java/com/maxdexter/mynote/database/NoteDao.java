@@ -9,7 +9,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.maxdexter.mynote.data.Note;
+import com.maxdexter.mynote.model.Note;
 
 import java.util.List;
 

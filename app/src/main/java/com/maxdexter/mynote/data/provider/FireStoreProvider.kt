@@ -3,13 +3,10 @@ package com.maxdexter.mynote.data.provider
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
-import com.maxdexter.mynote.data.Note
+import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.errors.NoAuthException
-import com.maxdexter.mynote.model.NoteResult
 import com.maxdexter.mynote.model.User
 
 private const val USERS_COLLECTION = "users"

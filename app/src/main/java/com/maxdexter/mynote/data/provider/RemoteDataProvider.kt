@@ -1,8 +1,7 @@
 package com.maxdexter.mynote.data.provider
 
 import androidx.lifecycle.LiveData
-import com.maxdexter.mynote.data.Note
-import com.maxdexter.mynote.model.NoteResult
+import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.model.User
 
 /**

@@ -25,12 +25,16 @@
         tools:layout="@layout/fragment_fullscreen" />
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.DetailFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.detail.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <action
             android:id="@+id/action_detailFragment_to_fullscreenFragment"
             app:destination="@id/fullscreenFragment" />
+        <argument
+            android:name="note_id"
+            app:argType="string"
+            android:defaultValue="new_note" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -39,5 +43,25 @@
         <action
             android:id="@+id/action_settingsFragment_to_fireStoreFragment"
             app:destination="@id/fireStoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/passwordNotesFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.password.PasswordNotesFragment"
+        android:label="password_notes_fragment"
+        tools:layout="@layout/password_notes_fragment" >
+        <argument
+            android:name="noteType"
+            app:argType="integer"
+            android:defaultValue="2" />
+    </fragment>
+    <fragment
+        android:id="@+id/importantNoteFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.important.ImportantNoteFragment"
+        android:label="important_note_fragment"
+        tools:layout="@layout/important_note_fragment" >
+        <argument
+            android:name="noteType"
+            app:argType="integer"
+            android:defaultValue="1" />
     </fragment>
 </navigation>

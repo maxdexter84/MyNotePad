@@ -41,7 +41,8 @@
     <string name="logout">logout</string>
     <string name="Authentication">Authentication</string>
     <string name="logout_dialog_title">Are you sure you want to get out?</string>
-    <string name="login">in</string>
+    <string name="login" translatable="false">in</string>
+    <string name="add_note">Add</string>
 
 
 </resources>

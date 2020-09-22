@@ -3,6 +3,7 @@ package com.maxdexter.mynote.ui.fragments;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.maxdexter.mynote.R;
-import com.maxdexter.mynote.data.Note;
+import com.maxdexter.mynote.model.Note;
 import com.maxdexter.mynote.data.NotePad;
 import com.maxdexter.mynote.data.PictureUtils;
 import com.maxdexter.mynote.repository.Repository;
@@ -30,7 +34,7 @@ import java.util.List;
 
 
 
-public class NoteListFragment extends Fragment {
+public class NoteListFragment extends Fragment  {
 public static final String TYPE_ID = "type_id";
 private RecyclerView mRecyclerView;
 private NoteAdapter mNoteAdapter;
@@ -38,6 +42,7 @@ private int type;
 private FloatingActionButton fab;
 private List<Note> listNew;
 private Callbacks mCallbacks;
+private ViewDataBinding binding;
 //Обязательный интерфейс для активности хоста
 public interface Callbacks{
     void onNoteSelected(Note note);
@@ -52,12 +57,15 @@ public interface Callbacks{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_note_list, container, false);
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_note_list, container, false);
+
         mRecyclerView = view.findViewById(R.id.note_list_id);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         assert getArguments() != null;
@@ -67,7 +75,7 @@ public interface Callbacks{
         mRecyclerView.addItemDecoration(itemTouchHelper);
 
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-        return view;
+        return binding.getRoot();
     }
 
 

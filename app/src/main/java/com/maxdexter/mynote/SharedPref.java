@@ -19,7 +19,7 @@ public class SharedPref {
     //Чтенеие настроек
     public boolean isDarkTheme(){
         // Если настройка не найдена , то берется параметр по умолчанию
-        return sharedPref.getBoolean(IsDarkThem,true);
+        return sharedPref.getBoolean(IsDarkThem,false);
     }
     public int getTextSize(){
         return sharedPref.getInt(TEXT_SIZE,0);

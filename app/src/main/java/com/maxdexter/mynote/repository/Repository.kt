@@ -1,8 +1,6 @@
 package com.maxdexter.mynote.repository
 
-import android.content.Context
-import com.maxdexter.mynote.data.Note
-import com.maxdexter.mynote.data.NotePad
+import com.maxdexter.mynote.model.Note
 
 import com.maxdexter.mynote.data.provider.FireStoreProvider
 import com.maxdexter.mynote.data.provider.RemoteDataProvider

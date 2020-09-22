@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="8dp"
 
-    tools:context=".ui.fragments.DetailFragment">
+    tools:context=".ui.fragments.detail.DetailFragment">
 
 
     <EditText

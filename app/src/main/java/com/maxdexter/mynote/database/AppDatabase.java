@@ -5,7 +5,7 @@ package com.maxdexter.mynote.database;
 import androidx.room.Database;
 import androidx.room.RoomDatabase;
 
-import com.maxdexter.mynote.data.Note;
+import com.maxdexter.mynote.model.Note;
 
 @Database(entities = {Note.class},version = 1,exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

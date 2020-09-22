@@ -3,23 +3,23 @@ package com.maxdexter.mynote
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-import android.widget.AdapterView.OnItemSelectedListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavDirections
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.maxdexter.mynote.data.Note
+import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.databinding.ActivityMainBinding
-import com.maxdexter.mynote.ui.fragments.DetailFragment
+import com.maxdexter.mynote.databinding.FragmentNoteListBinding
+import com.maxdexter.mynote.ui.fragments.detail.DetailFragment
 import com.maxdexter.mynote.ui.fragments.NoteListFragment
-import java.util.*
 
 class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
     lateinit var binding: ActivityMainBinding
@@ -31,6 +31,7 @@ class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
     lateinit var sharedPref: SharedPref
     lateinit var mSpinner: Spinner
     lateinit var bottomNavigationView: BottomNavigationView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

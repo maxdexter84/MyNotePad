@@ -2,7 +2,7 @@ package com.maxdexter.mynote.ui.fragments.settings
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.maxdexter.mynote.data.Note
+import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.repository.Repository
 import kotlinx.coroutines.CoroutineScope

@@ -12,9 +12,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.maxdexter.mynote.data.Note;
+import com.maxdexter.mynote.model.Note;
 import com.maxdexter.mynote.data.NotePad;
-import com.maxdexter.mynote.ui.fragments.DetailFragment;
+import com.maxdexter.mynote.ui.fragments.detail.DetailFragment;
 
 import java.util.ArrayList;
 import java.util.List;

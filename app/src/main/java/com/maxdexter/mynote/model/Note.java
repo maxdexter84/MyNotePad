@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.data;
+package com.maxdexter.mynote.model;
 
 
 
@@ -87,7 +87,11 @@ public class Note {
     }
 
     public Note(){
-        mUUID = UUID.randomUUID().toString();
+        this.mUUID = UUID.randomUUID().toString();
+        this.mTypeNote = 0;
+        this.mTitle = "";
+        this.id = 0;
+        this.mDescription = "";
         Date date = new Date();
         //setDate(date);
         setDate(dateFormat(date));
