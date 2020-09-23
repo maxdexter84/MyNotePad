@@ -9,7 +9,7 @@ import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.extensions.currentDate
 import java.util.*
 
-const val NEW_NOTE = "new_note"
+
 class DetailFragmentViewModel(private val uuid: String, private val context: Context) : ViewModel() {
     private lateinit var note: Note
     private val _newNote = MutableLiveData<Note>()
@@ -23,7 +23,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     }
 
     private fun selectNote(uuid: String) {
-        if (uuid == NEW_NOTE) {
+        if (uuid == com.maxdexter.mynote.utils.NEW_NOTE) {
             note = Note()
             _newNote.value = note
         } else {

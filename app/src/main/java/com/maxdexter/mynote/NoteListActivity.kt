@@ -1,11 +1,14 @@
 package com.maxdexter.mynote
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -14,12 +17,17 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.navigation.NavigationView
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.databinding.ActivityMainBinding
 import com.maxdexter.mynote.databinding.FragmentNoteListBinding
 import com.maxdexter.mynote.ui.fragments.detail.DetailFragment
 import com.maxdexter.mynote.ui.fragments.NoteListFragment
+import com.maxdexter.mynote.ui.fragments.bottomsheet.BottomSheetDrawerFragment
+import com.maxdexter.mynote.utils.NEW_NOTE
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_login.*
 
 class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
     lateinit var binding: ActivityMainBinding
@@ -34,22 +42,45 @@ class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        //setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(bottom_app_bar)
         sharedPref = SharedPref(this)
         //initFragmentList(type);
         //initBottomNav();
 
-        val mNavHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?
-        val navController = mNavHostFragment?.navController
-        bottomNavigationView = findViewById(R.id.bottom_nav)
-        if (navController != null) {
-            bottomNavigationView.setupWithNavController(navController)
-        }
+//        val mNavHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?
+//        val navController = mNavHostFragment?.navController
+//        bottomNavigationView = findViewById(R.id.bottom_nav)
+//        if (navController != null) {
+//            bottomNavigationView.setupWithNavController(navController)
+//        }
+
+
         initFloatingActionButton()
 //        initBottomSheet()
         initTheme()
         //initSwitch()
        // initSpinner()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.bottomappbar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            android.R.id.home -> {
+               val bottomSheetDrawerFragment = BottomSheetDrawerFragment()
+                bottomSheetDrawerFragment.show(supportFragmentManager,bottomSheetDrawerFragment.tag)
+
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
     }
 
 //    private fun initSpinner() {
@@ -107,10 +138,7 @@ class NoteListActivity : AppCompatActivity(), NoteListFragment.Callbacks {
     private fun initFloatingActionButton() {
         mFloatingActionButton = findViewById(R.id.add_button)
         mFloatingActionButton.setOnClickListener(View.OnClickListener {
-            val note = Note()
-            NotePad.get(this@NoteListActivity).addNote(note)
-            val intent = NotePagerActivity.newIntent(this@NoteListActivity, note.uuid)
-            startActivity(intent)
+           supportFragmentManager.beginTransaction().replace(R.id.navHostFragment, DetailFragment.newInstance(NEW_NOTE))
         })
     }
 

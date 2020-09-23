@@ -13,6 +13,9 @@
             android:name="noteType"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_noteListFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/fireStoreFragment"
@@ -53,6 +56,9 @@
             android:name="noteType"
             app:argType="integer"
             android:defaultValue="2" />
+        <action
+            android:id="@+id/action_passwordNotesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/importantNoteFragment"
@@ -63,6 +69,9 @@
             android:name="noteType"
             app:argType="integer"
             android:defaultValue="1" />
+        <action
+            android:id="@+id/action_importantNoteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/simpleNoteFragment"
@@ -72,5 +81,22 @@
             android:name="noteType"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_simpleNoteFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
+    <dialog
+        android:id="@+id/bottomSheetDrawerFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.bottomsheet.BottomSheetDrawerFragment"
+        android:label="BottomSheetDrawerFragment" >
+        <action
+            android:id="@+id/action_bottomSheetDrawerFragment_to_passwordNotesFragment"
+            app:destination="@id/passwordNotesFragment" />
+        <action
+            android:id="@+id/action_bottomSheetDrawerFragment_to_importantNoteFragment"
+            app:destination="@id/importantNoteFragment" />
+        <action
+            android:id="@+id/action_bottomSheetDrawerFragment_to_simpleNoteFragment"
+            app:destination="@id/simpleNoteFragment" />
+    </dialog>
 </navigation>

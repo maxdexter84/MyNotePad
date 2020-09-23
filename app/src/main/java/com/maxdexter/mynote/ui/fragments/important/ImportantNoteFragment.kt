@@ -27,11 +27,10 @@ class ImportantNoteFragment : Fragment() {
         val context = context
         if (args != null && context != null) {
             viewModelFactory = ImportantNoteViewModelFactory(args.noteType, context)
-            viewModel = ViewModelProvider(this, viewModelFactory).get(ImportantNoteViewModel::class.java)
-        }
-        viewModel.importantNote
 
-        val noteAdapter =
+        }
+        viewModel = ViewModelProvider(this, viewModelFactory).get(ImportantNoteViewModel::class.java)
+
         return binding.root
     }
 
