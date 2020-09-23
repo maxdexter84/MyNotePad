@@ -91,13 +91,12 @@ public interface Callbacks{
             mRecyclerView.setHasFixedSize(true);
             mRecyclerView.setAdapter(mNoteAdapter);
             mNoteAdapter.notifyDataSetChanged();
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    new Repository().loadToFireStore(list);
-                }
-            }).start();
-
+//            new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    new Repository().loadToFireStore(list);
+//                }
+//            }).start();
     }
 
 

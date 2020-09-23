@@ -6,15 +6,8 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.fragments.important.ImportantNoteFragment">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Hello" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/important_note_recycler"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"/>
 </layout>

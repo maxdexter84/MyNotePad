@@ -29,7 +29,9 @@ class ImportantNoteFragment : Fragment() {
             viewModelFactory = ImportantNoteViewModelFactory(args.noteType, context)
             viewModel = ViewModelProvider(this, viewModelFactory).get(ImportantNoteViewModel::class.java)
         }
+        viewModel.importantNote
 
+        val noteAdapter =
         return binding.root
     }
 

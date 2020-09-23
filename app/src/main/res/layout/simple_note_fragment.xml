@@ -7,10 +7,10 @@
     </data>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/password_list_recycler"
+        android:id="@+id/simple_note_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.fragments.password.PasswordNotesFragment">
+        tools:context=".ui.fragments.simple.SimpleNoteFragment">
 
 
     </androidx.recyclerview.widget.RecyclerView>

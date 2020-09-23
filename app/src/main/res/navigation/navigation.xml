@@ -64,4 +64,13 @@
             app:argType="integer"
             android:defaultValue="1" />
     </fragment>
+    <fragment
+        android:id="@+id/simpleNoteFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.simple.SimpleNoteFragment"
+        android:label="SimpleNoteFragment" >
+        <argument
+            android:name="noteType"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
