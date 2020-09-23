@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/noteListFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.NoteListFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.allnote.NoteListFragment"
         android:label="NoteListFragment" >
         <argument
             android:name="noteType"
@@ -38,6 +38,9 @@
             android:name="note_id"
             app:argType="string"
             android:defaultValue="new_note" />
+        <action
+            android:id="@+id/action_detailFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

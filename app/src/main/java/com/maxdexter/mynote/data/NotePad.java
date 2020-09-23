@@ -32,7 +32,7 @@ public class NotePad {
         mNotes = database.mNoteDao().getAll();
         return mNotes;
     }
-    public LiveData<List<Note>> getLiveNotes(){
+    public MutableLiveData<List<Note>> getLiveNotes(){
         MutableLiveData<List<Note>> liveNotes = new MutableLiveData<>();
         liveNotes.setValue(database.mNoteDao().getAll());
         return liveNotes;

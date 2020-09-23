@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.maxdexter.mynote.ui.fragments.password.PasswordNotesViewModel
 
 class SimpleNoteViwModelFactory(private val typeNote: Int, private val context: Context): ViewModelProvider.Factory {
+    @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SimpleNoteViewModel::class.java)) {
             return SimpleNoteViewModel(typeNote , context) as T

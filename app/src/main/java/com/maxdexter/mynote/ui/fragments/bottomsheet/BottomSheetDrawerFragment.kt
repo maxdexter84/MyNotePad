@@ -1,6 +1,6 @@
 package com.maxdexter.mynote.ui.fragments.bottomsheet
 
-import androidx.lifecycle.ViewModelProviders
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,25 +31,13 @@ class BottomSheetDrawerFragment : BottomSheetDialogFragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_drawer_fragment, container, false)
 
-       val mNavHostFragment = parentFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?
-        val navController = mNavHostFragment?.navController
+
+        val navController = findNavController()
         navigationView = binding.navigationView
         viewModel = ViewModelProvider(this).get(BottomSheetDrawerViewModel::class.java)
-        if (navController != null) {
-            navigationView.setupWithNavController(navController)
-        }
+        navigationView.setupWithNavController(navController)
 
-//        binding.navigationView.setNavigationItemSelectedListener { menuItem ->
-//            when(menuItem.itemId) {
-//                R.id.simpleNoteFragment -> findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToSimpleNoteFragment())
-//                R.id.passwordNotesFragment -> findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToPasswordNotesFragment())
-//                R.id.importantNoteFragment -> {
-//                    findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToImportantNoteFragment())
-//
-//                }
-//            }
-//            true
-//        }
+
         return binding.root
     }
 

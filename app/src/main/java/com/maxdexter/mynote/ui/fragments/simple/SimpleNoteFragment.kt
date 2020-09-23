@@ -1,6 +1,6 @@
 package com.maxdexter.mynote.ui.fragments.simple
 
-import androidx.lifecycle.ViewModelProviders
+
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -21,10 +21,5 @@ class SimpleNoteFragment : Fragment() {
         return inflater.inflate(R.layout.simple_note_fragment, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SimpleNoteViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
 
 }
