@@ -15,7 +15,9 @@
             android:defaultValue="0" />
         <action
             android:id="@+id/action_noteListFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </fragment>
     <fragment
         android:id="@+id/fireStoreFragment"
@@ -56,6 +58,8 @@
         android:label="BottomSheetDrawerFragment" >
         <action
             android:id="@+id/action_bottomSheetDrawerFragment_to_noteListFragment"
-            app:destination="@id/noteListFragment" />
+            app:destination="@id/noteListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
     </dialog>
 </navigation>

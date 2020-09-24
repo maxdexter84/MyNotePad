@@ -22,9 +22,8 @@ import com.maxdexter.mynote.model.Note
 
 class NoteListFragment : Fragment() {
 
-    private var type = 0
-    private var listNew: MutableList<Note>? = null
 
+    private var listNew: MutableList<Note>? = null
     private lateinit var binding: FragmentNoteListBinding
     private lateinit var adapter: NoteAdapter
     //Обязательный интерфейс для активности хоста
@@ -41,10 +40,6 @@ class NoteListFragment : Fragment() {
         initViewModel(inflater, container)
         initRecyclerAdapter()
 
-        binding.noteListId.layoutManager = LinearLayoutManager(activity)
-
-
-
         return binding.root
     }
 
@@ -60,113 +55,22 @@ class NoteListFragment : Fragment() {
         viewModel = ViewModelProvider(this, viewModelFactory).get(NoteListFragmentViewModel::class.java)
     }
 
-    private fun updateUI() {
-       // val list = NotePad.get(context).liveNotes
-        adapter = NoteAdapter(NoteListener {findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
-        viewModel.allNoteList.observe(viewLifecycleOwner, {adapter.submitList(it)})
-        binding.noteListId.setHasFixedSize(true)
-        binding.noteListId.adapter = adapter
-        //            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    new Repository().loadToFireStore(list);
-//                }
-//            }).start();
-    }
-        private fun initRecyclerAdapter() {
+
+    private fun initRecyclerAdapter() {
         binding.noteListId.layoutManager = LinearLayoutManager(context)
-        val noteAdapter = NoteAdapter(NoteListener { NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it) })
+        val noteAdapter = NoteAdapter(NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
         viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { noteAdapter.submitList(it) } })
         binding.noteListId.adapter = noteAdapter
-            initItemTouchHelper()
         }
 
-    private fun initItemTouchHelper() {
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        binding.noteListId.addItemDecoration(itemTouchHelper)
-        itemTouchHelper.attachToRecyclerView(binding.noteListId)
-    }
-
-
-//    private inner class NoteHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
-//        var mNote: Note? = null
-//        var textTitle: TextView
-//        var textDate: TextView
-//        var mImageView: ImageView
-//        fun bind(note: Note) {
-//            mNote = note
-//            textTitle.text = mNote!!.title
-//            textDate.text = mNote!!.date
-//            val file = NotePad.get(context).getPhotoFile(mNote)
-//            if (file != null) {
-//                mImageView.visibility = View.VISIBLE
-//                Thread {
-//                    val bitmap = PictureUtils.getScaleBitmap(file.path, activity)
-//                    mImageView.post { mImageView.setImageBitmap(bitmap) }
-//                }.start()
-//            }
-//        }
-//
-//        override fun onClick(v: View) {
-//            mCallbacks!!.onNoteSelected(mNote)
-//            //            Intent intent = NotePagerActivity.newIntent(getContext(),mNote.getUUID());
-////            startActivity(intent);
-//        }
-//
-//        init {
-//            itemView.setOnClickListener(this)
-//            textTitle = itemView.findViewById(R.id.text_item_id)
-//            textDate = itemView.findViewById(R.id.date_item_id)
-//            mImageView = itemView.findViewById(R.id.image)
-//        }
-//    }
-//
-//    private inner class NoteAdapter internal constructor(private val mNoteList: List<Note>) : RecyclerView.Adapter<NoteHolder>() {
-//        override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): NoteHolder {
-//            val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.list_item_note, viewGroup, false)
-//            return NoteHolder(view)
-//        }
-//
-//        override fun onBindViewHolder(noteHolder: NoteHolder, i: Int) {
-//            val note = mNoteList[i]
-//            noteHolder.bind(note)
-//        }
-//
-//        override fun getItemCount(): Int {
-//            return mNoteList.size
-//        }
-//
-//        override fun getItemViewType(position: Int): Int {
-//            val note = mNoteList[position]
-//            return note.typeNote
-//        }
-//    }
 
 
 
-    //Удаление по свайпу в лево
-    private val itemTouchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
-        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-            return true
-        }
 
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            val position = viewHolder.adapterPosition
-            if (direction == ItemTouchHelper.LEFT) {
-                Snackbar.make(requireView(), "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да") { delItem(true, position) }.show()
 
-            }
-        }
-    }
 
-    fun delItem(delete: Boolean, position: Int) {
-        val note = listNew!![position]
-        if (delete) {
-            NotePad.get(context).deleteNote(note)
-            listNew!!.removeAt(position)
 
-        }
-    }
+
 
 
 

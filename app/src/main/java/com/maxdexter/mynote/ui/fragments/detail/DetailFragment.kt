@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
 import com.maxdexter.mynote.DetailActivity
 import com.maxdexter.mynote.R
@@ -81,7 +82,7 @@ class DetailFragment : Fragment() {
             mPhotoFile = NotePad.get(activity).getPhotoFile(note)
         })
 
-//       // setRadioButton(view)
+        initButtonGroup()
 //        getTextDescript(binding.root)
 //        getTextTitle(binding.root)
 //     //   initRadioGroup(view)
@@ -168,23 +169,23 @@ class DetailFragment : Fragment() {
         }
     }
 
-//    private fun initButtonGroup(view: View) {
-//        share_button.setOnClickListener(View.OnClickListener {
-//            val intent = Intent(Intent.ACTION_SEND)
-//            intent.type = "text/plane"
-//            intent.putExtra(Intent.EXTRA_TITLE, mNote!!.title)
-//            intent.putExtra(Intent.EXTRA_TEXT, mNote!!.description)
-//            startActivity(intent)
-//        })
-//        delete_button.setOnClickListener(View.OnClickListener { v ->
-//            Snackbar.make(v, "Delete note?", Snackbar.LENGTH_LONG).setAction("Yes") {
-//                NotePad.get(context).deleteNote(mNote)
-//                requireActivity().finish()
-//            }.show()
-//        })
-//        add_image_button.setOnClickListener(View.OnClickListener { photoIntent() })
-//        add_gallery_button.setOnClickListener(View.OnClickListener { galleryIntent() })
-//    }
+    private fun initButtonGroup() {
+        binding.shareButton.setOnClickListener{
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plane"
+            intent.putExtra(Intent.EXTRA_TITLE, mNote!!.title)
+            intent.putExtra(Intent.EXTRA_TEXT, mNote!!.description)
+            startActivity(intent)
+        }
+        binding.deleteButton.setOnClickListener(View.OnClickListener { v ->
+            Snackbar.make(v, "Delete note?", Snackbar.LENGTH_LONG).setAction("Yes") {
+                NotePad.get(context).deleteNote(mNote)
+                requireActivity().finish()
+            }.show()
+        })
+        binding.addImageButton.setOnClickListener { photoIntent() }
+        binding.addGalleryButton.setOnClickListener { galleryIntent() }
+    }
 
     private fun photoIntent() {
         val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -209,63 +210,6 @@ class DetailFragment : Fragment() {
         startActivityForResult(galleryIntent, REQUEST_GALLERY)
     }
 
-//    private fun setRadioButton(view: View) {
-//        if (mNote!!.typeNote == NOTE_TYPE_SIMPLE) {
-//            binding.simpleRadioBtn.isChecked = true
-//        } else if (mNote!!.typeNote == NOTE_TYPE_IMPORTANT) {
-//           binding.importantRadioBtn.isChecked = true
-//        } else if (mNote!!.typeNote == NOTE_TYPE_PASSWORD) {
-//            binding.passwordRadioBtn.isChecked = true
-//        }
-//    }
-//
-//    private fun initRadioGroup(view: View) {
-//        binding.radioGroup.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
-//            when (checkedId) {
-//                R.id.simple_radio_btn -> {
-//                    mNote!!.typeNote = NOTE_TYPE_SIMPLE
-//                    NotePad.get(context).database.mNoteDao().update(mNote)
-//                    return@OnCheckedChangeListener
-//                }
-//                R.id.important_radio_btn -> {
-//                    mNote!!.typeNote = NOTE_TYPE_IMPORTANT
-//                    NotePad.get(context).database.mNoteDao().update(mNote)
-//                    return@OnCheckedChangeListener
-//                }
-//                R.id.password_radio_btn -> {
-//                    mNote!!.typeNote = NOTE_TYPE_PASSWORD
-//                    NotePad.get(context).database.mNoteDao().update(mNote)
-//                }
-//            }
-//        })
-//    }
-
-//    private fun getTextTitle(view: View) {
-//
-//       binding.titleId.setText(mNote!!.title)
-//        binding.titleId.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                mNote!!.title = s.toString()
-//                NotePad.get(context).addNote(mNote)
-//            }
-//
-//            override fun afterTextChanged(s: Editable) {}
-//        })
-//    }
-//
-//    private fun getTextDescript(view: View) {
-//        binding.descriptId.setText(mNote!!.description)
-//        binding.descriptId.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-//                mNote!!.description = s.toString()
-//                NotePad.get(context).addNote(mNote)
-//            }
-//
-//            override fun afterTextChanged(s: Editable) {}
-//        })
-//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
