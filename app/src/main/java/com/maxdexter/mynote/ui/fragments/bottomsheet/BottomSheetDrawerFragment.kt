@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.navigation.NavigationView
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.databinding.BottomSheetDrawerFragmentBinding
-import com.maxdexter.mynote.ui.fragments.important.ImportantNoteFragment
+
 
 class BottomSheetDrawerFragment : BottomSheetDialogFragment() {
 
@@ -36,6 +36,21 @@ class BottomSheetDrawerFragment : BottomSheetDialogFragment() {
         navigationView = binding.navigationView
         viewModel = ViewModelProvider(this).get(BottomSheetDrawerViewModel::class.java)
         navigationView.setupWithNavController(navController)
+        navigationView.setNavigationItemSelectedListener{when(it.itemId){
+            R.id.simpleNoteFragment ->{
+                findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToNoteListFragment(0))
+                true
+            }
+            R.id.importantNoteFragment ->{
+                findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToNoteListFragment(1))
+                true
+            }
+            R.id.passwordNotesFragment ->{
+                findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToNoteListFragment(2))
+                true
+            }
+            else -> true
+        } }
 
 
         return binding.root

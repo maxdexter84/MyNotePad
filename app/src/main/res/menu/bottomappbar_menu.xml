@@ -27,10 +27,10 @@
         app:showAsAction="always"
         tools:ignore="MenuTitle"/>
 
-<!--    <item-->
-<!--        android:id="@+id/app_bar_search"-->
-<!--        android:icon="@drawable/ic_search_black_24dp"-->
-<!--        app:showAsAction="always"-->
-<!--        android:title="@string/search"-->
-<!--        app:actionViewClass="android.widget.SearchView" />-->
+    <item
+        android:id="@+id/app_bar_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        app:showAsAction="always"
+        android:title="@string/search"
+        app:actionViewClass="android.widget.SearchView" />
 </menu>

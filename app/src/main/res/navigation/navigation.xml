@@ -50,56 +50,12 @@
             android:id="@+id/action_settingsFragment_to_fireStoreFragment"
             app:destination="@id/fireStoreFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/passwordNotesFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.password.PasswordNotesFragment"
-        android:label="password_notes_fragment"
-        tools:layout="@layout/password_notes_fragment" >
-        <argument
-            android:name="noteType"
-            app:argType="integer"
-            android:defaultValue="2" />
-        <action
-            android:id="@+id/action_passwordNotesFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/importantNoteFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.important.ImportantNoteFragment"
-        android:label="important_note_fragment"
-        tools:layout="@layout/important_note_fragment" >
-        <argument
-            android:name="noteType"
-            app:argType="integer"
-            android:defaultValue="1" />
-        <action
-            android:id="@+id/action_importantNoteFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/simpleNoteFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.simple.SimpleNoteFragment"
-        android:label="SimpleNoteFragment" >
-        <argument
-            android:name="noteType"
-            app:argType="integer"
-            android:defaultValue="0" />
-        <action
-            android:id="@+id/action_simpleNoteFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
     <dialog
         android:id="@+id/bottomSheetDrawerFragment"
         android:name="com.maxdexter.mynote.ui.fragments.bottomsheet.BottomSheetDrawerFragment"
         android:label="BottomSheetDrawerFragment" >
         <action
-            android:id="@+id/action_bottomSheetDrawerFragment_to_passwordNotesFragment"
-            app:destination="@id/passwordNotesFragment" />
-        <action
-            android:id="@+id/action_bottomSheetDrawerFragment_to_importantNoteFragment"
-            app:destination="@id/importantNoteFragment" />
-        <action
-            android:id="@+id/action_bottomSheetDrawerFragment_to_simpleNoteFragment"
-            app:destination="@id/simpleNoteFragment" />
+            android:id="@+id/action_bottomSheetDrawerFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
     </dialog>
 </navigation>

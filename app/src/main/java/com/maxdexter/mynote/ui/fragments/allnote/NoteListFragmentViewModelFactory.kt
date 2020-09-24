@@ -5,11 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 
-class NoteListFragmentViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class NoteListFragmentViewModelFactory(private val noteType: Int, private val context: Context) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(NoteListFragmentViewModel::class.java)) {
-            return NoteListFragmentViewModel(context) as T
+            return NoteListFragmentViewModel(noteType, context) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

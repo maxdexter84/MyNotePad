@@ -24,27 +24,20 @@ import com.maxdexter.mynote.ui.fragments.bottomsheet.BottomSheetDrawerFragment
 class NoteListActivity : AppCompatActivity() {
     lateinit var viewModel: NoteListActivityViewModel
     lateinit var binding: ActivityMainBinding
-    lateinit var bottomSheetBehavior:BottomSheetBehavior<View>
-    private val type = 0
-    lateinit var mNavigationView: BottomNavigationView
-    lateinit var mFloatingActionButton: FloatingActionButton
-    lateinit var mSwitchCompat: SwitchCompat
     lateinit var sharedPref: SharedPref
-    lateinit var mSpinner: Spinner
     lateinit var bottomNavigationView: BottomNavigationView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_main)
+
         binding = DataBindingUtil.setContentView(this, layout.activity_main)
         viewModel = ViewModelProvider(this).get(NoteListActivityViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         sharedPref = SharedPref(this)
-        //initFragmentList(type);
-        //initBottomNav();
+
 
         val mNavHostFragment = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment?
         val navController = mNavHostFragment?.navController
@@ -53,11 +46,7 @@ class NoteListActivity : AppCompatActivity() {
             bottomNavigationView.setupWithNavController(navController)
         }
 
-
-
         initTheme()
-        //initSwitch()
-       // initSpinner()
     }
 
 

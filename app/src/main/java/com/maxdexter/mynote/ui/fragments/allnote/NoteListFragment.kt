@@ -33,26 +33,31 @@ class NoteListFragment : Fragment() {
 
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_list, container, false)
-        val context = context
-        if (context != null) {viewModelFactory = NoteListFragmentViewModelFactory(context)}
-        viewModel = ViewModelProvider(this, viewModelFactory).get(NoteListFragmentViewModel::class.java)
-
+        initViewModel(inflater, container)
+        initRecyclerAdapter()
 
         binding.noteListId.layoutManager = LinearLayoutManager(activity)
 
-        updateUI()
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        binding.noteListId.addItemDecoration(itemTouchHelper)
-        itemTouchHelper.attachToRecyclerView(binding.noteListId)
+
+
         return binding.root
+    }
+
+    private fun initViewModel(inflater: LayoutInflater, container: ViewGroup?) {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_note_list, container, false)
+        val args = arguments?.let { NoteListFragmentArgs.fromBundle(it) }
+        val context = context
+        if (context != null) {
+            if (args != null) {
+                viewModelFactory = NoteListFragmentViewModelFactory(args.noteType, context)
+            }
+        }
+        viewModel = ViewModelProvider(this, viewModelFactory).get(NoteListFragmentViewModel::class.java)
     }
 
     private fun updateUI() {
@@ -68,6 +73,20 @@ class NoteListFragment : Fragment() {
 //                }
 //            }).start();
     }
+        private fun initRecyclerAdapter() {
+        binding.noteListId.layoutManager = LinearLayoutManager(context)
+        val noteAdapter = NoteAdapter(NoteListener { NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it) })
+        viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { noteAdapter.submitList(it) } })
+        binding.noteListId.adapter = noteAdapter
+            initItemTouchHelper()
+        }
+
+    private fun initItemTouchHelper() {
+        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
+        binding.noteListId.addItemDecoration(itemTouchHelper)
+        itemTouchHelper.attachToRecyclerView(binding.noteListId)
+    }
+
 
 //    private inner class NoteHolder internal constructor(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 //        var mNote: Note? = null

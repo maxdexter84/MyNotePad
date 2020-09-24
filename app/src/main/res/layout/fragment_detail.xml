@@ -107,12 +107,14 @@
                 android:id="@+id/add_image_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_camera_alt_24" />
 
             <ImageButton
                 android:id="@+id/add_gallery_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_image_24" />
 
             <!--        <ImageButton-->
@@ -125,12 +127,14 @@
                 android:id="@+id/share_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_share_24" />
 
             <ImageButton
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_delete_24" />
         </LinearLayout>
 
