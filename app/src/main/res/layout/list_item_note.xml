@@ -42,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 style="@style/TextStyle"
+                app:setTitle="@{item}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="my note first" />
@@ -51,6 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/TextStyle"
+                app:setDate="@{item}"
                 android:textSize="@dimen/min_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_item_id"

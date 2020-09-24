@@ -25,6 +25,8 @@ import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.data.PictureUtils
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
 import com.maxdexter.mynote.extensions.selectItem
+import com.maxdexter.mynote.extensions.setDescription
+import com.maxdexter.mynote.extensions.setTitle
 import java.io.File
 import java.io.IOException
 
@@ -42,12 +44,13 @@ class DetailFragment : Fragment() {
     private var mPhotoFile: File? = null
     private var photo: ImageView? = null
     private var noteId: String? = null
-    private var detailViewModel: DetailFragmentViewModel? = null
-    private var detailViewModelFactory: DetailFragmentViewModelFactory? = null
+    private lateinit var detailViewModel: DetailFragmentViewModel
+    private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
     var uuid: String? = null
     lateinit var binding: FragmentDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
      //   assert(arguments != null)
 //        noteId = arguments!!.getString(ARG_NOTE_ID) // Получение идентификатора заметки из аргументов
 
@@ -59,17 +62,25 @@ class DetailFragment : Fragment() {
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val args = arguments?.let { DetailFragmentArgs.fromBundle(it) }
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false)
-        detailViewModelFactory = args?.noteId?.let { DetailFragmentViewModelFactory(it, requireContext()) }
-        detailViewModel = ViewModelProvider(this, detailViewModelFactory!!).get(DetailFragmentViewModel::class.java)
+       val args = arguments?.let { DetailFragmentArgs.fromBundle(it) }
+        val context = context
+        if(context != null && args != null) {
+            detailViewModelFactory = DetailFragmentViewModelFactory(args.noteId,context)
+        }
+
+        detailViewModel = ViewModelProvider(this, detailViewModelFactory).get(DetailFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.viewModel = detailViewModel
-        detailViewModel!!.newNote.observe(viewLifecycleOwner, { note ->
+        detailViewModel.newNote.observe(viewLifecycleOwner, { note ->
             binding.note = note
+            binding.titleId.setTitle(note)
+            binding.descriptId.setDescription(note)
             binding.radioGroup.selectItem(note)
             mPhotoFile = NotePad.get(activity).getPhotoFile(note)
         })
+
 //       // setRadioButton(view)
 //        getTextDescript(binding.root)
 //        getTextTitle(binding.root)
@@ -110,7 +121,7 @@ class DetailFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                detailViewModel?.changeTitle(p0.toString())
+                detailViewModel.changeTitle(p0.toString())
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -123,7 +134,7 @@ class DetailFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                detailViewModel?.changeDescription(p0.toString())
+                detailViewModel.changeDescription(p0.toString())
             }
 
             override fun afterTextChanged(p0: Editable?) {

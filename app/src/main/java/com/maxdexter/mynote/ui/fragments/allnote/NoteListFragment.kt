@@ -57,7 +57,7 @@ class NoteListFragment : Fragment() {
 
     private fun updateUI() {
        // val list = NotePad.get(context).liveNotes
-        adapter = NoteAdapter(NoteListener { it -> findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
+        adapter = NoteAdapter(NoteListener {findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
         viewModel.allNoteList.observe(viewLifecycleOwner, {adapter.submitList(it)})
         binding.noteListId.setHasFixedSize(true)
         binding.noteListId.adapter = adapter

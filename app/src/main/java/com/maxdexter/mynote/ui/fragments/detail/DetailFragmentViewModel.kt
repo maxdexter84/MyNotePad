@@ -11,7 +11,7 @@ import java.util.*
 
 
 class DetailFragmentViewModel(private val uuid: String, private val context: Context) : ViewModel() {
-    private lateinit var note: Note
+    lateinit var note: Note
     private val _newNote = MutableLiveData<Note>()
             val newNote: LiveData<Note>
             get() = _newNote
@@ -27,9 +27,9 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             note = Note()
             _newNote.value = note
         } else {
-            _newNote.value = NotePad.get(context).getNote(uuid)
+            note = NotePad.get(context).getNote(uuid)
+            _newNote.value = note
         }
-
     }
 
     fun changeTitle(title: String) {

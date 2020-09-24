@@ -8,8 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.maxdexter.mynote.R
+import com.maxdexter.mynote.data.adapters.NoteAdapter
+import com.maxdexter.mynote.data.adapters.NoteListener
 import com.maxdexter.mynote.databinding.PasswordNotesFragmentBinding
+import com.maxdexter.mynote.ui.fragments.simple.SimpleNoteFragmentDirections
+import com.maxdexter.mynote.ui.fragments.simple.SimpleNoteViewModel
+import com.maxdexter.mynote.ui.fragments.simple.SimpleNoteViwModelFactory
 
 class PasswordNotesFragment : Fragment() {
 
@@ -25,17 +32,27 @@ class PasswordNotesFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.password_notes_fragment, container, false)
-        val args = arguments?.let { PasswordNotesFragmentArgs.fromBundle(it) }
-        val context = context
-        if (args != null && context != null) {
-            viewModelFactory = PasswordNotesViewModelFactory(args.noteType, context)
-            viewModel = ViewModelProvider(this, viewModelFactory).get(PasswordNotesViewModel::class.java)
-        }
+       initViewModel()
+        initRecyclerAdapter()
 
 
 
 
         return binding.root
+    }
+
+    private fun initRecyclerAdapter() {
+        binding.passwordListRecycler.layoutManager = LinearLayoutManager(context)
+        val noteAdapter = NoteAdapter(NoteListener { findNavController().navigate(PasswordNotesFragmentDirections.actionPasswordNotesFragmentToDetailFragment(it)) })
+        viewModel.passwordNote.observe(viewLifecycleOwner, { it.let { noteAdapter.submitList(it) } })
+        binding.passwordListRecycler.adapter = noteAdapter
+    }
+
+    private fun initViewModel() {
+        val context = context
+        if (context != null)
+            viewModelFactory = PasswordNotesViewModelFactory(context)
+        viewModel = ViewModelProvider(this, viewModelFactory).get(PasswordNotesViewModel::class.java)
     }
 
 

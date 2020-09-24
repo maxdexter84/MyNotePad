@@ -25,7 +25,6 @@
             android:layout_height="wrap_content"
             android:hint="@string/title_hint"
             style="@style/TextStyle"
-            android:text="@{note.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -39,7 +38,6 @@
             android:layout_height="0dp"
             android:gravity="left|top"
             android:hint="@string/desc_hint"
-            android:text="@{note.description}"
             style="@style/TextStyle"
             app:layout_constraintBottom_toTopOf="@+id/image_view_fragment_detail"
             app:layout_constraintEnd_toEndOf="parent"

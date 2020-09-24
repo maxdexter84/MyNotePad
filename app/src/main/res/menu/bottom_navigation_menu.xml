@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/noteListFragment"
+        android:id="@+id/simpleNoteFragment"
         android:icon="@drawable/ic_register"
         android:title="@string/simple_note_title"/>
     <item

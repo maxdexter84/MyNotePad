@@ -27,5 +27,12 @@ fun RadioGroup.selectItem(note: Note){
     }
 }
 
+fun EditText.setTitle (note: Note) {
+    text.append(note.title)
+}
+
+fun EditText.setDescription(note: Note) {
+    text.append(note.description)
+}
 
 
