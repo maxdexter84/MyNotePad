@@ -33,33 +33,19 @@ import java.io.File
 import java.io.IOException
 
 class DetailFragment : Fragment() {
-    private var share: ImageButton? = null
-    private var delete: ImageButton? = null
-    private val voice: ImageButton? = null
-    private var image: ImageButton? = null
-    private var gallery: ImageButton? = null
+
     private var mNote: Note? = null
-    private var mDescriptionField: EditText? = null
-    private var title_id: EditText? = null
-    private val mButton: FloatingActionButton? = null
-//    private var mRadioGroup: RadioGroup? = null
+
+
+
     private var mPhotoFile: File? = null
     private var photo: ImageView? = null
-    private var noteId: String? = null
+
     private lateinit var detailViewModel: DetailFragmentViewModel
     private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
     var uuid: String? = null
     lateinit var binding: FragmentDetailBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-     //   assert(arguments != null)
-//        noteId = arguments!!.getString(ARG_NOTE_ID) // Получение идентификатора заметки из аргументов
-
-        //        assert noteId != null;
-//        mNote = NotePad.get(getActivity()).getNote(noteId);
-//        mPhotoFile = NotePad.get(getActivity()).getPhotoFile(mNote);
-    }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -175,6 +161,7 @@ class DetailFragment : Fragment() {
         binding.deleteButton.setOnClickListener { v -> deleteNote(v) }
         binding.addImageButton.setOnClickListener { photoIntent() }
         binding.addGalleryButton.setOnClickListener { galleryIntent() }
+        binding.floatingActionButton.setOnClickListener { navigateToAllListNote() }
     }
 
     private fun shareNote() {
@@ -188,8 +175,13 @@ class DetailFragment : Fragment() {
     private fun deleteNote(v: View) {
         Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_LONG).setAction(getString(R.string.yes)) {
             detailViewModel.deleteNote()
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
+            navigateToAllListNote()
         }.show()
+    }
+
+    private fun navigateToAllListNote() {
+        detailViewModel.saveNote()
+        findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
     }
 
     private fun photoIntent() {

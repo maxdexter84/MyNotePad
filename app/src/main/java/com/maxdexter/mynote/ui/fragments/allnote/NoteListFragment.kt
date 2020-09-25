@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -57,7 +58,7 @@ class NoteListFragment : Fragment() {
 
 
     private fun initRecyclerAdapter() {
-        binding.noteListId.layoutManager = LinearLayoutManager(context)
+        binding.noteListId.layoutManager = GridLayoutManager(context,2)
         val noteAdapter = NoteAdapter(NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
         viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { noteAdapter.submitList(it) } })
         binding.noteListId.adapter = noteAdapter

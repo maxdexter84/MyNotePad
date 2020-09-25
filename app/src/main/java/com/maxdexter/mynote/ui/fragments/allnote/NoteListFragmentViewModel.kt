@@ -20,9 +20,10 @@ class NoteListFragmentViewModel(private val typeNote: Int, private val context: 
 
     }
 
-    private fun getSimpleNote(): List<Note> {
-        return NotePad.get(context).notes.filter { it.typeNote == typeNote }
-    }
-
+    private fun getSimpleNote(): List<Note> =
+             when(typeNote){
+                -1 ->  NotePad.get(context).notes
+                else -> NotePad.get(context).notes.filter { it.typeNote == typeNote }
+            }
 
 }

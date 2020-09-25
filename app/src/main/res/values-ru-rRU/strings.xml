@@ -38,4 +38,5 @@
     <string name="search">Искать</string>
     <string name="snack_bar_delete_note">Удалить заметку?</string>
     <string name="yes">Да</string>
+    <string name="note_image">картинка заметки</string>
 </resources>

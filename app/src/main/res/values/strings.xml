@@ -46,6 +46,7 @@
     <string name="search">Search</string>
     <string name="snack_bar_delete_note">Delete note?</string>
     <string name="yes">Yes</string>
+    <string name="note_image">note image</string>
 
 
 </resources>
