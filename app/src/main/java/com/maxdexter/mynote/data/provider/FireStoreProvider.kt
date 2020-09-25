@@ -16,7 +16,7 @@ class FireStoreProvider : RemoteDataProvider {
     private val currentUser
         get() = FirebaseAuth.getInstance().currentUser
 
-    private val TAG = "${FireStoreProvider::class.java.simpleName} :"
+    private val tag = "${FireStoreProvider::class.java.simpleName} :"
     /**
      * Корневым элементом структуры данных будет коллекция notes.
      * Вынесем это имя в константу верхнего уровня.
@@ -24,9 +24,7 @@ class FireStoreProvider : RemoteDataProvider {
     private val db = FirebaseFirestore.getInstance()
 
 
-    /**
-     * И вызвать у него метод collection() с именем нужной коллекции:*/
-    private val notesReference = db.collection(NOTES_COLLECTION )
+
 
             //Добавим метод для получения ссылки на коллекцию заметок пользователя:
     private fun getUserNotesCollection() = currentUser?.let {
@@ -46,6 +44,7 @@ class FireStoreProvider : RemoteDataProvider {
                 try {
                     getUserNotesCollection().addSnapshotListener { snapshot, e ->
                         value = snapshot?.documents?.map { it.toObject(Note::class.java)!! } as MutableList<Note>?
+                        e?.let { Log.e("TAG", e.stackTraceToString()) }
                     }
                 }catch (e: Throwable) {
                     Log.e("TAG", e.stackTraceToString())
@@ -57,10 +56,10 @@ class FireStoreProvider : RemoteDataProvider {
                 try {
                     getUserNotesCollection().document(note.id.toString())
                             .set(note).addOnSuccessListener {
-                                Log.d(TAG, "Note $note is saved")
+                                Log.d(tag, "Note $note is saved")
                                 value = note
                             }.addOnFailureListener {
-                                Log.d(TAG, "Error saving note $note, message: ${it.message}")
+                                Log.d(tag, "Error saving note $note, message: ${it.message}")
                                 throw it
                             }
                 } catch (e: Throwable) {
@@ -83,13 +82,18 @@ class FireStoreProvider : RemoteDataProvider {
             }
 
     override suspend fun deleteNote(note: Note): Boolean {
-        var result: Boolean = false
+        var result = false
         getUserNotesCollection().document(note.uuid).delete()
-                .addOnSuccessListener {result = true
-                    Log.d(TAG, "DocumentSnapshot successfully deleted!")
+                .addOnSuccessListener {
+                    Log.d(tag, "DocumentSnapshot successfully deleted!")
+                    result = true
                 }.addOnFailureListener {
-                    e -> Log.w(TAG, "Error deleting document", e)
+                    e -> Log.w(tag, "Error deleting document", e)
                 }
         return result
     }
+
+
+
+
 }

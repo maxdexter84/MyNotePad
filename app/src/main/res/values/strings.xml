@@ -44,6 +44,8 @@
     <string name="login" translatable="false">in</string>
     <string name="add_note">Add</string>
     <string name="search">Search</string>
+    <string name="snack_bar_delete_note">Delete note?</string>
+    <string name="yes">Yes</string>
 
 
 </resources>

@@ -16,6 +16,7 @@ import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
@@ -151,10 +152,10 @@ class DetailFragment : Fragment() {
 
     private fun initImageButton(view: View) {
         registerForContextMenu(binding.imageViewFragmentDetail)
-        binding.imageViewFragmentDetail .setOnClickListener(View.OnClickListener {
+        binding.imageViewFragmentDetail .setOnClickListener {
             val intent = DetailActivity.newIntent(activity, mNote!!.uuid)
             startActivity(intent)
-        })
+        }
     }
 
     private fun updatePhotoView() {
@@ -170,21 +171,25 @@ class DetailFragment : Fragment() {
     }
 
     private fun initButtonGroup() {
-        binding.shareButton.setOnClickListener{
-            val intent = Intent(Intent.ACTION_SEND)
-            intent.type = "text/plane"
-            intent.putExtra(Intent.EXTRA_TITLE, mNote!!.title)
-            intent.putExtra(Intent.EXTRA_TEXT, mNote!!.description)
-            startActivity(intent)
-        }
-        binding.deleteButton.setOnClickListener(View.OnClickListener { v ->
-            Snackbar.make(v, "Delete note?", Snackbar.LENGTH_LONG).setAction("Yes") {
-                NotePad.get(context).deleteNote(mNote)
-                requireActivity().finish()
-            }.show()
-        })
+        binding.shareButton.setOnClickListener{ shareNote() }
+        binding.deleteButton.setOnClickListener { v -> deleteNote(v) }
         binding.addImageButton.setOnClickListener { photoIntent() }
         binding.addGalleryButton.setOnClickListener { galleryIntent() }
+    }
+
+    private fun shareNote() {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.type = "text/plane"
+        intent.putExtra(Intent.EXTRA_TITLE, mNote!!.title)
+        intent.putExtra(Intent.EXTRA_TEXT, mNote!!.description)
+        startActivity(intent)
+    }
+
+    private fun deleteNote(v: View) {
+        Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_LONG).setAction(getString(R.string.yes)) {
+            detailViewModel.deleteNote()
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
+        }.show()
     }
 
     private fun photoIntent() {

@@ -36,4 +36,6 @@
     <string name="logout_dialog_title">Вы уверенны что хотите выйти из аккаунта?</string>
     <string name="add_note">Добавить</string>
     <string name="search">Искать</string>
+    <string name="snack_bar_delete_note">Удалить заметку?</string>
+    <string name="yes">Да</string>
 </resources>
