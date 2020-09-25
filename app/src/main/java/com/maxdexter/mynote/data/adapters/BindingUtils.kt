@@ -17,12 +17,13 @@ fun TextView.setDate(note: Note) {
 }
 
 @BindingAdapter("cardViewColor")
-fun CardView.setBackgroundColor(note: Note) {
+fun CardView.setBackgroundColor (note: Note) {
     val color = when(note.typeNote) {
         0 -> R.color.color_green
         1 -> R.color.color_red
         2 -> R.color.color_yello
         else -> R.color.color_blue
     }
-    setBackgroundColor(resources.getColor(color))
+    setCardBackgroundColor(resources.getColor(color))
+    //setBackgroundColor(resources.getColor(color))
 }

@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.maxdexter.mynote.R
 import com.maxdexter.mynote.databinding.ListItemNoteBinding
 import com.maxdexter.mynote.model.Note
+import kotlinx.android.synthetic.main.list_item_note.view.*
 import java.util.*
 
 
