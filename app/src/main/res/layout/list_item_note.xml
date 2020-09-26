@@ -16,7 +16,8 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/list_item"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
         android:onClick="@{()->clickListener.onClick(item)}"
         app:cardElevation="5dp"
         app:cardCornerRadius="8dp"
@@ -35,7 +36,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/text_item_id"
                 android:fontFamily="@font/roboto_mono"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
                 android:gravity="center"

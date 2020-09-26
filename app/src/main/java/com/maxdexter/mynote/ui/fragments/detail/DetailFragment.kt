@@ -3,43 +3,38 @@ package com.maxdexter.mynote.ui.fragments.detail
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
-import android.widget.*
 import androidx.core.content.FileProvider
 
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
-import com.maxdexter.mynote.DetailActivity
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.model.Note
-import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.data.PictureUtils
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
 import com.maxdexter.mynote.extensions.selectItem
 import com.maxdexter.mynote.extensions.setDescription
 import com.maxdexter.mynote.extensions.setTitle
+import com.maxdexter.mynote.utils.DetailEvent
 import java.io.File
 import java.io.IOException
 
 class DetailFragment : Fragment() {
 
-    private var mNote: Note? = null
 
 
 
-    private var mPhotoFile: File? = null
-    private var photo: ImageView? = null
+
+    private var photoFile: File? = null
+
 
     private lateinit var detailViewModel: DetailFragmentViewModel
     private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
@@ -66,38 +61,26 @@ class DetailFragment : Fragment() {
             binding.titleId.setTitle(note)
             binding.descriptId.setDescription(note)
             binding.radioGroup.selectItem(note)
-            mPhotoFile = NotePad.get(activity).getPhotoFile(note)
+            initImageButton(note.uuid)
+            updatePhotoView()
+
         })
+        detailViewModel.eventType.observe(viewLifecycleOwner, {
+            if (it != null){
+                when(it.first) {
+                    DetailEvent.SHARE -> startActivity(it.second)
+                    DetailEvent.PHOTO -> startActivityForResult(it.second, REQUEST_PHOTO)
+                    DetailEvent.DELETE -> view?.let { view -> deleteNote(view) }
+                    DetailEvent.SAVE -> findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
+                    else -> startActivityForResult(it.second, REQUEST_GALLERY)
+                }
+            }
 
-        initButtonGroup()
-//        getTextDescript(binding.root)
-//        getTextTitle(binding.root)
-//     //   initRadioGroup(view)
-//        initButtonGroup(binding.root)
-//        initImageButton(binding.root)
-//        updatePhotoView()
-//        val liveData: LiveData<Int> = NotePad.get(context).liveData
-//        liveData.observe(viewLifecycleOwner, Observer { integer ->
-//            when (integer) {
-//                0 -> {
-//                    title_id!!.textSize = 14f
-//                    mDescriptionField!!.textSize = 14f
-//                    return@Observer
-//                }
-//                1 -> {
-//                    title_id!!.textSize = 18f
-//                    mDescriptionField!!.textSize = 18f
-//                    return@Observer
-//                }
-//                2 -> {
-//                    title_id!!.textSize = 22f
-//                    mDescriptionField!!.textSize = 22f
-//                }
-//            }
-//        })
 
-//        binding.titleId.setText(mNote?.title)
-//        binding.descriptId.setText(mNote?.description)
+        })
+        photoFile = detailViewModel.getPhotoFile()
+        //initButtonGroup()
+
         updateNote()
         return binding.root
     }
@@ -136,82 +119,49 @@ class DetailFragment : Fragment() {
 
 
 
-    private fun initImageButton(view: View) {
+    private fun initImageButton(uuid: String) {
         registerForContextMenu(binding.imageViewFragmentDetail)
         binding.imageViewFragmentDetail .setOnClickListener {
-            val intent = DetailActivity.newIntent(activity, mNote!!.uuid)
-            startActivity(intent)
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToFullscreenFragment(uuid))
+
         }
     }
 
     private fun updatePhotoView() {
-        if (mPhotoFile == null || !mPhotoFile!!.exists()) {
-            photo!!.visibility = View.INVISIBLE
+        if (photoFile == null || !photoFile!!.exists()) {
+            binding.imageViewFragmentDetail.visibility = View.INVISIBLE
         } else {
-            photo!!.visibility = View.VISIBLE
+            binding.imageViewFragmentDetail.visibility = View.VISIBLE
             Thread {
-                val bitmap = PictureUtils.getScaleBitmap(mPhotoFile!!.path, requireActivity())
-                photo!!.post { photo!!.setImageBitmap(bitmap) }
+                val bitmap = PictureUtils.getScaleBitmap(photoFile!!.path, requireActivity())
+                binding.imageViewFragmentDetail.post { binding.imageViewFragmentDetail.setImageBitmap(bitmap) }
             }.start()
         }
     }
 
-    private fun initButtonGroup() {
-        binding.shareButton.setOnClickListener{ shareNote() }
-        binding.deleteButton.setOnClickListener { v -> deleteNote(v) }
-        binding.addImageButton.setOnClickListener { photoIntent() }
-        binding.addGalleryButton.setOnClickListener { galleryIntent() }
-        binding.floatingActionButton.setOnClickListener { navigateToAllListNote() }
-    }
+//    private fun initButtonGroup() {
+//        //binding.shareButton.setOnClickListener{ shareNote() }
+//        binding.deleteButton.setOnClickListener { v -> deleteNote(v) }
+//        binding.addImageButton.setOnClickListener {
+//            startActivityForResult(detailViewModel.photoIntent(), REQUEST_PHOTO) }
+//        binding.addGalleryButton.setOnClickListener {
+//            startActivityForResult(detailViewModel.galleryIntent(), REQUEST_GALLERY) }
+//        binding.floatingActionButton.setOnClickListener { navigateToAllListNote() }
+//    }
 
-    private fun shareNote() {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.type = "text/plane"
-        intent.putExtra(Intent.EXTRA_TITLE, mNote!!.title)
-        intent.putExtra(Intent.EXTRA_TEXT, mNote!!.description)
-        startActivity(intent)
-    }
 
     private fun deleteNote(v: View) {
         Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_LONG).setAction(getString(R.string.yes)) {
             detailViewModel.deleteNote()
-            navigateToAllListNote()
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
         }.show()
-    }
-
-    private fun navigateToAllListNote() {
-        detailViewModel.saveNote()
-        findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
-    }
-
-    private fun photoIntent() {
-        val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val uri = FileProvider.getUriForFile(requireActivity(), "com.maxdexter.mynote.fileprovider", mPhotoFile!!)
-        captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        val cameraActivity = requireActivity().packageManager.queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY)
-        for (activity in cameraActivity) {
-            requireActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        }
-        startActivityForResult(captureImage, REQUEST_PHOTO)
-    }
-
-    private fun galleryIntent() {
-        val galleryIntent = Intent(Intent.ACTION_PICK)
-        galleryIntent.type = "image/*"
-        val uri = FileProvider.getUriForFile(requireActivity(), "com.maxdexter.mynote.fileprovider", mPhotoFile!!)
-        galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
-        val cameraActivity = requireActivity().packageManager.queryIntentActivities(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY)
-        for (activity in cameraActivity) {
-            requireActivity().grantUriPermission(activity.activityInfo.packageName, uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-        }
-        startActivityForResult(galleryIntent, REQUEST_GALLERY)
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PHOTO) {
-            val uri = FileProvider.getUriForFile(requireActivity(), "com.maxdexter.mynote.fileprovider", mPhotoFile!!)
+            val uri = photoFile?.let { FileProvider.getUriForFile(requireActivity(), "com.maxdexter.mynote.fileprovider", it) }
             requireActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
             updatePhotoView()
         }
@@ -222,7 +172,7 @@ class DetailFragment : Fragment() {
                 try {
                     // Получаем InputStream, из которого будем декодировать Bitmap
                     val inputStream = requireContext().contentResolver.openInputStream(imageUri)
-                    val fos = requireActivity().openFileOutput(mPhotoFile!!.name, Context.MODE_PRIVATE)
+                    val fos = requireActivity().openFileOutput(photoFile!!.name, Context.MODE_PRIVATE)
                     if (BuildConfig.DEBUG && inputStream == null) {
                         error("Assertion failed")
                     }
@@ -248,7 +198,7 @@ class DetailFragment : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
-            mPhotoFile!!.delete()
+            photoFile!!.delete()
             requireActivity().recreate()
         }
         return super.onContextItemSelected(item)
@@ -259,7 +209,7 @@ class DetailFragment : Fragment() {
         const val NOTE_TYPE_SIMPLE = 0
         const val NOTE_TYPE_IMPORTANT = 1
         const val NOTE_TYPE_PASSWORD = 2
-        private const val REQUEST_PHOTO = 2
+        const val REQUEST_PHOTO = 2
         private const val REQUEST_GALLERY = 3
 
         //этот метод создает экземпляр фрагмента , упаковывает и задает его аргументы(этот метод вызывается в активносте хосте)

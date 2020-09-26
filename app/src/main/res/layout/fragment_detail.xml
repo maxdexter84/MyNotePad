@@ -67,6 +67,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/baseline_done_24"
             android:backgroundTint="@color/myAccent"
+            android:onClick="@{()->viewModel.saveNote()}"
             app:layout_constraintBottom_toTopOf="@+id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/image_view_fragment_detail"
@@ -122,6 +123,7 @@
                 android:id="@+id/add_image_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.photoIntent()}"
                 android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_camera_alt_24" />
 
@@ -129,6 +131,7 @@
                 android:id="@+id/add_gallery_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.galleryIntent()}"
                 android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_image_24" />
 
@@ -142,6 +145,7 @@
                 android:id="@+id/share_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.shareNote()}"
                 android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_share_24" />
 
@@ -149,6 +153,7 @@
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()-> viewModel.deleteEvent()}"
                 android:backgroundTint="@android:color/transparent"
                 android:src="@drawable/baseline_delete_24" />
         </LinearLayout>

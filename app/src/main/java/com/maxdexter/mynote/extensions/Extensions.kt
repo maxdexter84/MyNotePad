@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
@@ -34,5 +35,7 @@ fun EditText.setTitle (note: Note) {
 fun EditText.setDescription(note: Note) {
     text.append(note.description)
 }
+
+
 
 

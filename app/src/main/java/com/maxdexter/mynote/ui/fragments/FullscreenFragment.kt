@@ -1,254 +1,205 @@
-package com.maxdexter.mynote.ui.fragments;
+package com.maxdexter.mynote.ui.fragments
 
-import android.annotation.SuppressLint;
-
-import android.graphics.Bitmap;
-
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import com.maxdexter.mynote.R;
-import com.maxdexter.mynote.model.Note;
-import com.maxdexter.mynote.data.NotePad;
-import com.maxdexter.mynote.data.PictureUtils;
-
-import java.io.File;
-import java.util.Objects;
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.os.Bundle
+import android.os.Handler
+import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnTouchListener
+import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.maxdexter.mynote.R
+import com.maxdexter.mynote.data.NotePad
+import com.maxdexter.mynote.data.PictureUtils
+import com.maxdexter.mynote.databinding.FragmentFullscreenBinding
+import com.maxdexter.mynote.model.Note
+import java.io.File
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class FullscreenFragment extends Fragment {
-    /**
-     * Whether or not the system UI should be auto-hidden after
-     * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
-     */
-    private static final boolean AUTO_HIDE = true;
-
-    /**
-     * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
-     * user interaction before hiding the system UI.
-     */
-    private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
+class FullscreenFragment : Fragment() {
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
-    private File mFile;
-    private static final int UI_ANIMATION_DELAY = 300;
-    private static final String ARG_NOTE = "arg_note_id";
-    private final Handler mHideHandler = new Handler();
-    private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
-        @Override
-        public void run() {
-            // Delayed removal of status and navigation bar
 
-            // Note that some of these constants are new as of API 16 (Jelly Bean)
-            // and API 19 (KitKat). It is safe to use them, as they are inlined
-            // at compile-time and do nothing on earlier devices.
-            int flags = View.SYSTEM_UI_FLAG_LOW_PROFILE
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+    private val mHideHandler = Handler()
+    private val mHidePart2Runnable = Runnable { // Delayed removal of status and navigation bar
 
-            Activity activity = getActivity();
-            if (activity != null
-                    && activity.getWindow() != null) {
-                activity.getWindow().getDecorView().setSystemUiVisibility(flags);
-            }
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.hide();
-            }
-
+        // Note that some of these constants are new as of API 16 (Jelly Bean)
+        // and API 19 (KitKat). It is safe to use them, as they are inlined
+        // at compile-time and do nothing on earlier devices.
+        val flags = (View.SYSTEM_UI_FLAG_LOW_PROFILE
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION)
+        val activity: Activity? = activity
+        if (activity != null
+                && activity.window != null) {
+            activity.window.decorView.systemUiVisibility = flags
         }
-    };
+        val actionBar = supportActionBar
+        actionBar?.hide()
+    }
+
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @SuppressLint("ClickableViewAccessibility")
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            try {
-                requireActivity().finish();
-            }catch (SecurityException e){
-                e.printStackTrace();
-            }
 
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
-    private Note mNote;
-    private ImageView mContentView;
-    private LinearLayout mControlsView;
-    private final Runnable mShowPart2Runnable = new Runnable() {
-        @Override
-        public void run() {
-            // Delayed display of UI elements
-            ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.show();
-            }
-            mControlsView.setVisibility(View.VISIBLE);
-        }
-    };
-    private boolean mVisible;
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
+    lateinit var note: Note
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_fullscreen, container, false);
+    private val mShowPart2Runnable = Runnable { // Delayed display of UI elements
+        val actionBar = supportActionBar
+        actionBar?.show()
+        binding.fullscreenContentControls.visibility = View.VISIBLE
+    }
+    private var mVisible = false
+    private val mHideRunnable = Runnable { hide() }
+    private lateinit var binding: FragmentFullscreenBinding
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fullscreen, container, false)
+        return binding.root
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mVisible = true;
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mVisible = true
 
-        mControlsView = view.findViewById(R.id.fullscreen_content_controls);
-        mContentView = view.findViewById(R.id.fullscreen_content);
-        assert getArguments() != null;
-        String noteId = getArguments().getString(ARG_NOTE);
-        mNote = NotePad.get(getActivity()).getNote(noteId);
-        mFile = NotePad.get(getActivity()).getPhotoFile(mNote);
-        Bitmap bitmap = PictureUtils.getScaleBitmap(mFile.getPath(), requireActivity());
-        mContentView.setImageBitmap(bitmap);
+
+        val args = arguments?.let { FullscreenFragmentArgs.fromBundle(it) }
+        val noteId = args?.noteUUID
+        note = NotePad.get(activity).getNote(noteId)
+        val file = NotePad.get(context).getPhotoFile(note)
+        val bitmap = PictureUtils.getScaleBitmap(file.path, requireActivity())
+        binding.fullscreenContent.setImageBitmap(bitmap)
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        binding.fullscreenContent.setOnClickListener(View.OnClickListener { toggle() })
 
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        view.findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
-    }
-    //этот метод создает экземпляр фрагмента , упаковывает и задает его аргументы(этот метод вызывается в активносте хосте)
-    public static FullscreenFragment newInstance(String noteId){//Присоединение аргументов к фрагменту
-        Bundle args = new Bundle();
-        args.putSerializable(ARG_NOTE,noteId);
-        FullscreenFragment fullscreenFragment = new FullscreenFragment();
-        fullscreenFragment.setArguments(args);
-        return fullscreenFragment;
+       // binding.dummyButton.setOnTouchListener(mDelayHideTouchListener)
+        binding.dummyButton.setOnClickListener { val uuid = note.uuid
+            findNavController().navigate(FullscreenFragmentDirections.actionFullscreenFragmentToDetailFragment(uuid)) }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (getActivity() != null && getActivity().getWindow() != null) {
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+
+
+    override fun onResume() {
+        super.onResume()
+        if (activity != null && requireActivity().window != null) {
+            requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         }
 
         // Trigger the initial hide() shortly after the activity has been
         // created, to briefly hint to the user that UI controls
         // are available.
-        delayedHide(100);
+        delayedHide(100)
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (getActivity() != null && getActivity().getWindow() != null) {
-            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    override fun onPause() {
+        super.onPause()
+        if (activity != null && requireActivity().window != null) {
+            requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
             // Clear the systemUiVisibility flag
-            getActivity().getWindow().getDecorView().setSystemUiVisibility(0);
+            requireActivity().window.decorView.systemUiVisibility = 0
         }
-        show();
+        show()
     }
 
-
-    private void toggle() {
+    private fun toggle() {
         if (mVisible) {
-            hide();
+            hide()
         } else {
-            show();
+            show()
         }
     }
 
-    private void hide() {
+    private fun hide() {
         // Hide UI first
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.hide();
-        }
-        mControlsView.setVisibility(View.INVISIBLE);
-        mVisible = false;
+        val actionBar = supportActionBar
+        actionBar?.hide()
+        binding.fullscreenContentControls.visibility = View.INVISIBLE
+        mVisible = false
 
         // Schedule a runnable to remove the status and navigation bar after a delay
-        mHideHandler.removeCallbacks(mShowPart2Runnable);
-        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
+        mHideHandler.removeCallbacks(mShowPart2Runnable)
+        mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY.toLong())
     }
 
     @SuppressLint("InlinedApi")
-    private void show() {
+    private fun show() {
         // Show the system bar
-        mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION);
-        mVisible = true;
+        binding.fullscreenContent.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION)
+        mVisible = true
 
         // Schedule a runnable to display UI elements after a delay
-        mHideHandler.removeCallbacks(mHidePart2Runnable);
-        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.show();
-        }
+        mHideHandler.removeCallbacks(mHidePart2Runnable)
+        mHideHandler.postDelayed(mShowPart2Runnable, UI_ANIMATION_DELAY.toLong())
+        val actionBar = supportActionBar
+        actionBar?.show()
     }
 
     /**
      * Schedules a call to hide() in delay milliseconds, canceling any
      * previously scheduled calls.
      */
-    private void delayedHide(int delayMillis) {
-        mHideHandler.removeCallbacks(mHideRunnable);
-        mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    private fun delayedHide(delayMillis: Int) {
+        mHideHandler.removeCallbacks(mHideRunnable)
+        mHideHandler.postDelayed(mHideRunnable, delayMillis.toLong())
     }
 
-    @Nullable
-    private ActionBar getSupportActionBar() {
-        ActionBar actionBar = null;
-        if (getActivity() instanceof AppCompatActivity) {
-            AppCompatActivity activity = (AppCompatActivity) getActivity();
-            actionBar = activity.getSupportActionBar();
+    private val supportActionBar: ActionBar?
+        private get() {
+            var actionBar: ActionBar? = null
+            if (activity is AppCompatActivity) {
+                val activity = activity as AppCompatActivity?
+                actionBar = activity!!.supportActionBar
+            }
+            return actionBar
         }
-        return actionBar;
+
+    companion object {
+        /**
+         * Whether or not the system UI should be auto-hidden after
+         * [.AUTO_HIDE_DELAY_MILLIS] milliseconds.
+         */
+        private const val AUTO_HIDE = true
+
+        /**
+         * If [.AUTO_HIDE] is set, the number of milliseconds to wait after
+         * user interaction before hiding the system UI.
+         */
+        private const val AUTO_HIDE_DELAY_MILLIS = 3000
+        private const val UI_ANIMATION_DELAY = 300
+        private const val ARG_NOTE = "arg_note_id"
+
+        //этот метод создает экземпляр фрагмента , упаковывает и задает его аргументы(этот метод вызывается в активносте хосте)
+//        @JvmStatic
+//        fun newInstance(noteId: String?): FullscreenFragment { //Присоединение аргументов к фрагменту
+//            val args = Bundle()
+//            args.putSerializable(ARG_NOTE, noteId)
+//            val fullscreenFragment = FullscreenFragment()
+//            fullscreenFragment.arguments = args
+//            return fullscreenFragment
+//        }
     }
 }

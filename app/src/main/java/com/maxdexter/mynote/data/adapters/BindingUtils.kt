@@ -4,6 +4,7 @@ package com.maxdexter.mynote.data.adapters
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
+import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.model.Note
 
@@ -25,5 +26,5 @@ fun CardView.setBackgroundColor (note: Note) {
         else -> R.color.color_blue
     }
     setCardBackgroundColor(resources.getColor(color))
-    //setBackgroundColor(resources.getColor(color))
+
 }
