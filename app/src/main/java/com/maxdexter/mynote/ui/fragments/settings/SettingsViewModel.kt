@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class SettingsViewModel(private val repository: Repository?, private val owner: LifecycleOwner, private val context: Context?) : ViewModel() {
     private var viewModelJob = Job() //когда viewModel будет уничтожена то в переопределенном методе onCleared() будут так же завершены все задания
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private var notes = NotePad.get(context)?.notes
+    private var notes = context?.let { NotePad.get(it)?.notes }
 
     private var _isAuth = MutableLiveData<Boolean>()
     val isAuth: LiveData<Boolean>
@@ -40,24 +40,22 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
     }
 
     fun onLoadToFireStore() {
-        var list = notes?.toList()
-        if (list != null) {
-            repository?.loadToFireStore(list)
+        notes?.observeForever {
+            repository?.loadToFireStore(it)
         }
     }
 
     fun downloadFromFireStore(){
         var listOfNote = mutableListOf<Note>()
         repository?.synchronization()?.observe(owner, Observer{it-> listOfNote = it})
-        uiScope.launch {listOfNote.forEach{note ->  NotePad.get(context).addNote(note) }  }
+        uiScope.launch {listOfNote.forEach{note ->
+            if (context != null) {
+                NotePad.get(context)?.addNote(note)
+            }
+        }  }
 
 
     }
-
-    fun logoutDialog(){
-
-    }
-
 
     override fun onCleared() {
         super.onCleared()

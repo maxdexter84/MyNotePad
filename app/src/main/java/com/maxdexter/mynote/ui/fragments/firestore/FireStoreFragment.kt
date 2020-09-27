@@ -26,7 +26,7 @@ class FireStoreFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fire_store_fragment, container, false)
         binding.lifecycleOwner = this
-        val noteDao = NotePad.get(context).database.mNoteDao()
+        val noteDao = NotePad.get(requireContext())?.database?.mNoteDao()
         repository = Repository()
         viewModelFactory = FireStoreViewModelFactory(repository)
         viewModel = ViewModelProvider(this, viewModelFactory).get(FireStoreViewModel::class.java)

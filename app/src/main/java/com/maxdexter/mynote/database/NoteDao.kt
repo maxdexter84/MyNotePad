@@ -7,17 +7,17 @@ import com.maxdexter.mynote.model.Note
 @Dao
 interface NoteDao {
     @Query("SELECT * FROM note")
-    fun getAll():LiveData<List<Note?>>
+    fun getAll():LiveData<List<Note>>
 
     @Query("SELECT * FROM note WHERE uuid = :uuid")
     fun getById(uuid: String): LiveData<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(note: Note)
+   suspend fun insert(note: Note)
 
     @Update
-    fun update(note: Note)
+   suspend fun update(note: Note)
 
     @Delete
-    fun delete(note: Note)
+   suspend fun delete(note: Note)
 }

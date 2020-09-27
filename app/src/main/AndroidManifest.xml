@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/MyTheme">
-        <activity android:name=".NotePagerActivity" android:parentActivityName=".ui.NoteListActivity" android:windowSoftInputMode="adjustResize"/>
 
         <provider
             android:authorities="com.maxdexter.mynote.fileprovider"

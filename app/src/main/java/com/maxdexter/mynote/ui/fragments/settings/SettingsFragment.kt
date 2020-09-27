@@ -33,7 +33,7 @@ class SettingsFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.settings_fragment, container, false)
-        val noteDao = NotePad.get(context).database.mNoteDao()
+        val noteDao = context?.let { NotePad.get(it)?.database?.mNoteDao() }
 
         viewModelFactory = SettingsViewModelFactory(noteDao?.let { Repository() }, viewLifecycleOwner, context)
 

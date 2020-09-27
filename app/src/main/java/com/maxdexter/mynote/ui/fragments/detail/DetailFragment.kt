@@ -33,9 +33,7 @@ class DetailFragment : Fragment() {
 
 
 
-    private var photoFile: File? = null
-
-
+    private lateinit var photoFile: File
     private lateinit var detailViewModel: DetailFragmentViewModel
     private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
     var uuid: String? = null
@@ -56,14 +54,15 @@ class DetailFragment : Fragment() {
         detailViewModel = ViewModelProvider(this, detailViewModelFactory).get(DetailFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.viewModel = detailViewModel
+
         detailViewModel.newNote.observe(viewLifecycleOwner, { note ->
             binding.note = note
             binding.titleId.setTitle(note)
             binding.descriptId.setDescription(note)
             binding.radioGroup.selectItem(note)
+            photoFile = detailViewModel.getPhotoFile()
             initImageButton(note.uuid)
             updatePhotoView()
-
         })
         detailViewModel.eventType.observe(viewLifecycleOwner, {
             if (it != null){
@@ -78,7 +77,7 @@ class DetailFragment : Fragment() {
 
 
         })
-        photoFile = detailViewModel.getPhotoFile()
+
 
         updateNote()
         return binding.root
@@ -127,12 +126,12 @@ class DetailFragment : Fragment() {
     }
 
     private fun updatePhotoView() {
-        if (photoFile == null || !photoFile!!.exists()) {
+        if (!photoFile.exists()) {
             binding.imageViewFragmentDetail.visibility = View.INVISIBLE
         } else {
             binding.imageViewFragmentDetail.visibility = View.VISIBLE
             Thread {
-                val bitmap = PictureUtils.getScaleBitmap(photoFile!!.path, requireActivity())
+                val bitmap = PictureUtils.getScaleBitmap(photoFile.path, requireActivity())
                 binding.imageViewFragmentDetail.post { binding.imageViewFragmentDetail.setImageBitmap(bitmap) }
             }.start()
         }

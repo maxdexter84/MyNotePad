@@ -14,11 +14,14 @@ import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.extensions.currentDate
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.utils.DetailEvent
+import kotlinx.coroutines.*
 import java.io.File
 import java.util.*
 
 
 class DetailFragmentViewModel(uuid: String, private val context: Context) : ViewModel() {
+    private val viewModelJob = Job()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     lateinit var note: Note
     private val _newNote = MutableLiveData<Note>()
             val newNote: LiveData<Note>
@@ -38,8 +41,14 @@ class DetailFragmentViewModel(uuid: String, private val context: Context) : View
             note = Note()
             _newNote.value = note
         } else {
-            note = NotePad.get(context).getNote(uuid)
-            _newNote.value = note
+            NotePad.get(context)?.getNote(uuid)?.observeForever{
+                if(it != null) {
+                    note = it
+                    _newNote.value = note
+                }
+
+            }
+
         }
     }
 
@@ -65,18 +74,20 @@ class DetailFragmentViewModel(uuid: String, private val context: Context) : View
     fun saveNote() {
         changeDate()
         if (note.title != "" || note.description != ""){
-            NotePad.get(context).addNote(note)
+        uiScope.launch {
+            NotePad.get(context)?.addNote(note)
+            }
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
     }
-    fun getPhotoFile(): File? {
+    fun getPhotoFile(): File {
         val filesDir: File = context.filesDir
         return File(filesDir, note.photoFilename)
     }
 
     fun photoIntent() {
         val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val uri = getPhotoFile()?.let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        val uri = getPhotoFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         val cameraActivity = context.packageManager.queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY)
         for (activity in cameraActivity) {
@@ -111,7 +122,9 @@ class DetailFragmentViewModel(uuid: String, private val context: Context) : View
 
     }
     fun deleteNote() {
-        NotePad.get(context).deleteNote(note)
+        uiScope.launch {
+            NotePad.get(context)?.deleteNote(note)
+        }
     }
 
 

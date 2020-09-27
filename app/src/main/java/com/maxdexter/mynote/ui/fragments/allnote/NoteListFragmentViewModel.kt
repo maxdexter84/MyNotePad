@@ -20,15 +20,18 @@ class NoteListFragmentViewModel(private val typeNote: Int, private val context: 
                 get() = _eventNoteList
 
     init {
-
-        _allNoteList.value = getNoteList()
-
+        getNoteList()
     }
 
-    private fun getNoteList(): List<Note> =
-             when(typeNote){
-                -1 ->  NotePad.get(context).notes
-                else -> NotePad.get(context).notes.filter { it.typeNote == typeNote }
+    private fun getNoteList(){
+        var list: List<Note>
+        NotePad.get(context)?.notes?.observeForever { list = it
+            _allNoteList.value =  when(typeNote){
+                -1 ->  list
+                else -> list.filter { it.typeNote == typeNote }
             }
+        }
+    }
+
 
 }

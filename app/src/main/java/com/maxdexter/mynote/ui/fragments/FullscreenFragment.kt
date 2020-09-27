@@ -84,9 +84,11 @@ class FullscreenFragment : Fragment() {
 
         val args = arguments?.let { FullscreenFragmentArgs.fromBundle(it) }
         val noteId = args?.noteUUID
-        note = NotePad.get(activity).getNote(noteId)
-        val file = NotePad.get(context).getPhotoFile(note)
-        val bitmap = PictureUtils.getScaleBitmap(file.path, requireActivity())
+        if (noteId != null) {
+            NotePad.get(requireContext())?.getNote(noteId)?.observe(viewLifecycleOwner, {note = it})
+        }
+        val file = context?.let { NotePad.get(it)?.getPhotoFile(note) }
+        val bitmap = PictureUtils.getScaleBitmap(file?.path, requireActivity())
         binding.fullscreenContent.setImageBitmap(bitmap)
         // Set up the user interaction to manually show or hide the system UI.
         binding.fullscreenContent.setOnClickListener(View.OnClickListener { toggle() })
