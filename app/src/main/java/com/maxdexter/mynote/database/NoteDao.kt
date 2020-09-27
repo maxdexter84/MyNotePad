@@ -1,33 +1,23 @@
-package com.maxdexter.mynote.database;
+package com.maxdexter.mynote.database
 
-
-
-import androidx.room.Dao;
-import androidx.room.Delete;
-import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
-import androidx.room.Query;
-import androidx.room.Update;
-
-import com.maxdexter.mynote.model.Note;
-
-import java.util.List;
-
+import androidx.lifecycle.LiveData
+import androidx.room.*
+import com.maxdexter.mynote.model.Note
 
 @Dao
-public interface NoteDao {
+interface NoteDao {
     @Query("SELECT * FROM note")
-    List<Note> getAll();
+    fun getAll():LiveData<List<Note?>>
 
-    @Query("SELECT * FROM note WHERE mUUID = :uuid")
-    Note getById(String uuid);
+    @Query("SELECT * FROM note WHERE uuid = :uuid")
+    fun getById(uuid: String): LiveData<Note>
 
-    @Insert(onConflict =  OnConflictStrategy.REPLACE)
-    void insert(Note note);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(note: Note)
 
     @Update
-    void update(Note note);
+    fun update(note: Note)
 
     @Delete
-    void delete(Note note);
+    fun delete(note: Note)
 }

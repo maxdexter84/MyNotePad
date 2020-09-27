@@ -1,111 +1,35 @@
-package com.maxdexter.mynote.model;
+package com.maxdexter.mynote.model
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.text.SimpleDateFormat
+import java.util.*
 
-
-
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
-
-import com.maxdexter.mynote.extensions.ExtensionsKt;
-
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.UUID;
 @Entity
-public class Note {
+class Note( @PrimaryKey(autoGenerate = true)
+            var id: Int = 0,
+            @ColumnInfo(name = "uuid")
+            var uuid: String = UUID.randomUUID().toString(),
+            @ColumnInfo(name = "type_note")
+            var typeNote: Int = 0,
+            @ColumnInfo(name = "title")
+            var title: String = "",
+            @ColumnInfo(name = "description")
+            var description: String = "",
+            @ColumnInfo(name = "date")
+            var date: String ) {
 
-
-    public int getId() {
-        return id;
+    private fun dateFormat(date: Date): String {
+        val sd = SimpleDateFormat("d MMM yy HH:mm", Locale.getDefault())
+        return sd.format(date)
     }
 
+    val photoFilename: String
+        get() = "IMG $uuid .jpg"
 
-
-    public void setDate(String date) {
-        mDate = date;
+    init {
+        val date = Date()
+        this.date = dateFormat(date)
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    @PrimaryKey(autoGenerate = true)
-    private int id;
-    @ColumnInfo(name = "mUUID")
-    private String mUUID;
-    @ColumnInfo(name = "type_note")
-    private int mTypeNote;
-    @ColumnInfo(name = "title")
-    private String mTitle;
-    @ColumnInfo(name = "description")
-    private String mDescription;
-    @ColumnInfo(name = "date")
-    private String mDate;
-
-    public int getTypeNote() {
-        return mTypeNote;
-    }
-
-    public void setTypeNote(int typeNote) {
-        mTypeNote = typeNote;
-    }
-
-    public String getTitle() {
-        return mTitle;
-    }
-
-    public void setTitle(String title) {
-        mTitle = title;
-    }
-
-    public String getDescription() {
-        return mDescription;
-    }
-
-    public void setDescription(String description) {
-        mDescription = description;
-    }
-
-    public String getDate() {
-        return mDate;
-    }
-
-//    public void setDate(Date date) {
-//        mDate = dateFormat(date);
-//    }
-
-
-    public String getUUID() {
-        return mUUID;
-    }
-
-    public void setUUID(String uuid) {
-        mUUID = uuid;
-    }
-
-    public Note(){
-        this.mUUID = UUID.randomUUID().toString();
-        this.mTypeNote = 0;
-        this.mTitle = "";
-        this.id = 0;
-        this.mDescription = "";
-        Date date = new Date();
-        //setDate(date);
-        setDate(dateFormat(date));
-    }
-
-
-    private String dateFormat(Date date){
-        SimpleDateFormat sd = new SimpleDateFormat("d MMM yy HH:mm", Locale.getDefault());
-        return sd.format(date);
-    }
-
-    public String getPhotoFilename(){
-        return "IMG " + getUUID() + " .jpg";
-    }
-
-
 }
