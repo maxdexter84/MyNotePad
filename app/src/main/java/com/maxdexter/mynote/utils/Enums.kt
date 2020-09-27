@@ -7,3 +7,7 @@ import java.util.*
 enum class DetailEvent() {
     PHOTO, GALLERY, SHARE, DELETE, SAVE
 }
+
+enum class NoteListEvent() {
+    CHANGE_DISPLAY
+}

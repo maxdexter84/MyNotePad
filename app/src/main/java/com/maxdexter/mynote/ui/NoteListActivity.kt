@@ -3,18 +3,14 @@ package com.maxdexter.mynote.ui
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.R.*
 import com.maxdexter.mynote.SharedPref
@@ -46,28 +42,12 @@ class NoteListActivity : AppCompatActivity() {
             bottomNavigationView.setupWithNavController(navController)
         }
 
+
         initTheme()
     }
 
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.bottomappbar_menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-            android.R.id.home -> {
-               val bottomSheetDrawerFragment = BottomSheetDrawerFragment()
-                bottomSheetDrawerFragment.show(supportFragmentManager,bottomSheetDrawerFragment.tag)
-
-            }
-
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
 //    private fun initSpinner() {
 //        mSpinner = findViewById(R.id.text_size_spinner)
@@ -125,13 +105,5 @@ class NoteListActivity : AppCompatActivity() {
 
 
 
-//    override fun onNoteSelected(note: Note) { //Если ориентация портретная и R.id.fragment_container_detail нет в мкете то при клике на элемент списка запуститься NotePagerActivity
-//        if (findViewById<View?>(id.fragment_container_detail) == null) {
-//            val intent = NotePagerActivity.newIntent(this, note.uuid)
-//            startActivity(intent)
-//        } else { // если ориентация альбомная и R.id.fragment_container_detail есть в макете то произайдет транзакция DetailFragment в контейнер в макете
-//            val newDetail: Fragment = DetailFragment.newInstance(note.uuid)
-//            supportFragmentManager.beginTransaction().replace(id.fragment_container_detail, newDetail).commit()
-//        }
-//    }
+
 }

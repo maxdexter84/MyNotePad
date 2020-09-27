@@ -39,4 +39,5 @@
     <string name="snack_bar_delete_note">Удалить заметку?</string>
     <string name="yes">Да</string>
     <string name="note_image">картинка заметки</string>
+    <string name="change_display">Изменить отображение</string>
 </resources>

@@ -26,7 +26,12 @@ class FireStoreProvider : RemoteDataProvider {
 
 
 
-            //Добавим метод для получения ссылки на коллекцию заметок пользователя:
+//            //Добавим метод для получения ссылки на коллекцию заметок пользователя:
+//    private fun getUserNotesCollection() = currentUser?.let {
+//        db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
+//    } ?: throw NoAuthException()
+
+    //Добавим метод для получения ссылки на коллекцию заметок пользователя:
     private fun getUserNotesCollection() = currentUser?.let {
         db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
     } ?: throw NoAuthException()

@@ -49,7 +49,10 @@ class BottomSheetDrawerFragment : BottomSheetDialogFragment() {
                 findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToNoteListFragment(2))
                 true
             }
-            else -> true
+            else ->  {
+                findNavController().navigate(BottomSheetDrawerFragmentDirections.actionBottomSheetDrawerFragmentToNoteListFragment())
+                true
+            }
         } }
 
 

@@ -79,7 +79,6 @@ class DetailFragment : Fragment() {
 
         })
         photoFile = detailViewModel.getPhotoFile()
-        //initButtonGroup()
 
         updateNote()
         return binding.root
@@ -139,19 +138,9 @@ class DetailFragment : Fragment() {
         }
     }
 
-//    private fun initButtonGroup() {
-//        //binding.shareButton.setOnClickListener{ shareNote() }
-//        binding.deleteButton.setOnClickListener { v -> deleteNote(v) }
-//        binding.addImageButton.setOnClickListener {
-//            startActivityForResult(detailViewModel.photoIntent(), REQUEST_PHOTO) }
-//        binding.addGalleryButton.setOnClickListener {
-//            startActivityForResult(detailViewModel.galleryIntent(), REQUEST_GALLERY) }
-//        binding.floatingActionButton.setOnClickListener { navigateToAllListNote() }
-//    }
-
 
     private fun deleteNote(v: View) {
-        Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_LONG).setAction(getString(R.string.yes)) {
+        Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_SHORT).setAction(getString(R.string.yes)) {
             detailViewModel.deleteNote()
             findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
         }.show()
