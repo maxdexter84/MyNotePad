@@ -122,6 +122,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     }
     fun deleteNote() {
         uiScope.launch {
+            getPhotoFile().delete()
             NotePad.get(context)?.deleteNote(note)
         }
     }

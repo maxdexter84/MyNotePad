@@ -23,6 +23,7 @@ import com.maxdexter.mynote.R
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
 import com.maxdexter.mynote.extensions.selectItem
 import com.maxdexter.mynote.extensions.setDescription
+import com.maxdexter.mynote.extensions.setImage
 import com.maxdexter.mynote.extensions.setTitle
 import com.maxdexter.mynote.utils.DetailEvent
 import java.io.File
@@ -125,7 +126,7 @@ class DetailFragment : Fragment() {
             binding.imageViewFragmentDetail.visibility = View.INVISIBLE
         } else {
             binding.imageViewFragmentDetail.visibility = View.VISIBLE
-            Glide.with(this).load(photoFile.path).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.imageViewFragmentDetail)
+            binding.imageViewFragmentDetail.setImage(requireContext(),photoFile.path)
         }
     }
 
@@ -177,8 +178,7 @@ class DetailFragment : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
-          val delete =  photoFile.absoluteFile.delete()
-            Toast.makeText(context, "$delete", Toast.LENGTH_SHORT).show()
+            photoFile.absoluteFile.delete()
             updatePhotoView()
         }
         return super.onContextItemSelected(item)
