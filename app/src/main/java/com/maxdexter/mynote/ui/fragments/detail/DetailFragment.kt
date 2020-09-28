@@ -8,6 +8,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
+import android.widget.Toast
 import androidx.core.content.FileProvider
 
 import androidx.databinding.DataBindingUtil
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
 import com.maxdexter.mynote.R
@@ -53,12 +55,9 @@ class DetailFragment : Fragment() {
         detailViewModel = ViewModelProvider(this, detailViewModelFactory).get(DetailFragmentViewModel::class.java)
         binding.lifecycleOwner = this
         binding.viewModel = detailViewModel
-
         noteObserve()
         eventObserve()
         updateNote()
-
-
         registerForContextMenu(binding.imageViewFragmentDetail)
         return binding.root
     }
@@ -121,12 +120,12 @@ class DetailFragment : Fragment() {
     }
 
 
-    private fun updatePhotoView() {
+    private fun  updatePhotoView( ) {
         if (!photoFile.exists()) {
             binding.imageViewFragmentDetail.visibility = View.INVISIBLE
         } else {
             binding.imageViewFragmentDetail.visibility = View.VISIBLE
-            Glide.with(this).load(photoFile.path).into(binding.imageViewFragmentDetail)
+            Glide.with(this).load(photoFile.path).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(binding.imageViewFragmentDetail)
         }
     }
 
@@ -157,11 +156,10 @@ class DetailFragment : Fragment() {
                     if (BuildConfig.DEBUG && inputStream == null) {
                         error("Assertion failed")
                     }
-                    val image = ByteArray(inputStream!!.available())
-                    inputStream.read(image)
+                    val image = inputStream?.available()?.let { ByteArray(it) }
+                    inputStream?.read(image)
                     fos.write(image)
                     updatePhotoView()
-                    inputStream.close()
                 } catch (e: NullPointerException) {
                     e.printStackTrace()
                 } catch (e: IOException) {
@@ -179,7 +177,8 @@ class DetailFragment : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
-            photoFile.delete()
+          val delete =  photoFile.absoluteFile.delete()
+            Toast.makeText(context, "$delete", Toast.LENGTH_SHORT).show()
             updatePhotoView()
         }
         return super.onContextItemSelected(item)

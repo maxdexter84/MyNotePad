@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 
 
 public class SharedPref {
-
     //Имя параметра в настройках
     private  static final String TEXT_SIZE = "text_size";
     private static final String IsDarkThem = "IS_DARK_THEM";
