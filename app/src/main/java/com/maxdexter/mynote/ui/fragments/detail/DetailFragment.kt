@@ -82,6 +82,7 @@ class DetailFragment : Fragment() {
                     DetailEvent.PHOTO -> startActivityForResult(it.second, REQUEST_PHOTO)
                     DetailEvent.DELETE -> view?.let { view -> deleteNote(view) }
                     DetailEvent.SAVE -> findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
+                    DetailEvent.ZOOM_IMAGE -> findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageDialogFragment(photoFile.path))
                     else -> startActivityForResult(it.second, REQUEST_GALLERY)
                 }
             }

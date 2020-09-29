@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/myPrimary</item>
         <item name="colorPrimaryDark">@color/myPrimaryDark</item>
         <item name="colorAccent">@color/myAccent</item>
+        <item name="switchStyle">@style/MySwitchStyle</item>
     </style>
 
 
@@ -22,6 +23,20 @@
         <item name="colorAccent">@color/myAccent</item>
     </style>
 
+    <style name="MySwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="thumbTint">@color/selector_switch_thumb</item>
+    </style>
+
+    <style name="SettingsTextStyle">
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:layout_marginTop">@dimen/min_margin</item>
+        <item name="android:layout_marginBottom">@dimen/medium_margin</item>
+        <item name="android:paddingBottom">@dimen/min_margin</item>
+        <item name="android:paddingTop">@dimen/min_margin</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+    </style>
 
 
 </resources>

@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 enum class DetailEvent() {
-    PHOTO, GALLERY, SHARE, DELETE, SAVE
+    PHOTO, GALLERY, SHARE, DELETE, SAVE,ZOOM_IMAGE
 }
 
 enum class NoteListEvent() {

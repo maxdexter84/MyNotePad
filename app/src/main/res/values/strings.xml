@@ -38,7 +38,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="authentication">Authentication</string>
-    <string name="logout">logout</string>
+    <string name="logout" translatable="false">out</string>
     <string name="Authentication">Authentication</string>
     <string name="logout_dialog_title">Are you sure you want to get out?</string>
     <string name="login" translatable="false">in</string>
@@ -48,6 +48,7 @@
     <string name="yes">Yes</string>
     <string name="note_image">note image</string>
     <string name="change_display">Change display</string>
+    <string name="dark_theme">Dark theme</string>
 
 
 </resources>

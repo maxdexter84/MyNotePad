@@ -9,7 +9,7 @@ import java.io.File
 
 class NotePad private constructor(val context: Context) {
 
-    val database: AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "database")
+    val database: AppDatabase = Room.databaseBuilder(context, AppDatabase::class.java, "database").fallbackToDestructiveMigration()
             .build()
     val notes
         get() = database.mNoteDao().getAll()

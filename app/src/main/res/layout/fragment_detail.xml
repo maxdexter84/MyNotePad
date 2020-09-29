@@ -56,6 +56,7 @@
             android:focusable="true"
             android:scaleType="centerInside"
             android:visibility="invisible"
+            android:onClick="@{()->viewModel.zoomImageEvent()}"
             android:contentDescription="@string/note_image"
             app:layout_constraintBottom_toTopOf="@+id/radioGroup"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,26 +114,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginStart="5dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/floatingActionButton"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_id">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/add_image_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.photoIntent()}"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.photoIntent()}"
                 android:src="@drawable/baseline_camera_alt_24" />
 
             <ImageButton
                 android:id="@+id/add_gallery_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.galleryIntent()}"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.galleryIntent()}"
                 android:src="@drawable/baseline_image_24" />
 
             <!--        <ImageButton-->
@@ -145,16 +145,16 @@
                 android:id="@+id/share_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.shareNote()}"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.shareNote()}"
                 android:src="@drawable/baseline_share_24" />
 
             <ImageButton
                 android:id="@+id/delete_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()-> viewModel.deleteEvent()}"
                 android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()-> viewModel.deleteEvent()}"
                 android:src="@drawable/baseline_delete_24" />
         </LinearLayout>
 

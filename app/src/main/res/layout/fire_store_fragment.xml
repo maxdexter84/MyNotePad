@@ -20,7 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:cardElevation="@dimen/cardview_default_elevation"
             android:layout_marginTop="@dimen/min_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,13 +28,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:fontFamily="@font/roboto_mono"
                 android:text="@string/upload_to_the_cloud"
-                android:textSize="@dimen/medium_text" />
+                style="@style/SettingsTextStyle" />
 
             <ImageButton
                 android:id="@+id/btn_save_fire_store"
@@ -63,13 +57,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:fontFamily="@font/roboto_mono"
                 android:text="@string/synchronization"
-                android:textSize="@dimen/medium_text" />
+                style="@style/SettingsTextStyle" />
 
             <ImageButton
                 android:id="@+id/btn_download_fire_store"

@@ -16,12 +16,13 @@
 
 
     <color name="color_white">#F5F5F5</color>
-    <color name="color_yello">#FFF59D</color>
-    <color name="color_green">#81C784</color>
+    <color name="color_yello">#E4D551</color>
+    <color name="color_green">#549C57</color>
     <color name="color_blue">#80d8ff</color>
-    <color name="color_red">#ff8a80</color>
+    <color name="color_red">#AC5851</color>
     <color name="color_violet">#e1bee7</color>
     <color name="color_pink">#f8bbd0</color>
     <color name="dark_grey">#524544</color>
     <color name="my_card_color_main">#F7F8FC</color>
 </resources>
+

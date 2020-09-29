@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "796255366922-80sm5cf2kbor7jqul56snih4fsan8o52.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.maxdexter.mynote",
+            "certificate_hash": "f256a51e3ebb8e1bc5cf51ad8d408ffa8e765a64"
+          }
+        },
+        {
           "client_id": "796255366922-121ug6lk9m42oolrdlae4ebd3cbcdm6b.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -36,5 +44,5 @@
       }
     }
   ],
-  "configuration_version": "1"
+  "configuration_version": "2"
 }

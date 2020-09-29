@@ -18,14 +18,10 @@
 
         <TextView
             android:id="@+id/textView2"
+            style="@style/SettingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start|center"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="24dp"
-            android:fontFamily="@font/roboto_mono"
             android:text="@string/Authentication"
-            android:textSize="@dimen/medium_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -33,7 +29,7 @@
             android:id="@+id/auth"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="@string/login"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
@@ -45,87 +41,75 @@
             android:text="@string/logout"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:enabled="false"
             android:onClick="@{()->settingsViewModel.logOut()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/auth" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_tools_upload"
-            android:layout_width="match_parent"
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/SettingsTextStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            app:cardBackgroundColor="@color/my_card_color_main"
-            app:cardElevation="@dimen/cardview_default_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/upload_to_the_cloud"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/auth">
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/upload_to_the_cloud"
-                android:textSize="@dimen/medium_text" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_save_fire_store"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:backgroundTint="@color/fui_transparent"
+            android:onClick="@{() -> settingsViewModel.onLoadToFireStore()}"
+            android:src="@drawable/ic_baseline_cloud_upload_24"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView4" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_save_fire_store"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:textSize="12sp"
-                android:layout_gravity="end"
 
-                android:elevation="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:onClick="@{() -> settingsViewModel.onLoadToFireStore()}"
-                android:src="@drawable/ic_baseline_cloud_upload_24" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cv_tools_download"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/SettingsTextStyle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:cardElevation="@dimen/cardview_default_elevation"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/synchronization"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cv_tools_upload">
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="start|center"
-                android:layout_marginStart="@dimen/medium_margin"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:fontFamily="@font/roboto_mono"
-                android:text="@string/synchronization"
-                android:textSize="@dimen/medium_text" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_download_fire_store"
+            android:layout_width="70dp"
+            android:layout_height="40dp"
+            android:backgroundTint="@color/fui_transparent"
+            android:onClick="@{()->settingsViewModel.downloadFromFireStore()}"
+            android:src="@drawable/ic_baseline_cloud_download_24"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView3" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_download_fire_store"
-                android:layout_width="70dp"
-                android:layout_height="40dp"
-                android:textSize="12sp"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/min_margin"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_marginBottom="@dimen/min_margin"
-                android:elevation="@dimen/medium_margin"
-                android:onClick="@{()->settingsViewModel.downloadFromFireStore()}"
-                android:src="@drawable/ic_baseline_cloud_download_24"
-                android:text="@string/download" />
+        <TextView
+            android:id="@+id/textView"
+            style="@style/SettingsTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dark_theme"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        </androidx.cardview.widget.CardView>
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switch_app_theme"
+            style="@style/MySwitchStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintEnd_toEndOf="@+id/btn_download_fire_store"
+            app:layout_constraintStart_toStartOf="@+id/btn_download_fire_store"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
 
 
 

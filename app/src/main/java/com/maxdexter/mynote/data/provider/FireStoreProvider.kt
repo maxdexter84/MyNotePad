@@ -23,14 +23,6 @@ class FireStoreProvider : RemoteDataProvider {
      * Чтобы создать новую коллекцию, достаточно получить экземпляр базы данных для приложения:*/
     private val db = FirebaseFirestore.getInstance()
 
-
-
-
-//            //Добавим метод для получения ссылки на коллекцию заметок пользователя:
-//    private fun getUserNotesCollection() = currentUser?.let {
-//        db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
-//    } ?: throw NoAuthException()
-
     //Добавим метод для получения ссылки на коллекцию заметок пользователя:
     private fun getUserNotesCollection() = currentUser?.let {
         db.collection(USERS_COLLECTION).document(it.uid).collection(NOTES_COLLECTION)
@@ -43,13 +35,18 @@ class FireStoreProvider : RemoteDataProvider {
                         it.email ?: "") }
             }
 
-
+    @Suppress("unchecked_cast")
     override fun subscribeToAllNotes(): LiveData<MutableList<Note>> =
             MutableLiveData<MutableList<Note>>().apply {
                 try {
                     getUserNotesCollection().addSnapshotListener { snapshot, e ->
-                        value = snapshot?.documents?.map { it.toObject(Note::class.java)!! } as MutableList<Note>?
-                        e?.let { Log.e("TAG", e.stackTraceToString()) }
+
+                        if(snapshot != null && !snapshot.isEmpty) {
+                            value = snapshot.documents.map { it.toObject(Note::class.java) } as MutableList<Note>?
+                            e?.stackTraceToString()?.let { Log.e("TAG", it) }
+                        }
+
+
                     }
                 }catch (e: Throwable) {
                     Log.e("TAG", e.stackTraceToString())

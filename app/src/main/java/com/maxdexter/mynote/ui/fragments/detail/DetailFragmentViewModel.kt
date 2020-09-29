@@ -3,8 +3,13 @@ package com.maxdexter.mynote.ui.fragments.detail
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.net.Uri
+import android.os.Build
 import android.provider.MediaStore
+import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,6 +19,7 @@ import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.utils.DetailEvent
 import kotlinx.coroutines.*
 import java.io.File
+import java.net.URI
 import java.util.*
 
 
@@ -107,11 +113,15 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
        _eventType.value = Pair(DetailEvent.GALLERY, galleryIntent)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun shareNote() {
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plane"
+
+        val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
+       // shareIntent.type = "text/plane"
         shareIntent.putExtra(Intent.EXTRA_TITLE, note.title)
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.description)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(getPhotoFile().absolutePath))
+        shareIntent.type = "*/jpg"
         _eventType.value = Pair(DetailEvent.SHARE, shareIntent)
 
     }
@@ -119,6 +129,10 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     fun deleteEvent() {
         _eventType.value = Pair(DetailEvent.DELETE, Intent())
 
+    }
+
+    fun zoomImageEvent() {
+        _eventType.value = Pair(DetailEvent.ZOOM_IMAGE, Intent())
     }
     fun deleteNote() {
         uiScope.launch {

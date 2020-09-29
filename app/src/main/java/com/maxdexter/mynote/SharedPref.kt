@@ -1,36 +1,30 @@
-package com.maxdexter.mynote;
+package com.maxdexter.mynote
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.app.Activity
+import android.content.SharedPreferences
 
-
-public class SharedPref {
-    //Имя параметра в настройках
-    private  static final String TEXT_SIZE = "text_size";
-    private static final String IsDarkThem = "IS_DARK_THEM";
-    SharedPreferences sharedPref;
-    public SharedPref(Activity activity) {
-        sharedPref = activity.getPreferences(Activity.MODE_PRIVATE);
-    }
-
-
-    //Чтенеие настроек
-    public boolean isDarkTheme(){
-        // Если настройка не найдена , то берется параметр по умолчанию
-        return sharedPref.getBoolean(IsDarkThem,false);
-    }
-    public int getTextSize(){
-        return sharedPref.getInt(TEXT_SIZE,0);
-    }
+class SharedPref(activity: Activity) {
+    var sharedPref: SharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE)// Если настройка не найдена , то берется параметр по умолчанию//Параметры сохраняются посредствам специального класса editor
 
     //Сохранение настроек
-    public void setDarkTheme(boolean isDarkTheme){
-        sharedPref.edit().putBoolean(IsDarkThem,isDarkTheme).apply();
-        //Параметры сохраняются посредствам специального класса editor
+    //Чтенеие настроек
+    var isDarkTheme: Boolean
+        get() =// Если настройка не найдена , то берется параметр по умолчанию
+            sharedPref.getBoolean(IsDarkThem, false)
+        set(isDarkTheme) {
+            sharedPref.edit().putBoolean(IsDarkThem, isDarkTheme).apply()
+            //Параметры сохраняются посредствам специального класса editor
+        }
+    var textSize: Int
+        get() = sharedPref.getInt(TEXT_SIZE, 0)
+        set(textSize) {
+            sharedPref.edit().putInt(TEXT_SIZE, textSize).apply()
+        }
+
+    companion object {
+        //Имя параметра в настройках
+        private const val TEXT_SIZE = "text_size"
+        private const val IsDarkThem = "IS_DARK_THEM"
     }
 
-    public void setTextSize(int textSize){
-        sharedPref.edit().putInt(TEXT_SIZE,textSize).apply();
-    }
 }
