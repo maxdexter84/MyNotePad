@@ -22,7 +22,7 @@ fun CardView.setBackgroundColor (note: Note) {
     val color = when(note.typeNote) {
         0 -> R.color.color_green
         1 -> R.color.color_red
-        2 -> R.color.color_yello
+        2 -> R.color.color_violet
         else -> R.color.color_blue
     }
     setCardBackgroundColor(resources.getColor(color))

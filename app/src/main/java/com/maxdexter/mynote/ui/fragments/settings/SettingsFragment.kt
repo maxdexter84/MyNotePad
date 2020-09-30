@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +22,7 @@ import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.databinding.SettingsFragmentBinding
 import com.maxdexter.mynote.repository.Repository
+import com.maxdexter.mynote.utils.SettingsEvent
 import kotlin.properties.Delegates
 
 private const val RC_SIGN_IN = 458
@@ -30,7 +32,6 @@ class SettingsFragment : Fragment() {
     companion object {
         fun newInstance() = SettingsFragment()
     }
-//    private val preferences by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()) }
 
     private lateinit var viewModel: SettingsViewModel
     private lateinit var binding: SettingsFragmentBinding
@@ -69,6 +70,14 @@ class SettingsFragment : Fragment() {
         binding.auth.setOnClickListener { startLoginActivity() }
 
         initCloudAuth()
+
+        viewModel.settingsEvent.observe(viewLifecycleOwner, {event ->
+         when (event) {
+               SettingsEvent.LOAD_TO_FIRE_STORE -> binding.progressBar.visibility = ProgressBar.VISIBLE
+               SettingsEvent.LOAD_FROM_FIRE_STORE -> binding.progressBar.visibility = ProgressBar.VISIBLE
+                SettingsEvent.CANCEL_EVENT -> binding.progressBar.visibility = ProgressBar.INVISIBLE
+            }
+        })
 
         binding.switchAppTheme.setOnClickListener {  }
         viewModel.logOut.observe(viewLifecycleOwner, { if (it) logout() })

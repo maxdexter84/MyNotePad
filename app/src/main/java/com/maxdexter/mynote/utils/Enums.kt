@@ -11,3 +11,7 @@ enum class DetailEvent() {
 enum class NoteListEvent() {
     CHANGE_DISPLAY
 }
+
+enum class SettingsEvent() {
+    CANCEL_EVENT,LOAD_TO_FIRE_STORE, LOAD_FROM_FIRE_STORE
+}
