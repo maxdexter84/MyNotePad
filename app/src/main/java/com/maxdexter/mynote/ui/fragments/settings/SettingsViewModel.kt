@@ -6,10 +6,7 @@ import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.SettingsEvent
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 
 class SettingsViewModel(private val repository: Repository?, private val owner: LifecycleOwner, private val context: Context?) : ViewModel() {
@@ -54,15 +51,18 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
 
     fun downloadFromFireStore(){
         _settingsEvent.value = SettingsEvent.LOAD_FROM_FIRE_STORE
-        var listOfNote = mutableListOf<Note>()
-        repository?.synchronization()?.observe(owner, Observer{ listOfNote = it
-            _settingsEvent.value = SettingsEvent.CANCEL_EVENT
-        })
-        uiScope.launch {listOfNote.forEach{note ->
-            if (context != null) {
-                NotePad.get(context)?.addNote(note)
+        repository?.synchronization()?.observe(owner, Observer{
+            if (it != null){
+                it.forEach {note -> uiScope.launch {
+                    if (context != null) {
+                        NotePad.get(context)?.addNote(note)
+                    }
+                } }
+                _settingsEvent.value = SettingsEvent.CANCEL_EVENT
             }
-        }  }
+
+        })
+
     }
 
     override fun onCleared() {

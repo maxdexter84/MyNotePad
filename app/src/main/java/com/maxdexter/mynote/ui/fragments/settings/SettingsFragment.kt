@@ -17,14 +17,17 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
+//import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport
+//import com.google.api.services.drive.Drive
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.data.NotePad
+//import com.maxdexter.mynote.data.drive.GoogleDrive
 import com.maxdexter.mynote.databinding.SettingsFragmentBinding
 import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.SettingsEvent
 import kotlin.properties.Delegates
-
+private const val APPLICATION_NAME = "My Note"
 private const val RC_SIGN_IN = 458
 private const val DARK_THEME = "DARK_THEME"
 class SettingsFragment : Fragment() {
@@ -81,6 +84,7 @@ class SettingsFragment : Fragment() {
 
         binding.switchAppTheme.setOnClickListener {  }
         viewModel.logOut.observe(viewLifecycleOwner, { if (it) logout() })
+//        binding.btnDrive.setOnClickListener { driveStart() }
         return binding.root
     }
 
@@ -137,7 +141,34 @@ class SettingsFragment : Fragment() {
                 }
             }
         }.show()
-
     }
+
+
+//    fun driveStart() {
+//        // Build a new authorized API client service.
+//
+//        // Build a new authorized API client service.
+//        val httpTransport = GoogleNetHttpTransport.newTrustedTransport()
+//        val service = Drive.Builder(httpTransport, GoogleDrive.JSON_FACTORY, GoogleDrive.getCredentials(httpTransport))
+//                .setApplicationName(APPLICATION_NAME)
+//                .build()
+//
+//        // Print the names and IDs for up to 10 files.
+//
+//        // Print the names and IDs for up to 10 files.
+//        val result = service.files().list()
+//                .setPageSize(10)
+//                .setFields("nextPageToken, files(id, name)")
+//                .execute()
+//        val files = result.files
+//        if (files == null || files.isEmpty()) {
+//            println("No files found.")
+//        } else {
+//            println("Files:")
+//            for (file in files) {
+//                System.out.printf("%s (%s)\n", file.name, file.id)
+//            }
+//        }
+//    }
 
 }
