@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.text.style.ImageSpan
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
 
@@ -182,6 +183,7 @@ class DetailFragment : Fragment() {
         }
         return super.onContextItemSelected(item)
     }
+
 
 
 }

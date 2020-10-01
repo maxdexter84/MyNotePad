@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/title_hint"
             android:textSize="16sp"
+            android:imeOptions="actionDone"
             app:layout_constraintEnd_toStartOf="@+id/button_group"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,6 +42,7 @@
             android:gravity="start|top"
             android:hint="@string/desc_hint"
             android:textSize="16sp"
+            android:imeOptions="actionDone"
             app:layout_constraintBottom_toTopOf="@+id/image_view_fragment_detail"
             app:layout_constraintEnd_toStartOf="@+id/button_group"
             app:layout_constraintStart_toStartOf="parent"
