@@ -40,4 +40,5 @@
     <string name="note_image">картинка заметки</string>
     <string name="change_display">Изменить отображение</string>
     <string name="dark_theme">Темная тема</string>
+    <string name="text_settings">Настройки текста</string>
 </resources>

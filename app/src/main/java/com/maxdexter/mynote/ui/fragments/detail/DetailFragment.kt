@@ -19,11 +19,10 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
 import com.maxdexter.mynote.R
+import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
-import com.maxdexter.mynote.extensions.selectItem
-import com.maxdexter.mynote.extensions.setDescription
-import com.maxdexter.mynote.extensions.setImage
-import com.maxdexter.mynote.extensions.setTitle
+import com.maxdexter.mynote.extensions.*
+import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.DetailEvent
 import java.io.File
 import java.io.IOException
@@ -32,14 +31,12 @@ import java.io.IOException
 const val REQUEST_PHOTO = 2
 private const val REQUEST_GALLERY = 3
 class DetailFragment : Fragment() {
-
-
     private lateinit var photoFile: File
     private lateinit var detailViewModel: DetailFragmentViewModel
     private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
     var uuid: String? = null
     lateinit var binding: FragmentDetailBinding
-
+    lateinit var repository: Repository
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -65,8 +62,10 @@ class DetailFragment : Fragment() {
     private fun noteObserve() {
         detailViewModel.newNote.observe(viewLifecycleOwner, { note ->
             binding.note = note
-            binding.titleId.setTitle(note)
-            binding.descriptId.setDescription(note)
+            binding.titleId.apply { setTitle(note)
+                                    setTextSize(SharedPref(requireActivity()).textSize)}
+            binding.descriptId.apply { setDescription(note)
+                                    setTextSize(SharedPref(requireActivity()).textSize)}
             binding.radioGroup.selectItem(note)
             photoFile = detailViewModel.getPhotoFile()
             updatePhotoView()
@@ -85,39 +84,24 @@ class DetailFragment : Fragment() {
                     else -> startActivityForResult(it.second, REQUEST_GALLERY)
                 }
             }
-
-
         })
     }
 
     private fun updateNote() {
         binding.titleId.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 detailViewModel.changeTitle(p0.toString())
             }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
         binding.descriptId.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 detailViewModel.changeDescription(p0.toString())
             }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
+            override fun afterTextChanged(p0: Editable?) {}
         })
-
     }
 
 

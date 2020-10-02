@@ -1,10 +1,14 @@
 package com.maxdexter.mynote.data.provider
 
+import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.*
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.errors.NoAuthException
 import com.maxdexter.mynote.model.User
@@ -15,6 +19,9 @@ class FireStoreProvider : RemoteDataProvider {
     //Создадим свойство, представляющее пользователя, авторизованного в данный момент:
     private val currentUser
         get() = FirebaseAuth.getInstance().currentUser
+
+    private val storageReference
+        get() = FirebaseStorage.getInstance().reference
 
     private val tag = "${FireStoreProvider::class.java.simpleName} :"
     /**
@@ -94,8 +101,5 @@ class FireStoreProvider : RemoteDataProvider {
                 }
         return result
     }
-
-
-
 
 }

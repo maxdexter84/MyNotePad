@@ -1,7 +1,10 @@
 package com.maxdexter.mynote.ui.fragments.settings
 
+import android.app.Activity
 import android.content.Context
+import androidx.core.net.toUri
 import androidx.lifecycle.*
+import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.repository.Repository
@@ -45,8 +48,9 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
         _settingsEvent.value = SettingsEvent.LOAD_TO_FIRE_STORE
         notes?.observeForever {
             repository?.loadToFireStore(it)
+            _settingsEvent.value = SettingsEvent.CANCEL_EVENT
         }
-        _settingsEvent.value = SettingsEvent.CANCEL_EVENT
+
     }
 
     fun downloadFromFireStore(){
@@ -60,14 +64,22 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
                 } }
                 _settingsEvent.value = SettingsEvent.CANCEL_EVENT
             }
-
         })
-
     }
+
+    fun changeTextSize(position: Int, activity: Activity) {
+        when (position) {
+            0 -> SharedPref(activity).textSize = 0
+            1 -> SharedPref(activity).textSize = 1
+            2 -> SharedPref(activity).textSize = 2
+        }
+    }
+
 
     override fun onCleared() {
         super.onCleared()
         _settingsEvent.value = SettingsEvent.CANCEL_EVENT
         viewModelJob.cancel()
     }
+
 }

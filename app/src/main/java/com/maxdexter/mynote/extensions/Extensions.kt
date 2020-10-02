@@ -31,17 +31,12 @@ fun RadioGroup.selectItem(note: Note){
     }
 }
 
-fun EditText.setTitle (note: Note) {
-    text.append(note.title)
-}
-
-fun EditText.setDescription(note: Note) {
-    text.append(note.description)
-}
 
 fun <T> ImageView.setImage(context: Context, uri: T){
     Glide.with(context).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(this)
 }
+
+
 
 
 

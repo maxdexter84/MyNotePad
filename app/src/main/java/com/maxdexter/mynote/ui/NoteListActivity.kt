@@ -53,38 +53,7 @@ class NoteListActivity : AppCompatActivity() {
     }
 
 
-//    private fun initSpinner() {
-//        mSpinner = findViewById(R.id.text_size_spinner)
-//        val size = ArrayList<String>()
-//        size.add("small")
-//        size.add("medium")
-//        size.add("large")
-//        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, size)
-//        mSpinner.setAdapter(adapter)
-//        mSpinner.setSelection(sharedPref!!.textSize)
-//        mSpinner.setOnItemSelectedListener(object : OnItemSelectedListener {
-//            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-//                when (position) {
-//                    0 -> {
-//                        sharedPref!!.textSize = 0
-//                        NotePad.get(applicationContext).setLiveData(0)
-//                        return
-//                    }
-//                    1 -> {
-//                        sharedPref!!.textSize = 1
-//                        NotePad.get(applicationContext).setLiveData(1)
-//                        return
-//                    }
-//                    2 -> {
-//                        sharedPref!!.textSize = 2
-//                        NotePad.get(applicationContext).setLiveData(2)
-//                    }
-//                }
-//            }
-//
-//            override fun onNothingSelected(parent: AdapterView<*>?) {}
-//        })
-//    }
+
 
 
 

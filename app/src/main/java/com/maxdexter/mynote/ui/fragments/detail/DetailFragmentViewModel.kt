@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModel
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.extensions.currentDate
 import com.maxdexter.mynote.model.Note
+import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.DetailEvent
 import kotlinx.coroutines.*
 import java.io.File
@@ -117,7 +118,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     fun shareNote() {
 
         val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
-       // shareIntent.type = "text/plane"
+        shareIntent.type = "text/plane"
         shareIntent.putExtra(Intent.EXTRA_TITLE, note.title)
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.description)
         shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(getPhotoFile().absolutePath))
@@ -128,9 +129,9 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
 
     fun deleteEvent() {
         _eventType.value = Pair(DetailEvent.DELETE, Intent())
-
     }
 
+    
     fun zoomImageEvent() {
         _eventType.value = Pair(DetailEvent.ZOOM_IMAGE, Intent())
     }

@@ -49,6 +49,7 @@
     <string name="note_image">note image</string>
     <string name="change_display">Change display</string>
     <string name="dark_theme">Dark theme</string>
+    <string name="text_settings">Text settings</string>
 
 
 </resources>
