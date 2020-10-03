@@ -1,9 +1,7 @@
 package com.maxdexter.mynote.ui.fragments.settings
 
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -20,9 +18,11 @@ import com.maxdexter.mynote.R
 import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.databinding.SettingsFragmentBinding
+import com.maxdexter.mynote.extensions.checkedRB
 import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.SettingsEvent
-import kotlin.properties.Delegates
+
+
 private const val APPLICATION_NAME = "My Note"
 private const val RC_SIGN_IN = 458
 private const val DARK_THEME = "DARK_THEME"
@@ -55,10 +55,10 @@ class SettingsFragment : Fragment() {
         binding.lifecycleOwner = this
 
         binding.auth.setOnClickListener { startLoginActivity() }
+        initRadioGroup()
         changeTheme()
         initCloudAuth()
         eventObserve()
-        initSpinner()
         viewModel.logOut.observe(viewLifecycleOwner, { if (it) logout() })
         return binding.root
     }
@@ -73,7 +73,7 @@ class SettingsFragment : Fragment() {
         binding.switchAppTheme.isChecked = isDarkTheme
         binding.switchAppTheme.setOnCheckedChangeListener { _, isChecked ->
             SharedPref(requireActivity()).isDarkTheme = isChecked
-            requireActivity().recreate()
+           requireActivity().recreate()
         }
     }
 
@@ -143,18 +143,15 @@ class SettingsFragment : Fragment() {
     }
 
 
-    private fun initSpinner() {
-        val spinner = binding.textSizeSpinner
-        val size = listOf<String>("small","medium","large")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item,size)
-        spinner.adapter = adapter
-        spinner.setSelection(SharedPref(requireActivity()).textSize)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View, position: Int, id: Long) {
-             viewModel.changeTextSize(position, requireActivity())
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
+    private fun initRadioGroup() {
+        binding.rgSelectTextSize.checkedRB(SharedPref(requireActivity()).textSize)
+      binding.rgSelectTextSize.setOnCheckedChangeListener { group, checkedId ->
+          when(checkedId) {
+              R.id.rb_small_text -> viewModel.changeTextSize(0 , requireActivity())
+              R.id.rb_medium_text -> viewModel.changeTextSize(1 , requireActivity())
+              R.id.rb_large_text -> viewModel.changeTextSize(2, requireActivity())
+          }
+      }
     }
 
 }

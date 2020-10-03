@@ -29,10 +29,15 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
     val logOut: LiveData<Boolean>
         get() = _logOut
 
+    private var _textSize = MutableLiveData<Int>()
+    val textSize: LiveData<Int>
+        get() = _textSize
+
 
     init {
         _settingsEvent.value = SettingsEvent.CANCEL_EVENT
         _logOut.value = false
+        _textSize.value = -1
         isAuthFunc()
     }
 

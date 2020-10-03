@@ -132,6 +132,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView
+            android:id="@+id/textView6"
             style="@style/SettingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -139,13 +140,44 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-        <Spinner
-            android:id="@+id/text_size_spinner"
-            android:layout_width="100dp"
+        <RadioGroup
+            android:id="@+id/rg_select_text_size"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/medium_margin"
-            app:layout_constraintEnd_toEndOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@+id/textView6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView6">
+
+            <RadioButton
+                android:id="@+id/rb_small_text"
+                android:text="AA"
+                android:textSize="12sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_medium_text"
+                android:text="AA"
+                android:textSize="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:id="@+id/rb_large_text"
+                android:text="AA"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RadioGroup>
+
+<!--        <Spinner-->
+<!--            android:id="@+id/text_size_spinner"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/medium_margin"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/textView5"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/textView5" />-->
 
 
 
