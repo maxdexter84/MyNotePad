@@ -13,8 +13,8 @@ fun EditText.setDescription(note: Note) {
 
 fun EditText.setTextSize(size:Int) {
     when(size) {
-        0 -> this.textSize = 12F
-        1 -> this.textSize = 16F
-        2 -> this.textSize = 18F
+        0 -> this.textSize = 16F
+        1 -> this.textSize = 18F
+        2 -> this.textSize = 20F
     }
 }
