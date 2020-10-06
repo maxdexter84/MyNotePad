@@ -114,17 +114,16 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
        _eventType.value = Pair(DetailEvent.GALLERY, galleryIntent)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun shareNote() {
 
-        val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
-        shareIntent.type = "text/plane"
+    fun shareNote() {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        val uri = getPhotoFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         shareIntent.putExtra(Intent.EXTRA_TITLE, note.title)
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.description)
-        shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.parse(getPhotoFile().absolutePath))
-        shareIntent.type = "*/jpg"
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        shareIntent.type = "image/jpg"
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         _eventType.value = Pair(DetailEvent.SHARE, shareIntent)
-
     }
 
     fun deleteEvent() {

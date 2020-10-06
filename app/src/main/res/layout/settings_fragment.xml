@@ -22,6 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Authentication"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,6 +32,7 @@
             android:layout_height="40dp"
             android:textSize="12sp"
             android:text="@string/login"
+            android:visibility="gone"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintEnd_toStartOf="@+id/exit"
@@ -43,6 +45,7 @@
             android:layout_height="40dp"
             android:textSize="12sp"
             android:enabled="false"
+            android:visibility="gone"
             android:onClick="@{()->settingsViewModel.logOut()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/auth" />
@@ -54,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upload_to_the_cloud"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -62,6 +66,7 @@
             android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_gravity="end"
+            android:visibility="gone"
             android:backgroundTint="@color/fui_transparent"
             android:onClick="@{() -> settingsViewModel.onLoadToFireStore()}"
             android:src="@drawable/ic_baseline_cloud_upload_24"
@@ -87,6 +92,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/synchronization"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -94,6 +100,7 @@
             android:id="@+id/btn_download_fire_store"
             android:layout_width="70dp"
             android:layout_height="40dp"
+            android:visibility="gone"
             android:backgroundTint="@color/fui_transparent"
             android:onClick="@{()->settingsViewModel.downloadFromFireStore()}"
             android:src="@drawable/ic_baseline_cloud_download_24"
@@ -106,9 +113,14 @@
             style="@style/SettingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="101dp"
             android:text="@string/dark_theme"
+            app:layout_constraintEnd_toStartOf="@+id/switch_app_theme"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_app_theme"
@@ -116,10 +128,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="@+id/btn_download_fire_store"
-            app:layout_constraintStart_toStartOf="@+id/btn_download_fire_store"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
-
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView5"
