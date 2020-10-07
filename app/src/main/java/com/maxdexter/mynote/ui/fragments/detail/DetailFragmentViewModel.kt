@@ -121,7 +121,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         shareIntent.putExtra(Intent.EXTRA_TITLE, note.title)
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.description)
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        shareIntent.type = "image/jpg"
+        shareIntent.type = "*/*"
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         _eventType.value = Pair(DetailEvent.SHARE, shareIntent)
     }

@@ -55,7 +55,7 @@
             android:layout_height="100dp"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="centerInside"
+            android:scaleType="centerCrop"
             android:visibility="invisible"
             android:onClick="@{()->viewModel.zoomImageEvent()}"
             android:contentDescription="@string/note_image"
