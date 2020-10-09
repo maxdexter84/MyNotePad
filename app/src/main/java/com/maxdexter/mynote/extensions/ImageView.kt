@@ -9,6 +9,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.RadioGroup
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.luminance
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -25,6 +26,10 @@ import java.util.*
 
 
 fun <T> ImageView.setImage(context: Context, uri: T){
+    Glide.with(context).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(this)
+}
+
+fun <T> ImageView.setImagePrev(context: Context, uri: T){
     Glide.with(context).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(this)
 }
 

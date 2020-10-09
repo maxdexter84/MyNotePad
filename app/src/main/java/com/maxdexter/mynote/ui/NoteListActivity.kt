@@ -21,6 +21,7 @@ class NoteListActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.MyTheme)
         setDarkTheme()
         super.onCreate(savedInstanceState)
 

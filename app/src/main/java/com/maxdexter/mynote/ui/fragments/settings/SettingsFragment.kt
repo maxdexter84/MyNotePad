@@ -16,7 +16,7 @@ import com.firebase.ui.auth.AuthUI
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.SharedPref
-import com.maxdexter.mynote.data.NotePad
+import com.maxdexter.mynote.data.NoteRepository
 import com.maxdexter.mynote.databinding.SettingsFragmentBinding
 import com.maxdexter.mynote.extensions.checkedRB
 import com.maxdexter.mynote.repository.Repository
@@ -64,7 +64,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val noteDao = context?.let { NotePad.get(it)?.database?.mNoteDao() }
+        val noteDao = context?.let { NoteRepository.get()?.database?.mNoteDao() }
         viewModelFactory = SettingsViewModelFactory(noteDao?.let { Repository }, viewLifecycleOwner, context)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
     }

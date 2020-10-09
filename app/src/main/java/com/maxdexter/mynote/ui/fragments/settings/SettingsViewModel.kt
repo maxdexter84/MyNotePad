@@ -2,11 +2,9 @@ package com.maxdexter.mynote.ui.fragments.settings
 
 import android.app.Activity
 import android.content.Context
-import androidx.core.net.toUri
 import androidx.lifecycle.*
 import com.maxdexter.mynote.SharedPref
-import com.maxdexter.mynote.model.Note
-import com.maxdexter.mynote.data.NotePad
+import com.maxdexter.mynote.data.NoteRepository
 import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.SettingsEvent
 import kotlinx.coroutines.*
@@ -15,7 +13,7 @@ import kotlinx.coroutines.*
 class SettingsViewModel(private val repository: Repository?, private val owner: LifecycleOwner, private val context: Context?) : ViewModel() {
     private var viewModelJob = Job() //когда viewModel будет уничтожена то в переопределенном методе onCleared() будут так же завершены все задания
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private var notes = context?.let { NotePad.get(it)?.notes }
+    private var notes = context?.let { NoteRepository.get()?.notes }
 
     private var _isAuth = MutableLiveData<Boolean>()
     val isAuth: LiveData<Boolean>
@@ -64,7 +62,7 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
             if (it != null){
                 it.forEach {note -> uiScope.launch {
                     if (context != null) {
-                        NotePad.get(context)?.addNote(note)
+                        NoteRepository.get()?.addNote(note)
                     }
                 } }
                 _settingsEvent.value = SettingsEvent.CANCEL_EVENT

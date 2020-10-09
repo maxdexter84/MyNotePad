@@ -3,24 +3,17 @@ package com.maxdexter.mynote.ui.fragments.detail
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.net.Uri
-import android.os.Build
 import android.provider.MediaStore
-import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.maxdexter.mynote.data.NotePad
+import com.maxdexter.mynote.data.NoteRepository
 import com.maxdexter.mynote.extensions.currentDate
 import com.maxdexter.mynote.model.Note
-import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.DetailEvent
 import kotlinx.coroutines.*
 import java.io.File
-import java.net.URI
 import java.util.*
 
 
@@ -51,7 +44,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     }
 
    private fun noteChangeObserve() {
-        NotePad.get(context)?.getNote(uuid)?.observeForever {
+        NoteRepository.get()?.getNote(uuid)?.observeForever {
             if (it != null) {
                 note = it
                 _newNote.postValue(note)
@@ -81,7 +74,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         changeDate()
         if (note.title != "" || note.description != ""){
         uiScope.launch {
-            NotePad.get(context)?.addNote(note)
+            NoteRepository.get()?.addNote(note)
             }
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
@@ -137,7 +130,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     fun deleteNote() {
         uiScope.launch {
             getPhotoFile().delete()
-            NotePad.get(context)?.deleteNote(note)
+            NoteRepository.get()?.deleteNote(note)
         }
     }
 

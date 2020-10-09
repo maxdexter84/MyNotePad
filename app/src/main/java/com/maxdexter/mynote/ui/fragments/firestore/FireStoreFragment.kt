@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.maxdexter.mynote.R
-import com.maxdexter.mynote.data.NotePad
 import com.maxdexter.mynote.databinding.FireStoreFragmentBinding
 import com.maxdexter.mynote.repository.Repository
 

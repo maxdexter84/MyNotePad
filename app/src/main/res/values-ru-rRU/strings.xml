@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Блокнот</string>
-    <string name="simple_note_title">Обычная</string>
-    <string name="important_note_title">Важная</string>
-    <string name="password_note_title">Пароль</string>
-    <string name="simple_note">Обычная</string>
+    <string name="simple_note_title">Обычные заметки</string>
+    <string name="important_note_title">Важные заметки</string>
+    <string name="password_note_title">Заметки с паролями</string>
+    <string name="simple_note">Обычные заметки</string>
     <string name="important_note">Важная</string>
     <string name="password_note">С паролем</string>
     <string name="tools">Настроки</string>
@@ -42,4 +42,5 @@
     <string name="dark_theme">Темная тема</string>
     <string name="text_settings">Настройки текста</string>
     <string name="Aa">Аа</string>
+    <string name="all_note_title">Все заметки</string>
 </resources>

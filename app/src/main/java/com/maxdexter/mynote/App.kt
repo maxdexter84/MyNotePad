@@ -1,27 +1,35 @@
 package com.maxdexter.mynote
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.maxdexter.mynote.database.AppDatabase
 
 class App : Application(){
-    var database: AppDatabase? = null
+
+    companion object{
+        lateinit var database: AppDatabase
+        var instance: App? = null
+        fun applicationContext(): Context? {
+            return instance?.applicationContext
+
+        }
+    }
+    init {
+        instance = this
+    }
 
     override fun onCreate() {
         super.onCreate()
-       database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
+        database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
                 .build()
+
+    }
+    fun getDatabase(): AppDatabase {
+        return database ?: error("no database")
     }
 
-    @JvmName("getDatabase1")
-    fun getDatabase(): AppDatabase?{
-        if (database == null) {
-            database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
-                    .allowMainThreadQueries()
-                    .build()
-        }
-        return database
-    }
+
 
 
 }

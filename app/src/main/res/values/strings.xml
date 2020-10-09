@@ -10,7 +10,7 @@
     <string name="important_note">Important</string>
     <string name="password_note">Password</string>
     <string name="desc_hint">description</string>
-    <string name="all_note_title" translatable="false">All</string>
+    <string name="all_note_title">All</string>
     <string name="tools">Tools</string>
     <string name="delete">Delete</string>
     <string name="to_favourites" translatable="false">To favourites</string>
