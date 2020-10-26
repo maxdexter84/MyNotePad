@@ -15,7 +15,7 @@
     <string name="share">Поделиьтся</string>
     <string name="image">Изображение</string>
     <string name="title_hint">название заметки</string>
-    <string name="desc_hint">текст заметки</string>
+    <string name="desc_hint">"текст "</string>
     <string name="back">Назад</string>
     <string name="text_size">Размер шрифта</string>
     <string name="cloud">Облако</string>

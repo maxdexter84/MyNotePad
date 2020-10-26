@@ -19,18 +19,19 @@
         android:padding="8dp"
         tools:context=".ui.fragments.detail.DetailFragment">
 
+
         <EditText
             android:id="@+id/title_id"
             style="@style/TextStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/title_hint"
-            android:textSize="16sp"
             android:imeOptions="actionDone"
-            app:layout_constraintEnd_toStartOf="@+id/button_group"
+            android:textSize="20sp"
+            android:background="@color/fui_transparent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-        </EditText>
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"/>
 
 
         <EditText
@@ -38,42 +39,35 @@
             style="@style/TextStyle"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@color/fui_transparent"
             android:gravity="start|top"
             android:hint="@string/desc_hint"
-            android:textSize="16sp"
             android:imeOptions="actionDone"
-            app:layout_constraintBottom_toTopOf="@+id/image_view_fragment_detail"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup"
             app:layout_constraintEnd_toStartOf="@+id/button_group"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_id">
+            app:layout_constraintTop_toBottomOf="@+id/title_id" />
 
-        </EditText>
 
-        <ImageButton
-            android:id="@+id/image_view_fragment_detail"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:scaleType="centerCrop"
-            android:visibility="invisible"
-            android:onClick="@{()->viewModel.zoomImageEvent()}"
-            android:contentDescription="@string/note_image"
-            app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/baseline_done_24"
             android:backgroundTint="@color/myAccent"
             android:onClick="@{()->viewModel.saveNote()}"
+            android:src="@drawable/baseline_done_24"
             app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/image_view_fragment_detail"
-            app:layout_constraintTop_toTopOf="@+id/image_view_fragment_detail" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <RadioGroup
             android:id="@+id/radioGroup"

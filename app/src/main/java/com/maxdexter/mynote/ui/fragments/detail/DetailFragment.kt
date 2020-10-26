@@ -16,11 +16,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.SharedPref
+import com.maxdexter.mynote.data.adapters.ImageAdapter
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
 import com.maxdexter.mynote.extensions.*
 import com.maxdexter.mynote.repository.Repository
@@ -35,9 +37,9 @@ class DetailFragment : Fragment() {
     private lateinit var photoFile: File
     private lateinit var detailViewModel: DetailFragmentViewModel
     private lateinit var detailViewModelFactory: DetailFragmentViewModelFactory
+    private lateinit var adapter: ImageAdapter
     var uuid: String? = null
     lateinit var binding: FragmentDetailBinding
-    lateinit var repository: Repository
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +58,15 @@ class DetailFragment : Fragment() {
         noteObserve()
         eventObserve()
         updateNote()
-        registerForContextMenu(binding.imageViewFragmentDetail)
+        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL)
+        detailViewModel.imageList.observe(viewLifecycleOwner, {
+            adapter = ImageAdapter(it)
+            adapter.notifyItemInserted(it.size - 1)
+            binding.recyclerView.adapter = adapter
+        })
+
+
+
         return binding.root
     }
 
@@ -68,8 +78,8 @@ class DetailFragment : Fragment() {
             binding.descriptId.apply { setDescription(note)
                                     setTextSize(SharedPref(requireActivity()).textSize)}
             binding.radioGroup.selectItem(note)
-            photoFile = detailViewModel.getPhotoFile()
-            updatePhotoView()
+            photoFile = detailViewModel.createImageFile()
+//            updatePhotoView()
         })
     }
 
@@ -105,15 +115,15 @@ class DetailFragment : Fragment() {
         })
     }
 
-
-    private fun  updatePhotoView( ) {
-        if (!photoFile.exists()) {
-            binding.imageViewFragmentDetail.visibility = View.INVISIBLE
-        } else {
-            binding.imageViewFragmentDetail.visibility = View.VISIBLE
-            binding.imageViewFragmentDetail.setImage(requireContext(),photoFile.path)
-        }
-    }
+//
+//    private fun  updatePhotoView( ) {
+//        if (!photoFile.exists()) {
+//            binding.imageViewFragmentDetail.visibility = View.INVISIBLE
+//        } else {
+//            binding.imageViewFragmentDetail.visibility = View.VISIBLE
+//            binding.imageViewFragmentDetail.setImage(requireContext(),photoFile.path)
+//        }
+//    }
 
 
     private fun deleteNote(v: View) {
@@ -127,9 +137,10 @@ class DetailFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_PHOTO) {
-            val uri = photoFile.let { FileProvider.getUriForFile(requireActivity(), "com.maxdexter.mynote.fileprovider", it) }
+            detailViewModel.addPhoto()
+            val uri = detailViewModel.uri
             requireActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-            updatePhotoView()
+//            updatePhotoView()
         }
         if (requestCode == REQUEST_GALLERY && data != null) {
             // Получаем URI изображения
@@ -145,7 +156,7 @@ class DetailFragment : Fragment() {
                     val image = inputStream?.available()?.let { ByteArray(it) }
                     inputStream?.read(image)
                     fos.write(image)
-                    updatePhotoView()
+//                    updatePhotoView()
                 } catch (e: NullPointerException) {
                     e.printStackTrace()
                 } catch (e: IOException) {
@@ -164,7 +175,7 @@ class DetailFragment : Fragment() {
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
             photoFile.absoluteFile.delete()
-            updatePhotoView()
+//            updatePhotoView()
         }
         return super.onContextItemSelected(item)
     }

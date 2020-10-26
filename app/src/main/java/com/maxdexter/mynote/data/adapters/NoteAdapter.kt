@@ -22,13 +22,11 @@ class NoteAdapter (val clickListener: NoteListener): ListAdapter<Note,NoteViewHo
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(clickListener,item)
-
     }
 }
 
 
 class NoteViewHolder private constructor(private val binding: ListItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(clickListener: NoteListener, note: Note) = with (note){
         binding.item = note
         binding.clickListener = clickListener

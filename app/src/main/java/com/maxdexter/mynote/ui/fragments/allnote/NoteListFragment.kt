@@ -52,7 +52,7 @@ class NoteListFragment : Fragment() {
     private fun initRecyclerAdapter() {
         binding.noteListId.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
         adapter = NoteAdapter(NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
-        viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { adapter.submitList(it) } })
+        viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { adapter.submitList(it.reversed()) } })
         binding.noteListId.adapter = adapter
         }
 

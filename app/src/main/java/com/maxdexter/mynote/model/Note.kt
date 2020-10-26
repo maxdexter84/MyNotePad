@@ -18,12 +18,13 @@ data class Note(@PrimaryKey(autoGenerate = true)
                 @ColumnInfo(name = "description")
                 var description: String = "",
                 @ColumnInfo(name = "date")
-                var date: String = Date().currentDate()) {
+                var date: String = Date().currentDate(),
+                var photoFilename: String = "") {
 
-    var photoFilename: String = ""
-        get() = "IMG $uuid .jpg"
-        set(value) {
-            field = value
-        }
+//    var photoFilename: String = ""
+//        get() = "IMG $uuid .jpg"
+//        set(value) {
+//            field = value
+//        }
 
 }

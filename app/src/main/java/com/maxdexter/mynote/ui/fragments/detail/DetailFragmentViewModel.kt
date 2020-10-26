@@ -3,6 +3,7 @@ package com.maxdexter.mynote.ui.fragments.detail
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
@@ -14,6 +15,7 @@ import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.utils.DetailEvent
 import kotlinx.coroutines.*
 import java.io.File
+import java.text.SimpleDateFormat
 import java.util.*
 
 
@@ -21,6 +23,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     private val viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     lateinit var note: Note
+    lateinit var uri: Uri
     private val _newNote = MutableLiveData<Note>()
             val newNote: LiveData<Note>
             get() = _newNote
@@ -28,6 +31,10 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     private var _eventType = MutableLiveData<Pair<DetailEvent,Intent>?>()
     val eventType: LiveData<Pair<DetailEvent,Intent>?>
             get() = _eventType
+
+    private val _imageList = MutableLiveData<List<String>>()
+            val imageList: LiveData<List<String>>
+            get() = _imageList
 
     init {
         _eventType.value = null
@@ -48,9 +55,17 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             if (it != null) {
                 note = it
                 _newNote.postValue(note)
+                _imageList.value = getImageList(note)
             }
 
         }
+    }
+   private fun getImageList(note: Note): List<String>{
+       var list = listOf<String>()
+        if (note.photoFilename != ""){
+            list = note.photoFilename.split(",") ?: listOf<String>()
+        }
+        return list
     }
 
 
@@ -66,13 +81,22 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         note.typeNote = type
     }
 
+    fun addPhoto() {
+        val allPhoto = StringBuffer()
+        allPhoto.append("${note.photoFilename},")
+        allPhoto.append("$uri")
+
+        note.photoFilename = allPhoto.toString()
+    }
+
     private fun changeDate() {
         note.date = Date().currentDate()
     }
 
+
     fun saveNote() {
         changeDate()
-        if (note.title != "" || note.description != ""){
+        if (note.title != "" || note.description != "" || note.photoFilename != ""){
         uiScope.launch {
             NoteRepository.get()?.addNote(note)
             }
@@ -84,9 +108,16 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         return File(filesDir, note.photoFilename)
     }
 
+     fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = context.filesDir
+        return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
+
+    }
+
     fun photoIntent() {
         val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        val uri = getPhotoFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        uri = createImageFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         val cameraActivity = context.packageManager.queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY)
         for (activity in cameraActivity) {
@@ -95,10 +126,11 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         _eventType.value = Pair(DetailEvent.PHOTO, captureImage)
     }
 
+
    fun galleryIntent(){
         val galleryIntent = Intent(Intent.ACTION_PICK)
         galleryIntent.type = "image/*"
-        val uri = getPhotoFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        uri = createImageFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         val cameraActivity = context.packageManager.queryIntentActivities(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY)
         for (activity in cameraActivity) {

@@ -30,7 +30,7 @@ fun <T> ImageView.setImage(context: Context, uri: T){
 }
 
 fun <T> ImageView.setImagePrev(context: Context, uri: T){
-    Glide.with(context).load(uri).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(this)
+    Glide.with(context).load(uri).override(300).diskCacheStrategy(DiskCacheStrategy.NONE).skipMemoryCache(true).into(this)
 }
 
 

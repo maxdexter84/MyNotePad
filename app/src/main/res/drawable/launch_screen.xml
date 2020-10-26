@@ -7,7 +7,7 @@
     <!-- Лого приложения - 144dp версия иконки приложения -->
     <item>
         <bitmap
-            android:src="@drawable/logo_note"
+            android:src="@drawable/mynotelogo"
             android:gravity="center"/>
     </item>
 </layer-list>
