@@ -36,8 +36,8 @@
             android:id="@+id/action_detailFragment_to_noteListFragment"
             app:destination="@id/noteListFragment" />
         <action
-            android:id="@+id/action_detailFragment_to_imageDialogFragment"
-            app:destination="@id/imageDialogFragment" />
+            android:id="@+id/action_detailFragment_to_imageBottomFragment"
+            app:destination="@id/imageBottomFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -57,17 +57,20 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left" />
     </dialog>
-    <dialog
-        android:id="@+id/imageDialogFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.image_dialog.ImageDialogFragment"
-        android:label="image_dialog_fragment"
-        tools:layout="@layout/image_dialog_fragment" >
-        <action
-            android:id="@+id/action_imageDialogFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+    <fragment
+        android:id="@+id/imageBottomFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.image_bottom.ImageBottomFragment"
+        android:label="ImageBottomFragment" >
         <argument
             android:name="path"
             app:argType="string"
             android:defaultValue='""' />
-    </dialog>
+        <action
+            android:id="@+id/action_imageBottomFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+        <argument
+            android:name="itemPosition"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

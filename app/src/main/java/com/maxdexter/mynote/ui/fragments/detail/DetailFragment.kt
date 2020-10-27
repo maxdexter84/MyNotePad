@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -58,19 +59,24 @@ class DetailFragment : Fragment() {
         noteObserve()
         eventObserve()
         updateNote()
-        binding.recyclerView.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL)
-        detailViewModel.imageList.observe(viewLifecycleOwner, {
-            adapter = ImageAdapter(it)
-            adapter.notifyItemInserted(it.size - 1)
-            binding.recyclerView.adapter = adapter
-        })
-
+        initImageAdapter()
 
 
         return binding.root
     }
 
-    private fun noteObserve() {
+    private fun initImageAdapter() {
+        adapter = ImageAdapter{
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageBottomFragment(detailViewModel.note.photoFilename, it))
+        }
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
+        detailViewModel.imageList.observe(viewLifecycleOwner, {
+            adapter.updateData(it)
+        })
+        binding.recyclerView.adapter = adapter
+    }
+
+    private fun noteObserve(){
         detailViewModel.newNote.observe(viewLifecycleOwner, { note ->
             binding.note = note
             binding.titleId.apply { setTitle(note)
@@ -78,8 +84,7 @@ class DetailFragment : Fragment() {
             binding.descriptId.apply { setDescription(note)
                                     setTextSize(SharedPref(requireActivity()).textSize)}
             binding.radioGroup.selectItem(note)
-            photoFile = detailViewModel.createImageFile()
-//            updatePhotoView()
+
         })
     }
 
@@ -91,7 +96,6 @@ class DetailFragment : Fragment() {
                     DetailEvent.PHOTO -> startActivityForResult(it.second, REQUEST_PHOTO)
                     DetailEvent.DELETE -> view?.let { view -> deleteNote(view) }
                     DetailEvent.SAVE -> findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToNoteListFragment())
-                    DetailEvent.ZOOM_IMAGE -> findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageDialogFragment(photoFile.path))
                     else -> startActivityForResult(it.second, REQUEST_GALLERY)
                 }
             }
@@ -115,17 +119,6 @@ class DetailFragment : Fragment() {
         })
     }
 
-//
-//    private fun  updatePhotoView( ) {
-//        if (!photoFile.exists()) {
-//            binding.imageViewFragmentDetail.visibility = View.INVISIBLE
-//        } else {
-//            binding.imageViewFragmentDetail.visibility = View.VISIBLE
-//            binding.imageViewFragmentDetail.setImage(requireContext(),photoFile.path)
-//        }
-//    }
-
-
     private fun deleteNote(v: View) {
         Snackbar.make(v, getString(R.string.snack_bar_delete_note), Snackbar.LENGTH_SHORT).setAction(getString(R.string.yes)) {
             detailViewModel.deleteNote()
@@ -140,23 +133,23 @@ class DetailFragment : Fragment() {
             detailViewModel.addPhoto()
             val uri = detailViewModel.uri
             requireActivity().revokeUriPermission(uri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
-//            updatePhotoView()
         }
         if (requestCode == REQUEST_GALLERY && data != null) {
             // Получаем URI изображения
             val imageUri = data.data
             if (imageUri != null) {
                 try {
+                    detailViewModel.addPhoto()
                     // Получаем InputStream, из которого будем декодировать Bitmap
                     val inputStream = requireContext().contentResolver.openInputStream(imageUri)
-                    val fos = requireActivity().openFileOutput(photoFile.name, Context.MODE_PRIVATE)
+                    val fos = requireActivity().openFileOutput(detailViewModel.file.name, Context.MODE_PRIVATE)
                     if (BuildConfig.DEBUG && inputStream == null) {
                         error("Assertion failed")
                     }
                     val image = inputStream?.available()?.let { ByteArray(it) }
                     inputStream?.read(image)
                     fos.write(image)
-//                    updatePhotoView()
+
                 } catch (e: NullPointerException) {
                     e.printStackTrace()
                 } catch (e: IOException) {
@@ -174,7 +167,7 @@ class DetailFragment : Fragment() {
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.delete) {
-            photoFile.absoluteFile.delete()
+            //photoFile.absoluteFile.delete()
 //            updatePhotoView()
         }
         return super.onContextItemSelected(item)

@@ -11,15 +11,13 @@
 
    <androidx.constraintlayout.widget.ConstraintLayout
        android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:padding="8dp"
-       tools:context=".ui.fragments.image_dialog.ImageDialogFragment">
+       android:layout_height="match_parent"
+       android:padding="8dp">
 
-      <ImageView
-          android:id="@+id/iv_image_dialog_fragment"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:scaleType="centerInside"
+      <androidx.viewpager2.widget.ViewPager2
+          android:id="@+id/image_view_pager"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"

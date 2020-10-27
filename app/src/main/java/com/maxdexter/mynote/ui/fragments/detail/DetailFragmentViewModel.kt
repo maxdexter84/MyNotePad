@@ -24,6 +24,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     lateinit var note: Note
     lateinit var uri: Uri
+    lateinit var file: File
     private val _newNote = MutableLiveData<Note>()
             val newNote: LiveData<Note>
             get() = _newNote
@@ -44,13 +45,14 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     private fun selectNote(uuid: String) {
         if (uuid == com.maxdexter.mynote.utils.NEW_NOTE) {
             note = Note()
-            _newNote.value = note
+            saveEmptyNote()
+            noteChangeObserve(note.uuid)
         } else {
-            noteChangeObserve()
+            noteChangeObserve(uuid)
         }
     }
 
-   private fun noteChangeObserve() {
+   private fun noteChangeObserve(uuid: String) {
         NoteRepository.get()?.getNote(uuid)?.observeForever {
             if (it != null) {
                 note = it
@@ -82,11 +84,13 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     }
 
     fun addPhoto() {
-        val allPhoto = StringBuffer()
-        allPhoto.append("${note.photoFilename},")
-        allPhoto.append("$uri")
-
-        note.photoFilename = allPhoto.toString()
+        if (note.photoFilename == "")  note.photoFilename = "$uri"
+        else{
+            val oldImage = note.photoFilename
+            val newImage = "$oldImage,$uri"
+            note.photoFilename = newImage
+        }
+        saveEmptyNote()
     }
 
     private fun changeDate() {
@@ -103,12 +107,18 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
     }
-    fun getPhotoFile(): File {
+   private fun saveEmptyNote(){
+        changeDate()
+        uiScope.launch {
+            NoteRepository.get()?.addNote(note)
+        }
+    }
+    private fun getPhotoFile(): File {
         val filesDir: File = context.filesDir
         return File(filesDir, note.photoFilename)
     }
 
-     fun createImageFile(): File {
+     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = context.filesDir
         return File.createTempFile("JPEG_${timeStamp}_",".jpg",storageDir)
@@ -117,7 +127,8 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
 
     fun photoIntent() {
         val captureImage = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        uri = createImageFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        file = createImageFile()
+        uri = file.let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         captureImage.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         val cameraActivity = context.packageManager.queryIntentActivities(captureImage, PackageManager.MATCH_DEFAULT_ONLY)
         for (activity in cameraActivity) {
@@ -130,7 +141,8 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
    fun galleryIntent(){
         val galleryIntent = Intent(Intent.ACTION_PICK)
         galleryIntent.type = "image/*"
-        uri = createImageFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        file = createImageFile()
+        uri = file.let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
         galleryIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
         val cameraActivity = context.packageManager.queryIntentActivities(galleryIntent, PackageManager.MATCH_DEFAULT_ONLY)
         for (activity in cameraActivity) {
