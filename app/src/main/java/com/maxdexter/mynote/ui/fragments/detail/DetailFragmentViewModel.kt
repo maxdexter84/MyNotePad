@@ -5,7 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
 import androidx.core.content.FileProvider
+import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -104,6 +106,10 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         uiScope.launch {
             NoteRepository.get()?.addNote(note)
             }
+        } else {
+            uiScope.launch {
+                NoteRepository.get()?.deleteNote(note)
+            }
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
     }
@@ -113,9 +119,10 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             NoteRepository.get()?.addNote(note)
         }
     }
-    private fun getPhotoFile(): File {
-        val filesDir: File = context.filesDir
-        return File(filesDir, note.photoFilename)
+    private fun getPhotoFile(uri:String): File {
+        val storageDir: File? = context.filesDir
+        return File(storageDir, uri)
+
     }
 
      private fun createImageFile(): File {
@@ -153,11 +160,15 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
 
 
     fun shareNote() {
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        val uri = getPhotoFile().let { FileProvider.getUriForFile(context, "com.maxdexter.mynote.fileprovider", it) }
+        val shareIntent = Intent(Intent.ACTION_SEND_MULTIPLE)
+        val arrayUri = arrayListOf<Uri>()
+        _imageList.value?.forEach { it ->
+            arrayUri.add(it.toUri())
+        }
+        shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, arrayUri)
         shareIntent.putExtra(Intent.EXTRA_TITLE, note.title)
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.description)
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+
         shareIntent.type = "*/*"
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         _eventType.value = Pair(DetailEvent.SHARE, shareIntent)
@@ -167,13 +178,13 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         _eventType.value = Pair(DetailEvent.DELETE, Intent())
     }
 
-    
-    fun zoomImageEvent() {
-        _eventType.value = Pair(DetailEvent.ZOOM_IMAGE, Intent())
-    }
     fun deleteNote() {
         uiScope.launch {
-            getPhotoFile().delete()
+            _imageList.value?.forEach { it -> it.substring(56,it.lastIndex + 1).let {
+                val result = getPhotoFile(it).delete()
+                Log.i("DELETE", "$result  file $it  not delete")
+            }
+            }
             NoteRepository.get()?.deleteNote(note)
         }
     }

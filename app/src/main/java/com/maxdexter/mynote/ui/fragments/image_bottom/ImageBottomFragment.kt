@@ -10,19 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.data.adapters.ViewPagerAdapter
 import com.maxdexter.mynote.databinding.ImageBottomFragmentBinding
+
 
 const val TAG = "touch"
 //три возможные состояния матрици
 const val NONE = 0
 const val DRAG = 1
 const val ZOOM = 2
-class ImageBottomFragment : BottomSheetDialogFragment() {
+class ImageBottomFragment : Fragment() {
     //Эти матрици будут использоваться для перемещения и масштабирования изображегия
     var matrix: Matrix = Matrix()
     var savedMatrix: Matrix = Matrix()
@@ -51,7 +52,7 @@ class ImageBottomFragment : BottomSheetDialogFragment() {
         //binding.viewModel = viewModel
         binding.lifecycleOwner = this
         viewPager2 = binding.imageViewPager
-        mViewModel.imageUriList.observe(viewLifecycleOwner,{ list ->
+        mViewModel.imageUriList.observe(viewLifecycleOwner, { list ->
             adapter = ViewPagerAdapter(list)
             viewPager2.adapter = adapter
 
