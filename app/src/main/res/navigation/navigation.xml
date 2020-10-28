@@ -59,7 +59,7 @@
     </dialog>
     <fragment
         android:id="@+id/imageBottomFragment"
-        android:name="com.maxdexter.mynote.ui.fragments.image_bottom.ImageBottomFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.image_view_pager_fragment.ImageBottomFragment"
         android:label="ImageBottomFragment" >
         <argument
             android:name="path"

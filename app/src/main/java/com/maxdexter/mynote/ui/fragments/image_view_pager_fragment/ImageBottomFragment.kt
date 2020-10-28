@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.ui.fragments.image_bottom
+package com.maxdexter.mynote.ui.fragments.image_view_pager_fragment
 
 
 import android.annotation.SuppressLint

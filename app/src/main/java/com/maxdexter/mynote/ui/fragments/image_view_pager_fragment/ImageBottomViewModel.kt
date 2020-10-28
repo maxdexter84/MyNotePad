@@ -1,9 +1,10 @@
-package com.maxdexter.mynote.ui.fragments.image_bottom
+package com.maxdexter.mynote.ui.fragments.image_view_pager_fragment
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.maxdexter.mynote.extensions.getImageList
 
 class ImageBottomViewModel(val path: String) : ViewModel() {
 
@@ -12,16 +13,8 @@ class ImageBottomViewModel(val path: String) : ViewModel() {
             get() = _imageUriList
 
     init {
-        _imageUriList.value = getImageList()
+        _imageUriList.value = listOf<String>().getImageList(path)
     }
 
-    private fun getImageList(): List<String>{
-        var list = listOf<String>()
-        if (path != ""){
-            list = path.split(",") ?: listOf<String>()
-            Log.i("CLICK", "$list")
-        }
-        return list
-    }
 
 }

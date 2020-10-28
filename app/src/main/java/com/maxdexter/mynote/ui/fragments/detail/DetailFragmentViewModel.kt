@@ -13,6 +13,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maxdexter.mynote.data.NoteRepository
 import com.maxdexter.mynote.extensions.currentDate
+import com.maxdexter.mynote.extensions.getFile
+import com.maxdexter.mynote.extensions.getImageList
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.utils.DetailEvent
 import kotlinx.coroutines.*
@@ -59,19 +61,11 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             if (it != null) {
                 note = it
                 _newNote.postValue(note)
-                _imageList.value = getImageList(note)
+                _imageList.value = listOf<String>().getImageList(note.photoFilename) //getImageList(note)
             }
 
         }
     }
-   private fun getImageList(note: Note): List<String>{
-       var list = listOf<String>()
-        if (note.photoFilename != ""){
-            list = note.photoFilename.split(",") ?: listOf<String>()
-        }
-        return list
-    }
-
 
     fun changeTitle(title: String) {
         note.title = title
