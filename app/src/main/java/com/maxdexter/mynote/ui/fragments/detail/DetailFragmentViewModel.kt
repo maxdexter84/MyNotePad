@@ -24,7 +24,7 @@ import java.util.*
 
 
 class DetailFragmentViewModel(private val uuid: String, private val context: Context) : ViewModel() {
-    private val viewModelJob = Job()
+    private val viewModelJob = SupervisorJob()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     lateinit var note: Note
     lateinit var uri: Uri
@@ -107,7 +107,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
     }
-   private fun saveEmptyNote(){
+   fun saveEmptyNote(){
         changeDate()
         uiScope.launch {
             NoteRepository.get()?.addNote(note)

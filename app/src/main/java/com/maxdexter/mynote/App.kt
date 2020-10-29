@@ -23,13 +23,14 @@ class App : Application(){
 
     override fun onCreate() {
         super.onCreate()
-//        val MIGRATION_1_2 = object : Migration(1, 2) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE note ADD COLUMN photoFilename TEXT NOT NULL DEFAULT''")
-//            }
-//        }
-//                .addMigrations(MIGRATION_1_2)
+        val MIGRATION_1_2 = object : Migration(1, 2) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("ALTER TABLE note ADD COLUMN noteLabel TEXT NOT NULL DEFAULT''")
+            }
+        }
+
         database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
+                .addMigrations(MIGRATION_1_2)
                 .build()
 
     }

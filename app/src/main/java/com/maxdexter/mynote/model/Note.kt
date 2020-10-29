@@ -19,12 +19,6 @@ data class Note(@PrimaryKey(autoGenerate = true)
                 var description: String = "",
                 @ColumnInfo(name = "date")
                 var date: String = Date().currentDate(),
-                var photoFilename: String = "") {
+                var photoFilename: String = "",
+                var noteLabel:String = "")
 
-//    var photoFilename: String = ""
-//        get() = "IMG $uuid .jpg"
-//        set(value) {
-//            field = value
-//        }
-
-}

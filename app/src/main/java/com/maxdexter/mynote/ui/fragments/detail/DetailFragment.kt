@@ -67,7 +67,8 @@ class DetailFragment : Fragment() {
 
     private fun initImageAdapter() {
         adapter = ImageAdapter{
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageBottomFragment(detailViewModel.note.photoFilename, it))
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageBottomFragment(detailViewModel.note.photoFilename, it,detailViewModel.note.uuid))
+            detailViewModel.saveEmptyNote()
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         detailViewModel.imageList.observe(viewLifecycleOwner, {

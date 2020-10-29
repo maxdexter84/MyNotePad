@@ -67,10 +67,15 @@
             android:defaultValue='""' />
         <action
             android:id="@+id/action_imageBottomFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            app:destination="@id/detailFragment"
+            app:popUpTo="@id/detailFragment" />
         <argument
             android:name="itemPosition"
             app:argType="integer"
             android:defaultValue="0" />
+        <argument
+            android:name="uuid"
+            app:argType="string"
+            android:defaultValue='""' />
     </fragment>
 </navigation>
