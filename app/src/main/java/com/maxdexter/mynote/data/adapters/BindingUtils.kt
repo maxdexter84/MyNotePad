@@ -1,6 +1,7 @@
 package com.maxdexter.mynote.data.adapters
 
 
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
@@ -28,3 +29,4 @@ fun CardView.setBackgroundColor (note: Note) {
     setCardBackgroundColor(resources.getColor(color))
 
 }
+

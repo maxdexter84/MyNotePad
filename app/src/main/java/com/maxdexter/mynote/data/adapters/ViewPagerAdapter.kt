@@ -29,6 +29,7 @@ class ViewPagerAdapter(val list:List<String>): RecyclerView.Adapter<ViewHolder>(
 class ViewHolder(val binding: ListImageViewpagerItemBinding, val context: Context): RecyclerView.ViewHolder(binding.root) {
     fun bind(uri: String){
         binding.imageViewPager.setImage(context, uri)
+
     }
     companion object{
         fun from(parent: ViewGroup): ViewHolder{

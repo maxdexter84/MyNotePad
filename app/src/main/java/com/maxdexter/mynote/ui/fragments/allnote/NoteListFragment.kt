@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
+import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.data.adapters.NoteAdapter
 import com.maxdexter.mynote.data.adapters.NoteListener
@@ -42,7 +43,7 @@ class NoteListFragment : Fragment() {
         val context = context
         if (context != null) {
             if (args != null) {
-                viewModelFactory = NoteListFragmentViewModelFactory(args.noteType, context)
+                viewModelFactory = NoteListFragmentViewModelFactory(args.noteType, viewLifecycleOwner)
             }
         }
         viewModel = ViewModelProvider(this, viewModelFactory).get(NoteListFragmentViewModel::class.java)
@@ -50,10 +51,12 @@ class NoteListFragment : Fragment() {
 
 
     private fun initRecyclerAdapter() {
-        binding.noteListId.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
-        adapter = NoteAdapter(NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
+        binding.noteListId.layoutManager = LinearLayoutManager(context)
+        adapter = NoteAdapter(viewModel,NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
         viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { adapter.submitList(it.reversed()) } })
         binding.noteListId.adapter = adapter
+        val itemTouchHelper = ItemTouchHelper(adapter.simpleCallback)
+        itemTouchHelper.attachToRecyclerView(binding.noteListId)
         }
 
 

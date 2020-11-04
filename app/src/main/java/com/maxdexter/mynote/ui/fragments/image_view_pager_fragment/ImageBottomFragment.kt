@@ -6,18 +6,20 @@ import android.graphics.Matrix
 import android.graphics.PointF
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.data.adapters.ViewPagerAdapter
 import com.maxdexter.mynote.databinding.ImageBottomFragmentBinding
+import com.maxdexter.mynote.databinding.ListImageViewpagerItemBinding
+import kotlinx.android.synthetic.main.list_image_viewpager_item.view.*
 
 
 const val TAG = "touch"
@@ -46,18 +48,17 @@ class ImageBottomFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.image_bottom_fragment, container, false)
+
         val path = arguments?.let { ImageBottomFragmentArgs.fromBundle(it) }?.path
         currentPosition = arguments?.let { ImageBottomFragmentArgs.fromBundle(it) }?.itemPosition
         val noteUUID = arguments?.let { ImageBottomFragmentArgs.fromBundle(it) }?.uuid
         if (path != null)
-        mViewModelFactory = ImageBottomViewModelFragment(path)
+        mViewModelFactory = ImageBottomViewModelFragment(path, requireContext())
         mViewModel = ViewModelProvider(this, mViewModelFactory).get(ImageBottomViewModel::class.java)
         //binding.viewModel = viewModel
         binding.lifecycleOwner = this
         initViewPager()
         initBackBtn(noteUUID)
-
-
         return binding.root
     }
 
@@ -85,6 +86,7 @@ class ImageBottomFragment : Fragment() {
             adapter = ViewPagerAdapter(list)
             viewPager2.adapter = adapter
             initTabLayout(list.lastIndex)
+            registerForContextMenu(binding.imageViewPager)
             Log.i("CLICK", "$currentPosition ImageBottom")
         })
     }
@@ -92,5 +94,18 @@ class ImageBottomFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewPager2.setCurrentItem(currentPosition ?: 0, false)
+    }
+
+    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        super.onCreateContextMenu(menu, v, menuInfo)
+        val inflater = requireActivity().menuInflater
+        inflater.inflate(R.menu.context_menu, menu)
+    }
+
+    override fun onContextItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.delete) {
+            Snackbar.make(binding.imageViewPager, "Удалить изображение?", Snackbar.LENGTH_LONG).show()
+        }
+        return super.onContextItemSelected(item)
     }
 }

@@ -3,33 +3,35 @@ package com.maxdexter.mynote.ui.fragments.detail
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Canvas
+import android.graphics.Color.red
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.text.style.ImageSpan
 import android.view.*
 import android.view.ContextMenu.ContextMenuInfo
-
-import androidx.core.content.FileProvider
+import androidx.core.content.ContextCompat
 
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.BuildConfig
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.SharedPref
 import com.maxdexter.mynote.data.adapters.ImageAdapter
+import com.maxdexter.mynote.data.adapters.SimpleItemTouchHelperCallback
 import com.maxdexter.mynote.databinding.FragmentDetailBinding
 import com.maxdexter.mynote.extensions.*
-import com.maxdexter.mynote.repository.Repository
 import com.maxdexter.mynote.utils.DetailEvent
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 
 const val REQUEST_PHOTO = 2
@@ -66,15 +68,19 @@ class DetailFragment : Fragment() {
     }
 
     private fun initImageAdapter() {
-        adapter = ImageAdapter{
-            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageBottomFragment(detailViewModel.note.photoFilename, it,detailViewModel.note.uuid))
+        adapter = ImageAdapter(detailViewModel){ int ->
+            findNavController().navigate(DetailFragmentDirections.actionDetailFragmentToImageBottomFragment(detailViewModel.note.photoFilename, int,detailViewModel.note.uuid))
             detailViewModel.saveEmptyNote()
         }
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL, false)
         detailViewModel.imageList.observe(viewLifecycleOwner, {
             adapter.updateData(it)
         })
+        val itemTouchHelper = ItemTouchHelper(adapter.simpleCallback)
+        itemTouchHelper.attachToRecyclerView(binding.recyclerView)
+
         binding.recyclerView.adapter = adapter
+
     }
 
     private fun noteObserve(){
@@ -160,19 +166,7 @@ class DetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
-        val inflater = requireActivity().menuInflater
-        inflater.inflate(R.menu.context_menu, menu)
-    }
 
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.delete) {
-            //photoFile.absoluteFile.delete()
-//            updatePhotoView()
-        }
-        return super.onContextItemSelected(item)
-    }
 
 
 

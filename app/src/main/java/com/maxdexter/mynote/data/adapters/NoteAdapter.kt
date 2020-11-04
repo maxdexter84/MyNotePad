@@ -1,19 +1,23 @@
 package com.maxdexter.mynote.data.adapters
 
 import android.annotation.SuppressLint
+import android.graphics.Canvas
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.databinding.ListItemNoteBinding
 import com.maxdexter.mynote.model.Note
+import com.maxdexter.mynote.ui.fragments.allnote.NoteListFragmentViewModel
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 import kotlinx.android.synthetic.main.list_item_note.view.*
 import java.util.*
 
 
-class NoteAdapter (val clickListener: NoteListener): ListAdapter<Note,NoteViewHolder>(NoteAdapterDiffCallback()) {
+class NoteAdapter (val viewModel: NoteListFragmentViewModel,val clickListener: NoteListener): ListAdapter<Note,NoteViewHolder>(NoteAdapterDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder.from(parent)
@@ -22,6 +26,32 @@ class NoteAdapter (val clickListener: NoteListener): ListAdapter<Note,NoteViewHo
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(clickListener,item)
+    }
+    val simpleCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        //ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT
+        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
+            return false
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position: Int = viewHolder.adapterPosition // выясняем позицию элемента в адаптере
+            val item: Note = getItem(position)
+            when (direction) {
+                ItemTouchHelper.LEFT -> {
+                    viewModel.deleteNote(item, viewHolder.itemView)
+                    notifyItemRemoved(position) //обновляем адаптер
+                }
+            }
+        }
+
+        override fun onChildDraw(c: Canvas, recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Float, dY: Float, actionState: Int, isCurrentlyActive: Boolean) {
+            RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                    .addSwipeLeftBackgroundColor(R.color.color_red)
+                    .addSwipeLeftActionIcon(R.drawable.delete_dark_icone)
+                    .create()
+                    .decorate()
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        }
     }
 }
 

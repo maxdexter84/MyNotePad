@@ -13,6 +13,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.maxdexter.mynote.data.NoteRepository
 import com.maxdexter.mynote.extensions.currentDate
+import com.maxdexter.mynote.extensions.deleteImageFromList
 import com.maxdexter.mynote.extensions.getFile
 import com.maxdexter.mynote.extensions.getImageList
 import com.maxdexter.mynote.model.Note
@@ -37,8 +38,8 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     val eventType: LiveData<Pair<DetailEvent,Intent>?>
             get() = _eventType
 
-    private val _imageList = MutableLiveData<List<String>>()
-            val imageList: LiveData<List<String>>
+    private val _imageList = MutableLiveData<MutableList<String>>()
+            val imageList: LiveData<MutableList<String>>
             get() = _imageList
 
     init {
@@ -61,7 +62,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             if (it != null) {
                 note = it
                 _newNote.postValue(note)
-                _imageList.value = listOf<String>().getImageList(note.photoFilename) //getImageList(note)
+                _imageList.value = mutableListOf<String>().getImageList(note.photoFilename) //getImageList(note)
             }
 
         }
@@ -86,6 +87,15 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
             val newImage = "$oldImage,$uri"
             note.photoFilename = newImage
         }
+        saveEmptyNote()
+    }
+
+    fun deletePhoto(photo: String){
+        val result = getPhotoFile(photo).delete()
+        Log.i("DELETE", "$result")
+        val photoUriList = mutableListOf<String>().getImageList(note.photoFilename)
+        note.photoFilename = mutableListOf<String>().deleteImageFromList(photoUriList, photo)
+        _imageList.value = mutableListOf<String>().getImageList(note.photoFilename)
         saveEmptyNote()
     }
 
