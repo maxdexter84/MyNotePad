@@ -9,10 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
-import com.google.android.material.snackbar.Snackbar
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.data.adapters.NoteAdapter
 import com.maxdexter.mynote.data.adapters.NoteListener
+import com.maxdexter.mynote.data.adapters.SwipeController
+import com.maxdexter.mynote.data.adapters.SwipeControllerActions
 import com.maxdexter.mynote.databinding.FragmentNoteListBinding
 
 
@@ -55,8 +56,19 @@ class NoteListFragment : Fragment() {
         adapter = NoteAdapter(viewModel,NoteListener { findNavController().navigate(NoteListFragmentDirections.actionNoteListFragmentToDetailFragment(it)) })
         viewModel.allNoteList.observe(viewLifecycleOwner, { it.let { adapter.submitList(it.reversed()) } })
         binding.noteListId.adapter = adapter
-        val itemTouchHelper = ItemTouchHelper(adapter.simpleCallback)
-        itemTouchHelper.attachToRecyclerView(binding.noteListId)
+        val swipeController = SwipeController()
+        swipeController.buttonsActions = object : SwipeControllerActions {
+            override fun onLeftClicked(position: Int) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onRightClicked(position: Int) {
+                viewModel.deleteNote(adapter.currentList[position], view!!)
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeController)
+            itemTouchHelper.attachToRecyclerView(binding.noteListId)
         }
 
 

@@ -46,7 +46,7 @@ class NoteListFragmentViewModel(private val typeNote: Int, private val owner: Li
     }
 
     fun deleteNote(note: Note, view: View) {
-        Snackbar.make(view, "Удалить заметку?", Snackbar.LENGTH_LONG).setAction("Да") {
+        Snackbar.make(view, "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да") {
             scope.launch {
                 NoteRepository.get()?.deleteNote(note)
             }
