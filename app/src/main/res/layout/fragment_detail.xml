@@ -1,126 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    tools:context=".ui.fragments.DetailFragment">
+    <data>
+        <variable
+            name="note"
+            type="com.maxdexter.mynote.model.Note" />
+        <variable
+            name="viewModel"
+            type="com.maxdexter.mynote.ui.fragments.detail.DetailFragmentViewModel" />
 
+    </data>
 
-    <EditText
-        android:id="@+id/title_id"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="@string/title_hint"
-        style="@style/TextStyle"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </EditText>
-
-
-    <EditText
-        android:id="@+id/descript_id"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="left|top"
-        android:hint="@string/desc_hint"
-        style="@style/TextStyle"
-        app:layout_constraintBottom_toTopOf="@+id/image_view_fragment_detail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_id">
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        tools:context=".ui.fragments.detail.DetailFragment">
 
-    </EditText>
 
-    <ImageButton
-        android:id="@+id/image_view_fragment_detail"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleType="centerInside"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/radioGroup"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/title_id"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/title_hint"
+            android:imeOptions="actionDone"
+            android:textSize="20sp"
+            android:background="@color/fui_transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerView"/>
 
-    <RadioGroup
-        android:id="@+id/radioGroup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/button_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <RadioButton
-            android:id="@+id/simple_radio_btn"
-            android:layout_weight="1"
+        <EditText
+            android:id="@+id/descript_id"
+            style="@style/TextStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/fui_transparent"
+            android:gravity="start|top"
+            android:hint="@string/desc_hint"
+            android:imeOptions="actionDone"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+            app:layout_constraintEnd_toStartOf="@+id/button_group"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_id" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/simple_note" />
+            android:backgroundTint="@color/myAccent"
+            android:onClick="@{()->viewModel.saveNote()}"
+            android:src="@drawable/baseline_done_24"
+            app:layout_constraintBottom_toTopOf="@+id/radioGroup"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <RadioButton
-            android:id="@+id/important_radio_btn"
-            android:layout_weight="1"
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <RadioButton
+                android:id="@+id/simple_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.changeType(0)}"
+                android:text="@string/simple_note" />
+
+            <RadioButton
+                android:id="@+id/important_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.changeType(1)}"
+                android:text="@string/important_note" />
+
+            <RadioButton
+                android:id="@+id/password_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="@{()->viewModel.changeType(2)}"
+                android:text="@string/password_note" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/button_group"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/important_note" />
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/password_radio_btn"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password_note" />
-    </RadioGroup>
+            <ImageButton
+                android:id="@+id/add_image_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.photoIntent()}"
+                android:src="@drawable/baseline_camera_alt_24" />
 
-    <LinearLayout
-        android:id="@+id/button_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/radioGroup">
+            <ImageButton
+                android:id="@+id/add_gallery_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.galleryIntent()}"
+                android:src="@drawable/baseline_image_24" />
 
-        <ImageButton
-            android:id="@+id/add_image_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_camera_alt_24" />
-        <ImageButton
-            android:id="@+id/add_gallery_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_image_24" />
+            <!--        <ImageButton-->
+            <!--            android:id="@+id/add_voice_button"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:src="@drawable/baseline_record_voice_over_24" />-->
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/add_voice_button"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:src="@drawable/baseline_record_voice_over_24" />-->
+            <ImageButton
+                android:id="@+id/share_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()->viewModel.shareNote()}"
+                android:src="@drawable/baseline_share_24" />
 
-        <ImageButton
-            android:id="@+id/share_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_share_24" />
-
-        <ImageButton
-            android:id="@+id/delete_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/baseline_delete_24" />
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/delete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:onClick="@{()-> viewModel.deleteEvent()}"
+                android:src="@drawable/baseline_delete_24" />
+        </LinearLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 

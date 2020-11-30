@@ -1,11 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="MyTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="MyTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/myPrimary</item>
         <item name="colorPrimaryDark">@color/myPrimaryDark</item>
         <item name="colorAccent">@color/myAccent</item>
+        <item name="switchStyle">@style/MySwitchStyle</item>
+    </style>
+
+    <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
+    <style name="MyTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+        <!-- для Android 5+ вы можете поменять цвет colorPrimaryDark, -->
+        <!-- чтобы соответствовать цвету windowBackground -->
+        <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
 
 
@@ -13,10 +22,29 @@
 
    <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">
        <item name="android:inputType">textCapSentences|textMultiLine</item>
+       <item name="fontFamily">@font/roboto_mono</item>
    </style>
 
+    <style name="LoginStyle" parent="Theme.AppCompat.Light">
+        <item name="colorPrimary">@color/myPrimary</item>
+        <item name="colorPrimaryDark">@color/myPrimaryDark</item>
+        <item name="colorAccent">@color/myAccent</item>
+    </style>
 
-    <color name="myPrimary2">#558B2F</color>
-    <color name="myPrimaryDark2">#2E7D32</color>
-    <color name="myAccent2">#F9A825</color>
+    <style name="MySwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="thumbTint">@color/selector_switch_thumb</item>
+    </style>
+
+    <style name="SettingsTextStyle">
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:layout_marginTop">@dimen/min_margin</item>
+        <item name="android:layout_marginBottom">@dimen/medium_margin</item>
+        <item name="android:paddingBottom">@dimen/min_margin</item>
+        <item name="android:paddingTop">@dimen/min_margin</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+    </style>
+
+
 </resources>

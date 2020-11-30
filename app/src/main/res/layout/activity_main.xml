@@ -1,31 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.maxdexter.mynote.ui.NoteListActivityViewModel" />
+
+    </data>
+
+   <androidx.constraintlayout.widget.ConstraintLayout
+
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
 
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="55dp"
-        />
+       <androidx.fragment.app.FragmentContainerView
+           android:id="@+id/navHostFragment"
+           android:name="androidx.navigation.fragment.NavHostFragment"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           app:defaultNavHost="true"
+           app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent"
+           app:navGraph="@navigation/navigation" />
 
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="63dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true"
-        android:src="@drawable/add"
-        app:layout_anchor="@id/bottom_sheet"
-        app:layout_anchorGravity="top|end" />
-    <include
-        layout="@layout/bottom_sheet"/>
-</android.support.design.widget.CoordinatorLayout>
+                  <com.google.android.material.bottomnavigation.BottomNavigationView
+                      android:id="@+id/bottom_nav"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="bottom"
+                      app:layout_constraintBottom_toBottomOf="parent"
+                      app:layout_constraintEnd_toEndOf="parent"
+                      app:layout_constraintStart_toStartOf="parent"
+                      app:menu="@menu/bottom_nav_menu" />
+
+
+
+
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

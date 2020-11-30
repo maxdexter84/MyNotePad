@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Блокнот</string>
-    <string name="simple_note_title">Обычная</string>
-    <string name="important_note_title">Важная</string>
-    <string name="password_note_title">Пароль</string>
-    <string name="simple_note">Обычная</string>
+    <string name="simple_note_title">Обычные заметки</string>
+    <string name="important_note_title">Важные заметки</string>
+    <string name="password_note_title">Заметки с паролями</string>
+    <string name="simple_note">Обычные заметки</string>
     <string name="important_note">Важная</string>
     <string name="password_note">С паролем</string>
     <string name="tools">Настроки</string>
@@ -15,7 +15,32 @@
     <string name="share">Поделиьтся</string>
     <string name="image">Изображение</string>
     <string name="title_hint">название заметки</string>
-    <string name="desc_hint">текст заметки</string>
+    <string name="desc_hint">"текст "</string>
     <string name="back">Назад</string>
     <string name="text_size">Размер шрифта</string>
+    <string name="cloud">Облако</string>
+    <string name="download">Выгрузить из облака</string>
+    <string name="upload_to_the_cloud">Загрузить в облако</string>
+    <string name="synchronization">Синхронизация</string>
+    <string name="prompt_email">Почта</string>
+    <string name="prompt_password">Пароль</string>
+    <string name="action_sign_in">вход или регистрация</string>
+    <string name="action_sign_in_short">войти</string>
+    <string name="welcome">Добро пожаловать</string>
+    <string name="invalid_username">Неверное имя пользователя</string>
+    <string name="invalid_password">Пароль должен быть длинее 5 знаков</string>
+    <string name="login_failed">Ошибка входа</string>
+    <string name="authentication">Авторизация</string>
+    <string name="Authentication">Авторизация</string>
+    <string name="logout_dialog_title">Вы уверенны что хотите выйти из аккаунта?</string>
+    <string name="add_note">Добавить</string>
+    <string name="search">Искать</string>
+    <string name="snack_bar_delete_note">Удалить заметку?</string>
+    <string name="yes">Да</string>
+    <string name="note_image">картинка заметки</string>
+    <string name="change_display">Изменить отображение</string>
+    <string name="dark_theme">Темная тема</string>
+    <string name="text_settings">Настройки текста</string>
+    <string name="Aa">Аа</string>
+    <string name="all_note_title">Все заметки</string>
 </resources>

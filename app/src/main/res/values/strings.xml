@@ -10,7 +10,7 @@
     <string name="important_note">Important</string>
     <string name="password_note">Password</string>
     <string name="desc_hint">description</string>
-    <string name="all_note_title" translatable="false">All</string>
+    <string name="all_note_title">All</string>
     <string name="tools">Tools</string>
     <string name="delete">Delete</string>
     <string name="to_favourites" translatable="false">To favourites</string>
@@ -24,6 +24,33 @@
     <string name="dummy_content" translatable="false">DUMMY\nCONTENT</string>
     <string name="back">BACK</string>
     <string name="text_size">Text size</string>
+    <string name="cloud">"Cloud "</string>
+    <string name="download">Download</string>
+    <string name="upload_to_the_cloud">Upload</string>
+    <string name="synchronization">Synchronization</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="authentication">Authentication</string>
+    <string name="logout" translatable="false">out</string>
+    <string name="Authentication">Authentication</string>
+    <string name="logout_dialog_title">Are you sure you want to get out?</string>
+    <string name="login" translatable="false">in</string>
+    <string name="add_note">Add</string>
+    <string name="search">Search</string>
+    <string name="snack_bar_delete_note">Delete note?</string>
+    <string name="yes">Yes</string>
+    <string name="note_image">note image</string>
+    <string name="change_display">Change display</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="text_settings">Text settings</string>
+    <string name="Aa">Aa</string>
 
 
 </resources>

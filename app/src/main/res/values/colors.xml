@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="myPrimary">#4d9699</color>
+    <color name="myPrimary">#558B2F</color>
     <color name="myPrimaryDark">#5f6c11</color>
     <color name="myAccent">#fbc11a</color>
     <color name="myColor">#eae7e0</color>
@@ -8,4 +8,21 @@
     <color name="black">#201E1E</color>
     <color name="myPrimaryNight">#1C2247</color>
     <color name="myPrimaryDarkNight">#110F0F</color>
+
+
+    <color name="myPrimary2">#558B2F</color>
+    <color name="myPrimaryDark2">#2E7D32</color>
+    <color name="myAccent2">#F9A825</color>
+
+
+    <color name="color_white">#F5F5F5</color>
+    <color name="color_yello">#E4D551</color>
+    <color name="color_green">#549C57</color>
+    <color name="color_blue">#80d8ff</color>
+    <color name="color_red">#AC5851</color>
+    <color name="color_violet">#AF6DBA</color>
+    <color name="color_pink">#f8bbd0</color>
+    <color name="dark_grey">#524544</color>
+    <color name="my_card_color_main">#F7F8FC</color>
 </resources>
+

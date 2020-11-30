@@ -2,33 +2,36 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.maxdexter.mynote"
     >
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application
-        android:allowBackup="true"
         android:icon="@drawable/notepad"
         android:label="@string/app_name"
+        android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/MyTheme">
-        <activity android:name=".NotePagerActivity" android:parentActivityName=".NoteListActivity" android:windowSoftInputMode="adjustResize"/>
+        android:theme="@style/MyTheme.Launcher"
+        android:fullBackupContent="true">
 
-        <activity android:name=".DetailActivity" />
         <provider
             android:authorities="com.maxdexter.mynote.fileprovider"
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file"/>
         </provider>
-        <activity android:name=".NoteListActivity" android:windowSoftInputMode="adjustPan">
+        <activity android:name=".ui.NoteListActivity" android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

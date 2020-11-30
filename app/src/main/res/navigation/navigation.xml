@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/noteListFragment">
+
+    <fragment
+        android:id="@+id/noteListFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.allnote.NoteListFragment"
+        android:label="NoteListFragment" >
+        <argument
+            android:name="noteType"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <action
+            android:id="@+id/action_noteListFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </fragment>
+    <fragment
+        android:id="@+id/fireStoreFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.firestore.FireStoreFragment"
+        android:label="FireStoreFragment" />
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.detail.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="note_id"
+            app:argType="string"
+            android:defaultValue="new_note" />
+        <action
+            android:id="@+id/action_detailFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment" />
+        <action
+            android:id="@+id/action_detailFragment_to_imageBottomFragment"
+            app:destination="@id/imageBottomFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.settings.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_fireStoreFragment"
+            app:destination="@id/fireStoreFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/bottomSheetDrawerFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.bottomsheet.BottomSheetDrawerFragment"
+        android:label="BottomSheetDrawerFragment" >
+        <action
+            android:id="@+id/action_bottomSheetDrawerFragment_to_noteListFragment"
+            app:destination="@id/noteListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left" />
+    </dialog>
+    <fragment
+        android:id="@+id/imageBottomFragment"
+        android:name="com.maxdexter.mynote.ui.fragments.image_view_pager_fragment.ImageBottomFragment"
+        android:label="ImageBottomFragment" >
+        <argument
+            android:name="path"
+            app:argType="string"
+            android:defaultValue='""' />
+        <action
+            android:id="@+id/action_imageBottomFragment_to_detailFragment"
+            app:destination="@id/detailFragment"
+            app:popUpTo="@id/detailFragment" />
+        <argument
+            android:name="itemPosition"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="uuid"
+            app:argType="string"
+            android:defaultValue='""' />
+    </fragment>
+</navigation>
