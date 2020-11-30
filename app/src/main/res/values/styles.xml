@@ -6,7 +6,27 @@
         <item name="colorPrimary">@color/myPrimary</item>
         <item name="colorPrimaryDark">@color/myPrimaryDark</item>
         <item name="colorAccent">@color/myAccent</item>
+        <item name="android:windowBackground">@color/color_white</item>
         <item name="switchStyle">@style/MySwitchStyle</item>
+        <item name="bottomNavStyle">@style/BottomNavigationViewLight</item>
+        <item name="textAppearanceBody1">@style/TextColorStyleDay</item>
+        <item name="settingsTextStyle">@style/SettingsTextStyle</item>
+        <item name="bottomDrawer">@style/BottomDrawerLight</item>
+    </style>
+
+
+
+    <style name="MyTheme.Night" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/myPrimary</item>
+        <item name="colorPrimaryDark">@color/myPrimaryDark</item>
+        <item name="colorAccent">@color/myAccent</item>
+        <item name="switchStyle">@style/MySwitchStyle</item>
+        <item name="android:windowBackground">@color/black</item>
+        <item name="bottomNavStyle">@style/BottomNavigationViewDark</item>
+        <item name="textAppearanceBody1">@style/TextColorStyleNight</item>
+        <item name="settingsTextStyle">@style/SettingsTextStyleNight</item>
+        <item name="bottomDrawer">@style/BottomDrawerDark</item>
     </style>
 
     <!-- Кастомная AppTheme.Launcher. Устанавливает в качестве фона вашу drawable -->
@@ -17,13 +37,58 @@
         <!-- <item name="colorPrimaryDark">@android:color/white</item> -->
     </style>
 
+    <style name="TextColorStyleDay" >
+        <item name="android:textColor">@color/black</item>
+        <item name="android:inputType">textCapSentences|textMultiLine</item>
+        <item name="fontFamily">@font/roboto_mono</item>
+    </style>
+
+    <style name="TextColorStyleNight">
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:inputType">textCapSentences|textMultiLine</item>
+        <item name="fontFamily">@font/roboto_mono</item>
+    </style>
+    
+    <style name="BottomNavigationViewLight">
+        <item name="backgroundTint">@color/myPrimary</item>
+        <item name="itemIconTint">@color/dark_grey</item>
+        <item name="itemTextColor">@color/dark_grey</item>
+        <item name="itemTextAppearanceActive">@color/myAccent</item>
+    </style>
+
+    <style name="BottomNavigationViewDark">
+        <item name="android:background">@color/dark_grey</item>
+        <item name="itemIconTint">@color/myPrimary</item>
+        <item name="itemTextColor">@color/myPrimary</item>
+        <item name="itemTextAppearanceActive">@color/myAccent</item>
+    </style>
 
 
+    <style name="BottomDrawerDark">
+        <item name="android:background">@color/dark_grey</item>
+        <item name="itemIconTint">@color/myPrimary</item>
+        <item name="itemTextColor">@color/color_white</item>
+    </style>
 
-   <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">
-       <item name="android:inputType">textCapSentences|textMultiLine</item>
-       <item name="fontFamily">@font/roboto_mono</item>
-   </style>
+    <style name="BottomDrawerLight" >
+
+        <item name="android:background">@color/color_white</item>
+        <item name="itemIconTint">@color/dark_grey</item>
+        <item name="itemTextColor">@color/myPrimary</item>
+    </style>
+
+
+<!--    // <item name="itemBackground">@color/color_white</item>-->
+<!--    <item name="android:backgroundTint">@color/grey_light</item>-->
+
+    
+    
+
+
+<!--   <style name="TextStyle" parent="TextAppearance.AppCompat.Display1">-->
+<!--       <item name="android:inputType">textCapSentences|textMultiLine</item>-->
+<!--       <item name="fontFamily">@font/roboto_mono</item>-->
+<!--   </style>-->
 
     <style name="LoginStyle" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">@color/myPrimary</item>
@@ -36,6 +101,19 @@
     </style>
 
     <style name="SettingsTextStyle">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:layout_gravity">start|center</item>
+        <item name="android:layout_marginStart">@dimen/medium_margin</item>
+        <item name="android:layout_marginTop">@dimen/min_margin</item>
+        <item name="android:layout_marginBottom">@dimen/medium_margin</item>
+        <item name="android:paddingBottom">@dimen/min_margin</item>
+        <item name="android:paddingTop">@dimen/min_margin</item>
+        <item name="android:fontFamily">@font/roboto_mono</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+    </style>
+
+    <style name="SettingsTextStyleNight">
+        <item name="android:textColor">@color/color_white</item>
         <item name="android:layout_gravity">start|center</item>
         <item name="android:layout_marginStart">@dimen/medium_margin</item>
         <item name="android:layout_marginTop">@dimen/min_margin</item>
@@ -47,4 +125,5 @@
     </style>
 
 
+    <color name="grey_light">#8F8988</color>
 </resources>

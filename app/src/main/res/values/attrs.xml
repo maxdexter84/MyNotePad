@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="settingsTextStyle" format="reference"/>
+    <attr name="bottomNavStyle" format="reference"/>
+    <attr name="bottomDrawer" format="reference"/>
+</resources>

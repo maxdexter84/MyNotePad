@@ -7,20 +7,21 @@
     <item
         android:id="@+id/bottomSheetDrawerFragment"
         android:icon="@drawable/ic_baseline_format_list_bulleted_24"
-        app:showAsAction="always"
+        android:title="списки"
         tools:ignore="MenuTitle" />
 
 
     <item
         android:id="@+id/detailFragment"
         android:icon="@drawable/ic_baseline_add_24"
-        app:showAsAction="always"
+        android:title="новая заметка"
         tools:ignore="MenuTitle"/>
 
     <item
         android:id="@+id/settingsFragment"
         android:icon="@drawable/settings_dark_icone"
         app:showAsAction="always"
+        android:title="настройки"
         tools:ignore="MenuTitle"/>
 
 <!--    <item-->
