@@ -9,17 +9,6 @@ import com.maxdexter.mynote.database.AppDatabase
 
 class App : Application(){
 
-    companion object{
-        lateinit var database: AppDatabase
-        var instance: App? = null
-//        fun applicationContext(): Context? {
-//            return instance?.applicationContext
-//
-//        }
-    }
-    init {
-        instance = this
-    }
 
     override fun onCreate() {
         super.onCreate()
@@ -29,13 +18,26 @@ class App : Application(){
             }
         }
 
-        database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
-                .addMigrations(MIGRATION_1_2)
-                .build()
+//        database = Room.databaseBuilder(this, AppDatabase::class.java, "database")
+//                .addMigrations(MIGRATION_1_2)
+//                .build()
 
     }
 //    fun getDatabase(): AppDatabase {
 //        return database ?: error("no database")
+//    }
+
+
+//    companion object{
+//        lateinit var database: AppDatabase
+//        var instance: App? = null
+////        fun applicationContext(): Context? {
+////            return instance?.applicationContext
+////
+////        }
+//    }
+//    init {
+//        instance = this
 //    }
 
 

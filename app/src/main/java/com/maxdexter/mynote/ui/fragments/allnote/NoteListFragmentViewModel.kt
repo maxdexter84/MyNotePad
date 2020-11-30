@@ -16,7 +16,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
 
-class NoteListFragmentViewModel(private val typeNote: Int, private val owner: LifecycleOwner): ViewModel() {
+class NoteListFragmentViewModel(private val typeNote: Int, private val owner: LifecycleOwner, private val context: Context): ViewModel() {
     private val job = SupervisorJob()
     private val scope = CoroutineScope(job + Dispatchers.IO)
     var deleteNote: Boolean = false
@@ -36,7 +36,7 @@ class NoteListFragmentViewModel(private val typeNote: Int, private val owner: Li
 
     private fun getNoteList(){
         var list: List<Note>
-        NoteRepository.get()?.notes?.observe (owner){ observeList ->
+        NoteRepository.get(context)?.notes?.observe (owner){ observeList ->
             list = observeList
             _allNoteList.value =  when(typeNote){
                 -1 ->  list
@@ -48,7 +48,7 @@ class NoteListFragmentViewModel(private val typeNote: Int, private val owner: Li
     fun deleteNote(note: Note, view: View) {
         Snackbar.make(view, "Точно удалить?", Snackbar.LENGTH_LONG).setAction("Да") {
             scope.launch {
-                NoteRepository.get()?.deleteNote(note)
+                NoteRepository.get(context)?.deleteNote(note)
             }
         }.show()
 

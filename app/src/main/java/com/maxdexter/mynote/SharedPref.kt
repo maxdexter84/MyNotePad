@@ -4,7 +4,8 @@ import android.app.Activity
 import android.content.SharedPreferences
 
 class SharedPref(activity: Activity) {
-    var sharedPref: SharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE)// Если настройка не найдена , то берется параметр по умолчанию//Параметры сохраняются посредствам специального класса editor
+    // Если настройка не найдена , то берется параметр по умолчанию//Параметры сохраняются посредствам специального класса editor
+    var sharedPref: SharedPreferences = activity.getPreferences(Activity.MODE_PRIVATE)
 
     //Сохранение настроек
     //Чтенеие настроек

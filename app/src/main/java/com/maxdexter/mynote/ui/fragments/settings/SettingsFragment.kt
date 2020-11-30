@@ -64,7 +64,7 @@ class SettingsFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        val noteDao = context?.let { NoteRepository.get()?.database?.mNoteDao() }
+        val noteDao = context?.let { NoteRepository.get(requireContext())?.database?.mNoteDao() }
         viewModelFactory = SettingsViewModelFactory(noteDao?.let { Repository }, viewLifecycleOwner, context)
         viewModel = ViewModelProvider(this, viewModelFactory).get(SettingsViewModel::class.java)
     }
