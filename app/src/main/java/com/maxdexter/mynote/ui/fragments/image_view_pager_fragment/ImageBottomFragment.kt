@@ -7,7 +7,6 @@ import android.graphics.PointF
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.core.view.get
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -16,10 +15,8 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.maxdexter.mynote.R
-import com.maxdexter.mynote.data.adapters.ViewPagerAdapter
+import com.maxdexter.mynote.ui.adapters.ViewPagerAdapter
 import com.maxdexter.mynote.databinding.ImageBottomFragmentBinding
-import com.maxdexter.mynote.databinding.ListImageViewpagerItemBinding
-import kotlinx.android.synthetic.main.list_image_viewpager_item.view.*
 
 
 const val TAG = "touch"

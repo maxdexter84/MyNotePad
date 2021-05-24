@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.data.adapters
+package com.maxdexter.mynote.ui.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas
@@ -13,8 +13,6 @@ import com.maxdexter.mynote.databinding.ListItemNoteBinding
 import com.maxdexter.mynote.model.Note
 import com.maxdexter.mynote.ui.fragments.allnote.NoteListFragmentViewModel
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
-import kotlinx.android.synthetic.main.list_item_note.view.*
-import java.util.*
 
 
 class NoteAdapter (val viewModel: NoteListFragmentViewModel,val clickListener: NoteListener): ListAdapter<Note,NoteViewHolder>(NoteAdapterDiffCallback()) {

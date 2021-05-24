@@ -10,10 +10,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.*
 import com.maxdexter.mynote.R
-import com.maxdexter.mynote.data.adapters.NoteAdapter
-import com.maxdexter.mynote.data.adapters.NoteListener
-import com.maxdexter.mynote.data.adapters.SwipeController
-import com.maxdexter.mynote.data.adapters.SwipeControllerActions
+import com.maxdexter.mynote.ui.adapters.NoteAdapter
+import com.maxdexter.mynote.ui.adapters.NoteListener
+import com.maxdexter.mynote.ui.adapters.SwipeController
+import com.maxdexter.mynote.ui.adapters.SwipeControllerActions
 import com.maxdexter.mynote.databinding.FragmentNoteListBinding
 
 

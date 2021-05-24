@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.data.adapters
+package com.maxdexter.mynote.ui.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Canvas

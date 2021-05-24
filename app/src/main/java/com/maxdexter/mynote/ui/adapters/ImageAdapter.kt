@@ -1,15 +1,11 @@
-package com.maxdexter.mynote.data.adapters
+package com.maxdexter.mynote.ui.adapters
 
 import android.content.Context
 import android.graphics.Canvas
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView

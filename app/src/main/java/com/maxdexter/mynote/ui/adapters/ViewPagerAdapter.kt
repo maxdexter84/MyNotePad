@@ -1,10 +1,9 @@
-package com.maxdexter.mynote.data.adapters
+package com.maxdexter.mynote.ui.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.maxdexter.mynote.databinding.ListImageItemBinding
 import com.maxdexter.mynote.databinding.ListImageViewpagerItemBinding
 import com.maxdexter.mynote.extensions.setImage
 

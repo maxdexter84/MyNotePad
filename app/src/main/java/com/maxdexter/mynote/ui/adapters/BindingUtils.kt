@@ -1,11 +1,9 @@
-package com.maxdexter.mynote.data.adapters
+package com.maxdexter.mynote.ui.adapters
 
 
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.databinding.BindingAdapter
-import com.google.android.material.theme.overlay.MaterialThemeOverlay
 import com.maxdexter.mynote.R
 import com.maxdexter.mynote.model.Note
 
