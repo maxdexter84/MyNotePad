@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.database
+package com.maxdexter.mynote.data.database
 
 import android.content.Context
 import androidx.room.Database

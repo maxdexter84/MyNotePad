@@ -1,4 +1,4 @@
-package com.maxdexter.mynote.database
+package com.maxdexter.mynote.data.database
 
 import androidx.lifecycle.LiveData
 import androidx.room.*

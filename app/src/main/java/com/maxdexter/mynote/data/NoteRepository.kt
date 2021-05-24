@@ -2,8 +2,7 @@ package com.maxdexter.mynote.data
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import com.maxdexter.mynote.App
-import com.maxdexter.mynote.database.AppDatabase
+import com.maxdexter.mynote.data.database.AppDatabase
 import com.maxdexter.mynote.model.Note
 
 class NoteRepository private constructor(context: Context) {
