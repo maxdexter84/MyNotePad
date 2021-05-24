@@ -13,7 +13,7 @@ import kotlinx.coroutines.*
 class SettingsViewModel(private val repository: Repository?, private val owner: LifecycleOwner, private val context: Context?) : ViewModel() {
     private var viewModelJob = Job() //когда viewModel будет уничтожена то в переопределенном методе onCleared() будут так же завершены все задания
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    private var notes = context?.let { NoteRepository.get()?.notes }
+    private var notes = context?.let { NoteRepository.get(context)?.notes }
 
     private var _isAuth = MutableLiveData<Boolean>()
     val isAuth: LiveData<Boolean>
@@ -62,7 +62,7 @@ class SettingsViewModel(private val repository: Repository?, private val owner: 
             if (it != null){
                 it.forEach {note -> uiScope.launch {
                     if (context != null) {
-                        NoteRepository.get()?.addNote(note)
+                        NoteRepository.get(context)?.addNote(note)
                     }
                 } }
                 _settingsEvent.value = SettingsEvent.CANCEL_EVENT

@@ -18,11 +18,11 @@
 
         <TextView
             android:id="@+id/textView2"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/Authentication"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,7 +32,7 @@
             android:layout_height="40dp"
             android:textSize="12sp"
             android:text="@string/login"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginEnd="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintEnd_toStartOf="@+id/exit"
@@ -45,7 +45,7 @@
             android:layout_height="40dp"
             android:textSize="12sp"
             android:enabled="false"
-            android:visibility="gone"
+            android:visibility="visible"
             android:onClick="@{()->settingsViewModel.logOut()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/auth" />
@@ -53,11 +53,11 @@
 
         <TextView
             android:id="@+id/textView4"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/upload_to_the_cloud"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
@@ -66,7 +66,7 @@
             android:layout_width="70dp"
             android:layout_height="40dp"
             android:layout_gravity="end"
-            android:visibility="gone"
+            android:visibility="visible"
             android:backgroundTint="@color/fui_transparent"
             android:onClick="@{() -> settingsViewModel.onLoadToFireStore()}"
             android:src="@drawable/ic_baseline_cloud_upload_24"
@@ -79,7 +79,7 @@
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="invisible"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -88,11 +88,11 @@
 
         <TextView
             android:id="@+id/textView3"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/synchronization"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -100,7 +100,7 @@
             android:id="@+id/btn_download_fire_store"
             android:layout_width="70dp"
             android:layout_height="40dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:backgroundTint="@color/fui_transparent"
             android:onClick="@{()->settingsViewModel.downloadFromFireStore()}"
             android:src="@drawable/ic_baseline_cloud_download_24"
@@ -110,7 +110,7 @@
 
         <TextView
             android:id="@+id/textView"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -134,7 +134,7 @@
 
         <TextView
             android:id="@+id/textView5"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -144,7 +144,7 @@
 
         <TextView
             android:id="@+id/textView6"
-            style="@style/SettingsTextStyle"
+            style="?settingsTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_size"
@@ -164,12 +164,14 @@
                 android:id="@+id/rb_small_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?textAppearanceBody1"
                 android:text="@string/Aa"
                 android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_medium_text"
                 android:text="@string/Aa"
+                style="?textAppearanceBody1"
                 android:textSize="18sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -177,6 +179,7 @@
             <RadioButton
                 android:id="@+id/rb_large_text"
                 android:text="@string/Aa"
+                style="?textAppearanceBody1"
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

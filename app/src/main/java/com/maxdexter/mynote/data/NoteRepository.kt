@@ -1,13 +1,14 @@
 package com.maxdexter.mynote.data
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import com.maxdexter.mynote.App
 import com.maxdexter.mynote.database.AppDatabase
 import com.maxdexter.mynote.model.Note
 
-class NoteRepository private constructor() {
+class NoteRepository private constructor(context: Context) {
 
-    val database:AppDatabase = App.database
+    val database:AppDatabase = AppDatabase.invoke(context)
     val notes
         get() = database.mNoteDao().getAll()
 
@@ -32,9 +33,9 @@ class NoteRepository private constructor() {
     companion object {
         private var notePad: NoteRepository? = null
         @JvmStatic
-        fun get(): NoteRepository? { //Если экземпляр уже существует то просто возвращает его, если не существует то вызвывается конструктор для его создания
+        fun get(context: Context): NoteRepository? { //Если экземпляр уже существует то просто возвращает его, если не существует то вызвывается конструктор для его создания
             if (notePad == null) {
-                notePad = NoteRepository()
+                notePad = NoteRepository(context)
             }
             return notePad
         }

@@ -58,7 +58,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
     }
 
    private fun noteChangeObserve(uuid: String) {
-        NoteRepository.get()?.getNote(uuid)?.observeForever {
+        NoteRepository.get(context)?.getNote(uuid)?.observeForever {
             if (it != null) {
                 note = it
                 _newNote.postValue(note)
@@ -108,11 +108,11 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
         changeDate()
         if (note.title != "" || note.description != "" || note.photoFilename != ""){
         uiScope.launch {
-            NoteRepository.get()?.addNote(note)
+            NoteRepository.get(context)?.addNote(note)
             }
         } else {
             uiScope.launch {
-                NoteRepository.get()?.deleteNote(note)
+                NoteRepository.get(context)?.deleteNote(note)
             }
         }
         _eventType.value = Pair(DetailEvent.SAVE, Intent())
@@ -120,7 +120,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
    fun saveEmptyNote(){
         changeDate()
         uiScope.launch {
-            NoteRepository.get()?.addNote(note)
+            NoteRepository.get(context)?.addNote(note)
         }
     }
     private fun getPhotoFile(uri:String): File {
@@ -189,7 +189,7 @@ class DetailFragmentViewModel(private val uuid: String, private val context: Con
                 Log.i("DELETE", "$result  file $it  not delete")
             }
             }
-            NoteRepository.get()?.deleteNote(note)
+            NoteRepository.get(context)?.deleteNote(note)
         }
     }
 

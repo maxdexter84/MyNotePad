@@ -22,7 +22,7 @@
 
         <EditText
             android:id="@+id/title_id"
-            style="@style/TextStyle"
+            style="?textAppearanceBody1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="@string/title_hint"
@@ -36,7 +36,7 @@
 
         <EditText
             android:id="@+id/descript_id"
-            style="@style/TextStyle"
+            style="?textAppearanceBody1"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/fui_transparent"
@@ -83,6 +83,8 @@
                 android:id="@+id/simple_radio_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="?textAppearanceBody1"
+                android:textSize="@dimen/min_text"
                 android:layout_weight="1"
                 android:onClick="@{()->viewModel.changeType(0)}"
                 android:text="@string/simple_note" />
@@ -92,6 +94,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textSize="@dimen/min_text"
+                style="?textAppearanceBody1"
                 android:onClick="@{()->viewModel.changeType(1)}"
                 android:text="@string/important_note" />
 
@@ -99,6 +103,8 @@
                 android:id="@+id/password_radio_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/min_text"
+                style="?textAppearanceBody1"
                 android:layout_weight="1"
                 android:onClick="@{()->viewModel.changeType(2)}"
                 android:text="@string/password_note" />

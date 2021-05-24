@@ -47,9 +47,11 @@ class NoteListActivity : AppCompatActivity() {
     private fun setDarkTheme() {
         val isDarkTheme = SharedPref(this).isDarkTheme
         if (isDarkTheme) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            setTheme(R.style.MyTheme_Night)
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            setTheme(R.style.MyTheme)
+            //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
     }
 
